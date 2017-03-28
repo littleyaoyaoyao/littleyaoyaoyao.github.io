@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hibernate对象状态 | We-Param</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Hibernate对象状态标签（空格分隔）： Hibernate 对象状态
+
+Hibernate中的对象状态有三种：
+瞬时态/临时态
+没有与Hibernate产生关联
+与数据库中的记录没有产生关联
+
+持久态
+与Hibernate有关联
+对象有ID
+
+游离态
+没有与Hibernate产生关联
+对象有ID
+
+12345678910      Session session = HibernateUti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate对象状态">
+<meta property="og:url" content="http://yoursite.com/2017/03/28/Hibernate对象状态/index.html">
+<meta property="og:site_name" content="We-Param">
+<meta property="og:description" content="Hibernate对象状态标签（空格分隔）： Hibernate 对象状态
+
+Hibernate中的对象状态有三种：
+瞬时态/临时态
+没有与Hibernate产生关联
+与数据库中的记录没有产生关联
+
+持久态
+与Hibernate有关联
+对象有ID
+
+游离态
+没有与Hibernate产生关联
+对象有ID
+
+12345678910      Session session = HibernateUti">
+<meta property="og:updated_time" content="2017-03-28T11:54:14.528Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hibernate对象状态">
+<meta name="twitter:description" content="Hibernate对象状态标签（空格分隔）： Hibernate 对象状态
+
+Hibernate中的对象状态有三种：
+瞬时态/临时态
+没有与Hibernate产生关联
+与数据库中的记录没有产生关联
+
+持久态
+与Hibernate有关联
+对象有ID
+
+游离态
+没有与Hibernate产生关联
+对象有ID
+
+12345678910      Session session = HibernateUti">
+  
+    <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">We-Param</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Hibernate对象状态" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/28/Hibernate对象状态/" class="article-date">
+  <time datetime="2017-03-28T11:54:09.938Z" itemprop="datePublished">2017-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hibernate对象状态
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hibernate对象状态"><a href="#Hibernate对象状态" class="headerlink" title="Hibernate对象状态"></a>Hibernate对象状态</h1><p>标签（空格分隔）： Hibernate 对象状态</p>
+<hr>
+<p>Hibernate中的对象状态有三种：</p>
+<h2 id="瞬时态-临时态"><a href="#瞬时态-临时态" class="headerlink" title="瞬时态/临时态"></a>瞬时态/临时态</h2><ol>
+<li>没有与Hibernate产生关联</li>
+<li>与数据库中的记录没有产生关联</li>
+</ol>
+<h2 id="持久态"><a href="#持久态" class="headerlink" title="持久态"></a>持久态</h2><ol>
+<li>与Hibernate有关联</li>
+<li>对象有ID</li>
+</ol>
+<h2 id="游离态"><a href="#游离态" class="headerlink" title="游离态"></a>游离态</h2><ol>
+<li>没有与Hibernate产生关联</li>
+<li>对象有ID</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">      Session session = HibernateUtils.openSession();</div><div class="line">session.beginTransaction();</div><div class="line">	</div><div class="line">User u = new User(); //瞬时状态</div><div class="line">u.setName(<span class="string">"tony"</span>);   //瞬时状态</div><div class="line">u.setPassword(<span class="string">"132"</span>);//瞬时状态</div><div class="line">session.save(u);//持久状态</div><div class="line">//事务提交时，会把持久化状态对象同步到数据库中</div><div class="line">session.getTransaction().commit();//持久状态</div><div class="line">session.close();//游离状态</div></pre></td></tr></table></figure>
+<p>当主键自增时：<br>通过debug发现save()方法仅是获得id,在commit处才会insert</p>
+<p>当increment时:<br>select max(id)</p>
+<p>当assigned时：<br>需要手动指定主键，不指定将会报错</p>
+<h3 id="三种状态的作用"><a href="#三种状态的作用" class="headerlink" title="三种状态的作用"></a>三种状态的作用</h3><p>持久状态，我恶魔你使用Hibernate主要是为了持久化我们的数据，对于对象的状态，我们期望我们需要同步到数据库的数据，都被转换成持久化状态</p>
+<p>持久化状态的特点：Hibernate会自动将持久化状态对象的变化同步到数据库中</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj0thkzvt0003n8txcfh6fjeq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/28/Hibernate一级缓存/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hibernate一级缓存
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/Hibernate入门/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hibernate入门</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/28/Hibernate入门学习二/">Hibernate入门学习二</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/28/Hibernate一级缓存/">Hibernate一级缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/28/Hibernate对象状态/">Hibernate对象状态</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Hibernate入门/">Hibernate入门</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/25/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Yao<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

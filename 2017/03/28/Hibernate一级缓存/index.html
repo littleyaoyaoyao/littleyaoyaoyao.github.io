@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hibernate一级缓存 | We-Param</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="标签 ： Hibernate 一级缓存
+
+缓存Hibernate中也存在缓存，Hibernate中存在的缓存也是用来提高效率的Hibernate中存在两种缓存：
+
+线程级别的缓存：Session缓存
+进程级别的缓存： Hibernate二级缓存
+
+session缓存：就是session对象中存在的缓存，缓存中存在的是（持久化）对象
+12345678910111213      Session se">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate一级缓存">
+<meta property="og:url" content="http://yoursite.com/2017/03/28/Hibernate一级缓存/index.html">
+<meta property="og:site_name" content="We-Param">
+<meta property="og:description" content="标签 ： Hibernate 一级缓存
+
+缓存Hibernate中也存在缓存，Hibernate中存在的缓存也是用来提高效率的Hibernate中存在两种缓存：
+
+线程级别的缓存：Session缓存
+进程级别的缓存： Hibernate二级缓存
+
+session缓存：就是session对象中存在的缓存，缓存中存在的是（持久化）对象
+12345678910111213      Session se">
+<meta property="og:updated_time" content="2017-03-28T11:59:57.066Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hibernate一级缓存">
+<meta name="twitter:description" content="标签 ： Hibernate 一级缓存
+
+缓存Hibernate中也存在缓存，Hibernate中存在的缓存也是用来提高效率的Hibernate中存在两种缓存：
+
+线程级别的缓存：Session缓存
+进程级别的缓存： Hibernate二级缓存
+
+session缓存：就是session对象中存在的缓存，缓存中存在的是（持久化）对象
+12345678910111213      Session se">
+  
+    <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">We-Param</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Hibernate一级缓存" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/28/Hibernate一级缓存/" class="article-date">
+  <time datetime="2017-03-28T11:59:53.002Z" itemprop="datePublished">2017-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hibernate一级缓存
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： Hibernate 一级缓存</p>
+<hr>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>Hibernate中也存在缓存，Hibernate中存在的缓存也是用来提高效率的<br>Hibernate中存在两种缓存：</p>
+<ol>
+<li>线程级别的缓存：Session缓存</li>
+<li>进程级别的缓存： Hibernate二级缓存</li>
+</ol>
+<p>session缓存：就是session对象中存在的缓存，缓存中存在的是（持久化）对象</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">      Session session = HibernateUtils.openSession();</div><div class="line">session.beginTransaction();</div><div class="line">//------------------------------------------------</div><div class="line">User u1 = (User) session.get(User.class, 1);</div><div class="line">// 发送select语句,从数据库取出记录.并封装成对象</div><div class="line">   // 持久化状态对象=&gt; 存到缓存中</div><div class="line">User u2 = (User) session.get(User.class, 1);//再次查询时,会从缓存中查找,不会发送select</div><div class="line">User u3 = (User) session.get(User.class, 1);//再次查询时,会从缓存中查找,不会发送select</div><div class="line">System.out.println(u1==u2);//<span class="literal">true</span></div><div class="line">System.out.println(u1==u3);//<span class="literal">true</span></div><div class="line">//------------------------------------------------</div><div class="line">session.getTransaction().commit();</div><div class="line">session.close(); // 游离状态</div></pre></td></tr></table></figure>
+<h3 id="一级缓存，对象快照"><a href="#一级缓存，对象快照" class="headerlink" title="一级缓存，对象快照"></a>一级缓存，对象快照</h3><h4 id="缓存中的快照"><a href="#缓存中的快照" class="headerlink" title="缓存中的快照"></a>缓存中的快照</h4><p>在从数据库中取得数据时，会将数据一式两份，一份作为缓存中的对象，一份作为快照（快照与数据库中保持一致），在session提交时作为对比</p>
+<h4 id="持久化状态"><a href="#持久化状态" class="headerlink" title="持久化状态"></a>持久化状态</h4><p>本质就是存在缓存中的对象，就是持久化状态</p>
+<h4 id="session缓存的细节问题"><a href="#session缓存的细节问题" class="headerlink" title="session缓存的细节问题"></a>session缓存的细节问题</h4><p>save()方法：<br>来自于Hibernate<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">      User u = new User();</div><div class="line">u.setName(<span class="string">"张三"</span>);</div><div class="line">session.save(u); //insert语句被打印=&gt; 目的:获得id</div></pre></td></tr></table></figure></p>
+<p>persist() :<br>来自于JPA接口</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate一级缓存/" data-id="cj0thkzua0000n8txqbx32iu8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/28/Hibernate入门学习二/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hibernate入门学习二
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/28/Hibernate对象状态/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hibernate对象状态</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/28/Hibernate入门学习二/">Hibernate入门学习二</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/28/Hibernate一级缓存/">Hibernate一级缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/28/Hibernate对象状态/">Hibernate对象状态</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Hibernate入门/">Hibernate入门</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/25/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Yao<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

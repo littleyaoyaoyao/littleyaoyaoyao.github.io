@@ -3,17 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>We-Param</title>
+  <title>Hibernate入门学习二 | We-Param</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="New Land">
-<meta property="og:type" content="website">
-<meta property="og:title" content="We-Param">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="Hibernate的api详解Bean — PO对象 （持久化对象） 在实际开发中PO对象更普遍
+BO：BUsiness object业务数据对象   service层VO：Value Object值对象   Web层
+Configuration对象详解- property元素用于配置Hibernate中的属性  键:值 
+- 调用configure(),加载src下名为hibernate.cf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate入门学习二">
+<meta property="og:url" content="http://yoursite.com/2017/03/28/Hibernate入门学习二/index.html">
 <meta property="og:site_name" content="We-Param">
-<meta property="og:description" content="New Land">
+<meta property="og:description" content="Hibernate的api详解Bean — PO对象 （持久化对象） 在实际开发中PO对象更普遍
+BO：BUsiness object业务数据对象   service层VO：Value Object值对象   Web层
+Configuration对象详解- property元素用于配置Hibernate中的属性  键:值 
+- 调用configure(),加载src下名为hibernate.cf">
+<meta property="og:updated_time" content="2017-03-28T12:26:13.631Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="We-Param">
-<meta name="twitter:description" content="New Land">
+<meta name="twitter:title" content="Hibernate入门学习二">
+<meta name="twitter:description" content="Hibernate的api详解Bean — PO对象 （持久化对象） 在实际开发中PO对象更普遍
+BO：BUsiness object业务数据对象   service层VO：Value Object值对象   Web层
+Configuration对象详解- property元素用于配置Hibernate中的属性  键:值 
+- 调用configure(),加载src下名为hibernate.cf">
   
     <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
   
@@ -62,9 +72,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-Hibernate入门学习二" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Hibernate入门学习二" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/28/Hibernate入门学习二/" class="article-date">
   <time datetime="2017-03-28T12:25:56.991Z" itemprop="datePublished">2017-03-28</time>
@@ -77,8 +85,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/28/Hibernate入门学习二/">Hibernate入门学习二</a>
+    <h1 class="article-title" itemprop="name">
+      Hibernate入门学习二
     </h1>
   
 
@@ -185,213 +193,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-Hibernate一级缓存" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/28/Hibernate一级缓存/" class="article-date">
-  <time datetime="2017-03-28T11:59:53.002Z" itemprop="datePublished">2017-03-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/28/Hibernate一级缓存/">Hibernate一级缓存</a>
-    </h1>
+    <a href="/2017/03/28/Hibernate一级缓存/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hibernate一级缓存</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>标签 ： Hibernate 一级缓存</p>
-<hr>
-<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>Hibernate中也存在缓存，Hibernate中存在的缓存也是用来提高效率的<br>Hibernate中存在两种缓存：</p>
-<ol>
-<li>线程级别的缓存：Session缓存</li>
-<li>进程级别的缓存： Hibernate二级缓存</li>
-</ol>
-<p>session缓存：就是session对象中存在的缓存，缓存中存在的是（持久化）对象</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">      Session session = HibernateUtils.openSession();</div><div class="line">session.beginTransaction();</div><div class="line">//------------------------------------------------</div><div class="line">User u1 = (User) session.get(User.class, 1);</div><div class="line">// 发送select语句,从数据库取出记录.并封装成对象</div><div class="line">   // 持久化状态对象=&gt; 存到缓存中</div><div class="line">User u2 = (User) session.get(User.class, 1);//再次查询时,会从缓存中查找,不会发送select</div><div class="line">User u3 = (User) session.get(User.class, 1);//再次查询时,会从缓存中查找,不会发送select</div><div class="line">System.out.println(u1==u2);//<span class="literal">true</span></div><div class="line">System.out.println(u1==u3);//<span class="literal">true</span></div><div class="line">//------------------------------------------------</div><div class="line">session.getTransaction().commit();</div><div class="line">session.close(); // 游离状态</div></pre></td></tr></table></figure>
-<h3 id="一级缓存，对象快照"><a href="#一级缓存，对象快照" class="headerlink" title="一级缓存，对象快照"></a>一级缓存，对象快照</h3><h4 id="缓存中的快照"><a href="#缓存中的快照" class="headerlink" title="缓存中的快照"></a>缓存中的快照</h4><p>在从数据库中取得数据时，会将数据一式两份，一份作为缓存中的对象，一份作为快照（快照与数据库中保持一致），在session提交时作为对比</p>
-<h4 id="持久化状态"><a href="#持久化状态" class="headerlink" title="持久化状态"></a>持久化状态</h4><p>本质就是存在缓存中的对象，就是持久化状态</p>
-<h4 id="session缓存的细节问题"><a href="#session缓存的细节问题" class="headerlink" title="session缓存的细节问题"></a>session缓存的细节问题</h4><p>save()方法：<br>来自于Hibernate<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">      User u = new User();</div><div class="line">u.setName(<span class="string">"张三"</span>);</div><div class="line">session.save(u); //insert语句被打印=&gt; 目的:获得id</div></pre></td></tr></table></figure></p>
-<p>persist() :<br>来自于JPA接口</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate一级缓存/" data-id="cj0thkzua0000n8txqbx32iu8" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-Hibernate对象状态" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/28/Hibernate对象状态/" class="article-date">
-  <time datetime="2017-03-28T11:54:09.938Z" itemprop="datePublished">2017-03-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/28/Hibernate对象状态/">Hibernate对象状态</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Hibernate对象状态"><a href="#Hibernate对象状态" class="headerlink" title="Hibernate对象状态"></a>Hibernate对象状态</h1><p>标签（空格分隔）： Hibernate 对象状态</p>
-<hr>
-<p>Hibernate中的对象状态有三种：</p>
-<h2 id="瞬时态-临时态"><a href="#瞬时态-临时态" class="headerlink" title="瞬时态/临时态"></a>瞬时态/临时态</h2><ol>
-<li>没有与Hibernate产生关联</li>
-<li>与数据库中的记录没有产生关联</li>
-</ol>
-<h2 id="持久态"><a href="#持久态" class="headerlink" title="持久态"></a>持久态</h2><ol>
-<li>与Hibernate有关联</li>
-<li>对象有ID</li>
-</ol>
-<h2 id="游离态"><a href="#游离态" class="headerlink" title="游离态"></a>游离态</h2><ol>
-<li>没有与Hibernate产生关联</li>
-<li>对象有ID</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">      Session session = HibernateUtils.openSession();</div><div class="line">session.beginTransaction();</div><div class="line">	</div><div class="line">User u = new User(); //瞬时状态</div><div class="line">u.setName(<span class="string">"tony"</span>);   //瞬时状态</div><div class="line">u.setPassword(<span class="string">"132"</span>);//瞬时状态</div><div class="line">session.save(u);//持久状态</div><div class="line">//事务提交时，会把持久化状态对象同步到数据库中</div><div class="line">session.getTransaction().commit();//持久状态</div><div class="line">session.close();//游离状态</div></pre></td></tr></table></figure>
-<p>当主键自增时：<br>通过debug发现save()方法仅是获得id,在commit处才会insert</p>
-<p>当increment时:<br>select max(id)</p>
-<p>当assigned时：<br>需要手动指定主键，不指定将会报错</p>
-<h3 id="三种状态的作用"><a href="#三种状态的作用" class="headerlink" title="三种状态的作用"></a>三种状态的作用</h3><p>持久状态，我恶魔你使用Hibernate主要是为了持久化我们的数据，对于对象的状态，我们期望我们需要同步到数据库的数据，都被转换成持久化状态</p>
-<p>持久化状态的特点：Hibernate会自动将持久化状态对象的变化同步到数据库中</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj0thkzvt0003n8txcfh6fjeq" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Hibernate入门" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/26/Hibernate入门/" class="article-date">
-  <time datetime="2017-03-26T03:10:53.305Z" itemprop="datePublished">2017-03-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/26/Hibernate入门/">Hibernate入门</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>date: 2017-03-25 15:14:21</p>
-<h1 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h1><h2 id="sample1"><a href="#sample1" class="headerlink" title="sample1"></a>sample1</h2><h3 id="三层框架"><a href="#三层框架" class="headerlink" title="三层框架"></a>三层框架</h3><p>WEB        Service       Dao</p>
-<p>Servlet                  JDBC<br>   |                      |<br>Struts2               Hibernate</p>
-<p>Spring管理每一个架构层</p>
-<p>Struts2 架构最简单（<strong>源码相对简单</strong>）<br>Hibernate 架构最复杂，使用以及思想都很简单</p>
-<h3 id="ORM框架"><a href="#ORM框架" class="headerlink" title="ORM框架"></a>ORM框架</h3><p>ORM Object Relational Mapping 对象关系映射<br>O：对象<br>R：关系（表）<br>M：映射</p>
-<p>Orm元素—》配置文件</p>
-<p>常用的ORM框架：Hibernate  MyBatis</p>
-<h3 id="Hibernate的作用"><a href="#Hibernate的作用" class="headerlink" title="Hibernate的作用"></a>Hibernate的作用</h3><ul>
-<li>会使对数据库的操作变成对对象的操作</li>
-</ul>
-<h3 id="我们需要做的"><a href="#我们需要做的" class="headerlink" title="我们需要做的"></a>我们需要做的</h3><ul>
-<li>自动生成sql语句</li>
-<li>配置对象和表的对应关系</li>
-<li>喝酒撒结婚</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/26/Hibernate入门/" data-id="cj0thkzvr0002n8txf5e1ngez" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/25/hello-world/" class="article-date">
-  <time datetime="2017-03-25T06:32:43.303Z" itemprop="datePublished">2017-03-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/25/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/25/hello-world/" data-id="cj0thkzvp0001n8txv6z4xarj" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 </section>
         
