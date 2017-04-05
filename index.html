@@ -67,26 +67,17 @@
     <article id="post-Spring框架学习一" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/04/05/Spring框架学习一/" class="article-date">
-  <time datetime="2017-04-05T04:22:06.611Z" itemprop="datePublished">2017-04-05</time>
+  <time datetime="2017-04-05T14:43:27.865Z" itemprop="datePublished">2017-04-05</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/05/Spring框架学习一/">Spring框架学习一</a>
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>标签 ： Spring</p>
+        <hr>
+<h2 id="title-Spring框架学习一"><a href="#title-Spring框架学习一" class="headerlink" title="title : Spring框架学习一"></a>title : Spring框架学习一</h2><p>标签 ： Spring</p>
 <hr>
 <p>spring是J2EE应用程序框架，是轻量级的IoC和AOP的容器框架，主要是针对JavaBean的生命周期进行管理的轻量级容器。</p>
 <p>spring的Core包括四个部分：bean core context expression<br>这是spring中重要的部分</p>
@@ -136,11 +127,78 @@
 <p>  <strong>FileSystemXmlApplication</strong>用于加载指定盘符下的xml<br>加载xml运行时位置—&gt;/WEB-INF/…xml </p>
 </li>
 </ul>
+<h2 id="四-装配Bean基于XML"><a href="#四-装配Bean基于XML" class="headerlink" title="四 . 装配Bean基于XML"></a>四 . 装配Bean基于XML</h2><h3 id="实例化方式"><a href="#实例化方式" class="headerlink" title="实例化方式"></a>实例化方式</h3><p>3中实例化方式：<strong>默认构造</strong>、<strong>静态工厂</strong>、<strong>实例工厂</strong></p>
+<h4 id="1-默认构造"><a href="#1-默认构造" class="headerlink" title="1. 默认构造"></a>1. 默认构造</h4><p><code>&lt;bean id=&quot;&quot; class=&quot;&quot;&gt;</code> 必须提供默认构造</p>
+<h4 id="2-静态工厂"><a href="#2-静态工厂" class="headerlink" title="2. 静态工厂"></a>2. 静态工厂</h4><p>常用于spring整合其他框架（工具）<br>静态工厂：用于生产实例对象，所有的方法必须是static的<br><code>&lt;bean id=&quot;&quot; class=&quot;工厂全限定类名&quot; factory-method=&quot;静态方法&quot;&gt;</code></p>
+<p><strong>实例：</strong><br>创建UserService.java and UserServiceImpl.java</p>
+<p>工厂类MyBeanFactory.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> UserService <span class="title">createService</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> UserServiceImpl();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>spring配置文件applicationContext.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></div><div class="line">						   http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;</div><div class="line">	<span class="comment">&lt;!-- 将静态工厂创建的实例交予spring --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userService"</span> <span class="attr">class</span>=<span class="string">"com.yao.c_inject.b_static_factory.MyBeanFactory"</span> <span class="attr">factory-method</span>=<span class="string">"createService"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>测试类TestStaticFactory.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestStaticFactory</span> </span>&#123;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demo1</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">//自定义工厂</span></div><div class="line">		UserService userService = MyBeanFactory.createService();</div><div class="line">		userService.addUser();</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demo2</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">//自定义工厂</span></div><div class="line">		String xmlPath = <span class="string">"com/yao/c_inject/b_static_factory/applicationContext.xml"</span>; </div><div class="line">		org.springframework.context.ApplicationContext applicationContext = <span class="keyword">new</span> ClassPathXmlApplicationContext(xmlPath);</div><div class="line">		<span class="comment">//获得内容-----不需要new，都是从spring容器中获得</span></div><div class="line">		UserService userService = applicationContext.getBean(<span class="string">"userService"</span>,UserService.class);</div><div class="line">		userService.addUser();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-实例工厂"><a href="#3-实例工厂" class="headerlink" title="3. 实例工厂"></a>3. 实例工厂</h4><p>必须先有工厂实例，通过实例对象创建对象。提供所有的方法都是<strong>“非静态”</strong>的。</p>
+<p><strong>实例：</strong><br>创建UserService.java and UserServiceImpl.java</p>
+<p>工厂类MyBeanFactory.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> UserService <span class="title">createService</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> UserServiceImpl();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>spring配置文件applicationContext.xml<br>在配置时，可以对象测试类的demo1()来对应着完成配置。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></div><div class="line">						   http://www.springframework.org/schema/beans/spring-beans.xsd "&gt;</div><div class="line"></div><div class="line">	<span class="comment">&lt;!-- 创建工厂实例 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"myBeanFactory"</span> <span class="attr">class</span>=<span class="string">"com.yao.c_inject.c_factory.MyBeanFactory"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!-- 获得userService --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userService"</span> <span class="attr">factory-bean</span>=<span class="string">"myBeanFactory"</span> <span class="attr">factory-method</span>=<span class="string">"createService"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>测试类TestStaticFactory.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestFactory</span> </span>&#123;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demo1</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">//自定义实例工厂</span></div><div class="line">		<span class="comment">//1.创建工厂</span></div><div class="line">		MyBeanFactory myBeanFactory = <span class="keyword">new</span> MyBeanFactory();</div><div class="line">		<span class="comment">//2.通过工厂实例，获得对象</span></div><div class="line">		UserService userService = myBeanFactory.createService();</div><div class="line">		userService.addUser();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demo2</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">//自定义工厂</span></div><div class="line">		String xmlPath = <span class="string">"com/yao/c_inject/c_factory/applicationContext.xml"</span>; </div><div class="line">		org.springframework.context.ApplicationContext applicationContext = <span class="keyword">new</span> ClassPathXmlApplicationContext(xmlPath);</div><div class="line">		<span class="comment">//获得内容-----不需要new，都是从spring容器中获得</span></div><div class="line">		UserService userService = applicationContext.getBean(<span class="string">"userService"</span>,UserService.class);</div><div class="line">		userService.addUser();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Bean种类"><a href="#Bean种类" class="headerlink" title="Bean种类"></a>Bean种类</h3><ul>
+<li><p>普通bean：之前操作的都是普通bean。<bean id="" class="A"> ，spring直接创建A实例，并返回</bean></p>
+</li>
+<li><p>FactoryBean：是一个特殊的bean，具有工厂生成对象能力，只能生成特定的对象。</p>
+</li>
+</ul>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><ul>
+<li><p>作用域：用于确定spring创建的实例的个数</p>
+</li>
+<li><p>取值：<br>singleton 单例 ， 默认值<br>prototype 多例，每执行一次getBean将获得一个实例。 </p>
+</li>
+<li><p>配置信息<br><code>&lt;bean id=&quot;&quot; class=&quot;&quot;  scope=&quot;&quot;&gt;</code></p>
+</li>
+</ul>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><h4 id="1-初始化和销毁"><a href="#1-初始化和销毁" class="headerlink" title="1.初始化和销毁"></a>1.初始化和销毁</h4><ul>
+<li><p>目标方法执行前和执行后，将进行初始化或销毁<br><code>&lt;bean id=&quot;&quot; class=&quot;&quot; init-method=&quot;初始化方法名&quot; destroy-method=&quot;销毁的方法名称&quot;&gt;</code></p>
+</li>
+<li><p>init-method 用于配置初始化方法,准备数据等</p>
+</li>
+<li><p>destroy-method 用于配置销毁方法,清理资源等</p>
+</li>
+</ul>
+<h4 id="2-BeanPostProcessor后处理Bean"><a href="#2-BeanPostProcessor后处理Bean" class="headerlink" title="2.BeanPostProcessor后处理Bean"></a>2.BeanPostProcessor后处理Bean</h4><ul>
+<li><p>spring提供一种机制，只要实现此接口BeanPostProcessor，并将实现类提供给spring容器，spring容器将自动执行，在初始化方法钱执行before(),在初始化方法后执行after()</p>
+</li>
+<li><p>spring提供工厂勾子，用于修改实例对象，可以生成代理对象，是aop底层。（有了代理对象，就有AOP）</p>
+</li>
+</ul>
+<p>模拟：<br>A a =new A();<br>a = B.before(a)            –&gt;将a的实例对象传递给后处理bean，可以生成代理对象并返回。<br>a.init();<br>a = B.after(a);          //生成代理对象，目的在目标方法前后执行（例如：开启事务、提交事务）<br>a.addUser();<br>a.destroy()</p>
+<p>若将代理对象想在before()处生成，代理对象就只能调用接口中的addUser()方法，而不能调用初始化init()方法。因此将代理对象在after处生成。</p>
+<p>UserService.java不变</p>
+<p>UserServiceImpl.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"e_lifecycle add user"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myInit</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"初始化"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myDestroy</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"销毁"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>spring配置文件applicationContext.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></div><div class="line">       					   http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;</div><div class="line">	<span class="comment">&lt;!--  </span></div><div class="line">		init-method 用于配置初始化方法,准备数据等</div><div class="line">		destroy-method 用于配置销毁方法,清理资源等</div><div class="line">	--&gt;</div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userService"</span> <span class="attr">class</span>=<span class="string">"com.yao.e_lifecycle.UserServiceImpl"</span> </span></div><div class="line">		<span class="attr">init-method</span>=<span class="string">"myInit"</span> <span class="attr">destroy-method</span>=<span class="string">"myDestroy"</span> &gt;<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!-- 将后处理的实现类注册给spring --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.yao.e_lifecycle.MyBeanPostProcessor"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>MyBeanPostProcessor.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBeanPostProcessor</span> <span class="keyword">implements</span> <span class="title">BeanPostProcessor</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">postProcessBeforeInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">		System.out.println(<span class="string">"前方法 ： "</span> + beanName);</div><div class="line">		<span class="keyword">return</span> bean;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">postProcessAfterInitialization</span><span class="params">(<span class="keyword">final</span> Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">		System.out.println(<span class="string">"后方法 ： "</span> + beanName);</div><div class="line">		<span class="comment">// bean    目标对象</span></div><div class="line">		<span class="comment">// 生成jdk 代理</span></div><div class="line">		<span class="keyword">return</span> Proxy.newProxyInstance(</div><div class="line">					MyBeanPostProcessor.class.getClassLoader(), </div><div class="line">					bean.getClass().getInterfaces(), </div><div class="line">					<span class="keyword">new</span> InvocationHandler()&#123;</div><div class="line">						<span class="meta">@Override</span></div><div class="line">						<span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">							</div><div class="line">							System.out.println(<span class="string">"------开启事务"</span>);</div><div class="line">							</div><div class="line">							<span class="comment">//执行目标方法</span></div><div class="line">							Object obj = method.invoke(bean, args);</div><div class="line">							</div><div class="line">							System.out.println(<span class="string">"------提交事务"</span>);</div><div class="line">							<span class="keyword">return</span> obj;</div><div class="line">						&#125;&#125;);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>测试类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCycle</span> </span>&#123;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demo1</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">		<span class="comment">//spring 工厂</span></div><div class="line">		String xmlPath = <span class="string">"com/yao/e_lifecycle/applicationContext.xml"</span>;</div><div class="line">		ClassPathXmlApplicationContext applicationContext = <span class="keyword">new</span> ClassPathXmlApplicationContext(xmlPath);</div><div class="line">		UserService userService = (UserService) applicationContext.getBean(<span class="string">"userService"</span>);</div><div class="line">		userService.addUser();</div><div class="line">		<span class="comment">//要求：1.容器必须close，销毁方法执行; 2.必须是单例的</span></div><div class="line">		<span class="comment">//applicationContext.getClass().getMethod("close").invoke(applicationContext);</span></div><div class="line">		<span class="comment">// * 此方法接口中没有定义，实现类提供</span></div><div class="line">		applicationContext.close();</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<p><strong>打印结果：</strong><br>前方法 ： userService<br>初始化<br>后方法 ： userService<br>——开启事务<br>e_lifecycle add user<br>——提交事务<br>销毁</p>
+<h3 id="属性依赖注入"><a href="#属性依赖注入" class="headerlink" title="属性依赖注入"></a>属性依赖注入</h3><ol>
+<li><p>构造方法</p>
+</li>
+<li><p>setter方法</p>
+</li>
+<li><p>P命令空间(了解)</p>
+</li>
+<li><p>spEL(了解)</p>
+</li>
+</ol>
+<p>5.集合注入 </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/05/Spring框架学习一/" data-id="cj14gw7pt0004g8txfgldhn6g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/05/Spring框架学习一/" data-id="cj1531idd0009hstxbx0j5y3z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -227,7 +285,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj14gw7qn000ag8txqmpvxukk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj1531i7i0000hstx0srjob1v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -268,7 +326,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj14gw7py0007g8tx0bnk5qmo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj1531iam0002hstxsbsdmb7d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -316,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj14gw7q40009g8txl5g0z0o9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj1531ict0007hstx5jerxn7v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -354,7 +412,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj14gw7q30008g8txgb5q2ai0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj1531ibz0005hstxge66nxj5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -436,7 +494,7 @@ static{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj14gw7pk0000g8tx2a9z0dil" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj1531ibf0004hstxwoevqgos" class="article-share-link">Share</a>
       
       
     </footer>
@@ -573,7 +631,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj14gw7ps0003g8txz0646wvy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj1531ida0008hstxch825fux" class="article-share-link">Share</a>
       
       
     </footer>
@@ -649,7 +707,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj14gw7pp0001g8txzyh23j6p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj1531iai0001hstxx2f2c0t9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -774,7 +832,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj14gw7pq0002g8txv7ctdhex" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj1531ibd0003hstxq4f4a9n8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -831,7 +889,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj14gw7pv0005g8txnu43zmgb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj1531iek000ahstx1lhsuwxk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -875,7 +933,7 @@ false : 与get一致，会理解加载数据
       <ul>
         
           <li>
-            <a href="/2017/04/05/Spring框架学习一/">Spring框架学习一</a>
+            <a href="/2017/04/05/Spring框架学习一/">(no title)</a>
           </li>
         
           <li>
