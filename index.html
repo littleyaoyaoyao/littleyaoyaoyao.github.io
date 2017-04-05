@@ -64,10 +64,96 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Spring框架学习一" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/05/Spring框架学习一/" class="article-date">
+  <time datetime="2017-04-05T04:22:06.611Z" itemprop="datePublished">2017-04-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/05/Spring框架学习一/">Spring框架学习一</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： Spring</p>
+<hr>
+<p>spring是J2EE应用程序框架，是轻量级的IoC和AOP的容器框架，主要是针对JavaBean的生命周期进行管理的轻量级容器。</p>
+<p>spring的Core包括四个部分：bean core context expression<br>这是spring中重要的部分</p>
+<h2 id="一-IoC"><a href="#一-IoC" class="headerlink" title="一 . IoC"></a>一 . IoC</h2><p>下面我们来通过一个简单的IoC案例来对其有一个初步的了解。</p>
+<h4 id="1-导入jar包"><a href="#1-导入jar包" class="headerlink" title="1. 导入jar包"></a>1. 导入jar包</h4><h4 id="2-目标类"><a href="#2-目标类" class="headerlink" title="2. 目标类"></a>2. 目标类</h4><pre><code>1. 提供UserService接口和实现类
+
+2. 获得UserService实现类的实例
+</code></pre><p>现在由spring来创建实例对象，即不再是由开发者来new对象，这就是IoC控制反转（Inverse of Control）。此后需要实例对象时，从spring工厂（容器）中获得，需要将实现类的全限定名称配置到xml中。</p>
+<p>UserService.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>UserServiceImpl.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"a_IoC add User"</span>);</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-配置文件"><a href="#3-配置文件" class="headerlink" title="3. 配置文件"></a>3. 配置文件</h4><p>配置文件的位置： 任意位置，但是在开发中一般在classpath下<br>配置文件的名称： 任意名称，但是在开发中常用applicationContext.xml\<br>配置文件的内容： 添加schema约束，约束文件的位置 —- spring-framework-3.2.0.RELEASE-dist\spring-framework-3.2.0.RELEASE\docs\spring-framework-reference\html\xsd-config.html</p>
+<p>applicationContext.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></div><div class="line">						   http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;</div><div class="line"></div><div class="line">	<span class="comment">&lt;!-- 配置service --&gt;</span></div><div class="line">	<span class="comment">&lt;!-- &lt;bean&gt;配置需要创建的对象</span></div><div class="line">	        id:用于之后从spring容器获得实例时使用</div><div class="line">	        class:需要创建实例的全限定类名&gt;</div><div class="line">	        </div><div class="line">	&lt;bean id="UserService" class="com.yao.a_IoC.UserServiceImpl"&gt;&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<h4 id="4-测试"><a href="#4-测试" class="headerlink" title="4. 测试"></a>4. 测试</h4><p>test.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demo1</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">//之前开发</span></div><div class="line">		<span class="comment">/*UserService userService = new UserServiceImpl();</span></div><div class="line">		userService.addUser();*/</div><div class="line">		</div><div class="line">		<span class="comment">//从spring容器中获得</span></div><div class="line">		<span class="comment">//获得容器</span></div><div class="line">		String xmlPath = <span class="string">"com/yao/a_IoC/applicationContext.xml"</span>; </div><div class="line">		org.springframework.context.ApplicationContext applicationContext = <span class="keyword">new</span> ClassPathXmlApplicationContext(xmlPath);</div><div class="line">		<span class="comment">//获得内容-----不需要new，都是从spring容器中获得</span></div><div class="line">		UserService userService = (UserService) applicationContext.getBean(<span class="string">"UserService"</span>);</div><div class="line">		userService.addUser();</div><div class="line">		</div><div class="line">		</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h2 id="二-DI"><a href="#二-DI" class="headerlink" title="二 . DI"></a>二 . DI</h2><p>依赖 ： 一个对象需要使用另一个对象<br>注入 ： 通过setter方法进行另一个对象实例设置</p>
+<p>模拟sprig执行过程:</p>
+<ul>
+<li>创建service实例：UserService userService = new UserServiceImpl();   //IoC  <bean></bean></li>
+<li>创建dao实例：UserDao userDao = new UserDaoImpl();                   //IoC</li>
+<li>将dao设置给service：userService.setUserDao(userDao);                //DI   <property></property></li>
+</ul>
+<p>spring中service实现类使用dao接口，但是不知道具体的实现类</p>
+<ul>
+<li>private UserDao userDao;</li>
+<li>setter方法</li>
+</ul>
+<h4 id="1-目标类"><a href="#1-目标类" class="headerlink" title="1.目标类"></a>1.目标类</h4><p>创建Service接口和实现类<br>创建Dao接口和实现类<br>将dao和service配置到xml中<br>使用api测试</p>
+<ul>
+<li>dao</li>
+</ul>
+<p>UserDao.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDao</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>UserDaoImpl.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDaoImpl</span> <span class="keyword">implements</span> <span class="title">UserDao</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span> </span>&#123;</div><div class="line">			System.out.println(<span class="string">"DI ADD USER"</span>);</div><div class="line">		&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>service</li>
+</ul>
+<p>UserService.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>UserServiceImpl.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span> </span>&#123;</div><div class="line">	<span class="comment">//之前的方式：UserDao userDao = new UserDaoImpl();</span></div><div class="line">	<span class="keyword">private</span> UserDao userDao;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserDao</span><span class="params">(UserDao userDao)</span></span>&#123;</div><div class="line">		<span class="keyword">this</span>.userDao = userDao;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">this</span>.userDao.save();</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="2-配置文件"><a href="#2-配置文件" class="headerlink" title="2.配置文件"></a>2.配置文件</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></div><div class="line">						   http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;</div><div class="line"><span class="comment">&lt;!-- 模拟sprig执行过程:</span></div><div class="line">- 创建service实例：UserService userService = new UserServiceImpl();   //IoC  &lt;bean&gt;</div><div class="line">- 创建dao实例：UserDao userDao = new UserDaoImpl();                   //IoC</div><div class="line">- 将dao设置给service：userService.setUserDao(userDao);                //DI   &lt;property&gt;</div><div class="line">	 </div><div class="line">	 &lt;property&gt; 用于进行属性注入</div><div class="line">	 		name  bena的属性名，通过setter方法来获得</div><div class="line">	 		ref   另一个bean的id值的引用</div><div class="line">	 --&gt;</div><div class="line">	 <span class="comment">&lt;!-- 创建service --&gt;</span></div><div class="line">	 <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userService"</span> <span class="attr">class</span>=<span class="string">"com.yao.b_DI.UserServiceImpl"</span>&gt;</span></div><div class="line">	 	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"userDao"</span> <span class="attr">ref</span>=<span class="string">"userDao"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">	 <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	 <span class="comment">&lt;!-- 创建dao --&gt;</span></div><div class="line">	 <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userDao"</span> <span class="attr">class</span>=<span class="string">"com.yao.b_DI.UserDaoImpl"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="3-测试"><a href="#3-测试" class="headerlink" title="3.测试"></a>3.测试</h4><h2 id="三-核心API"><a href="#三-核心API" class="headerlink" title="三 . 核心API"></a>三 . 核心API</h2><ul>
+<li>BeanFactory<br>这是一个工厂，用于生成任意bean。采用延时加载，第一次getBean时才会进行初始化Bean。</li>
+<li><p>ApplicationContext<br>是BeanFactory的子接口，功能更强大。配置文件一加载，对象就实例化。</p>
+<p>  <strong>ClassPathXmlApplicationContext</strong>用于加载classpath(类路径、src)下的指定的xml。<br>加载xml运行时位置—&gt;/WEB-INF/classes/…xml</p>
+<p>  <strong>FileSystemXmlApplication</strong>用于加载指定盘符下的xml<br>加载xml运行时位置—&gt;/WEB-INF/…xml </p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/05/Spring框架学习一/" data-id="cj14gw7pt0004g8txfgldhn6g" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Hibernate 二级缓存" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/04/02/Hibernate 二级缓存/" class="article-date">
-  <time datetime="2017-04-02T01:57:05.474Z" itemprop="datePublished">2017-04-02</time>
+  <time datetime="2017-04-02T01:58:26.972Z" itemprop="datePublished">2017-04-02</time>
 </a>
     
   </div>
@@ -141,7 +227,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj101eujg00036gtx6bxqm2ij" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj14gw7qn000ag8txqmpvxukk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -182,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj101eujc00016gtxavg5l2w0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj14gw7py0007g8tx0bnk5qmo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -230,7 +316,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj101eujr00086gtxkproo4r2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj14gw7q40009g8txl5g0z0o9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -268,7 +354,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj101eujm00076gtxlnjxsyca" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj14gw7q30008g8txgb5q2ai0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -350,7 +436,7 @@ static{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj101euje00026gtx1iltfqmo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj14gw7pk0000g8tx2a9z0dil" class="article-share-link">Share</a>
       
       
     </footer>
@@ -487,7 +573,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj101eujj00056gtxv31wl9hz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj14gw7ps0003g8txz0646wvy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -563,7 +649,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj101euj700006gtxhae6grg5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj14gw7pp0001g8txzyh23j6p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -688,7 +774,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj101eujh00046gtxt8f02qxy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj14gw7pq0002g8txv7ctdhex" class="article-share-link">Share</a>
       
       
     </footer>
@@ -745,52 +831,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj101eujl00066gtx35hyf5dr" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/25/hello-world/" class="article-date">
-  <time datetime="2017-03-25T06:32:43.303Z" itemprop="datePublished">2017-03-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/25/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/25/hello-world/" data-id="cj101eujs00096gtxo01ahq2f" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj14gw7pv0005g8txnu43zmgb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -801,6 +842,10 @@ false : 与get一致，会理解加载数据
 
   
 
+
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+  </nav>
 </section>
         
           <aside id="sidebar">
@@ -830,6 +875,10 @@ false : 与get一致，会理解加载数据
       <ul>
         
           <li>
+            <a href="/2017/04/05/Spring框架学习一/">Spring框架学习一</a>
+          </li>
+        
+          <li>
             <a href="/2017/04/02/Hibernate 二级缓存/">Hibernate 二级缓存</a>
           </li>
         
@@ -843,10 +892,6 @@ false : 与get一致，会理解加载数据
         
           <li>
             <a href="/2017/03/31/Struts2未登录拦截和权限控制/">Struts2未登录拦截和权限控制</a>
-          </li>
-        
-          <li>
-            <a href="/2017/03/31/Hibernate入门/">Hibernate入门</a>
           </li>
         
       </ul>
