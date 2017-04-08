@@ -64,6 +64,63 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Hibernate对象状态" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/28/Hibernate对象状态/" class="article-date">
+  <time datetime="2017-03-28T11:54:09.938Z" itemprop="datePublished">2017-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/Hibernate对象状态/">Hibernate对象状态</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hibernate对象状态"><a href="#Hibernate对象状态" class="headerlink" title="Hibernate对象状态"></a>Hibernate对象状态</h1><p>标签（空格分隔）： Hibernate 对象状态</p>
+<hr>
+<p>Hibernate中的对象状态有三种：</p>
+<h2 id="瞬时态-临时态"><a href="#瞬时态-临时态" class="headerlink" title="瞬时态/临时态"></a>瞬时态/临时态</h2><ol>
+<li>没有与Hibernate产生关联</li>
+<li>与数据库中的记录没有产生关联</li>
+</ol>
+<h2 id="持久态"><a href="#持久态" class="headerlink" title="持久态"></a>持久态</h2><ol>
+<li>与Hibernate有关联</li>
+<li>对象有ID</li>
+</ol>
+<h2 id="游离态"><a href="#游离态" class="headerlink" title="游离态"></a>游离态</h2><ol>
+<li>没有与Hibernate产生关联</li>
+<li>对象有ID</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">      Session session = HibernateUtils.openSession();</div><div class="line">session.beginTransaction();</div><div class="line">	</div><div class="line">User u = new User(); //瞬时状态</div><div class="line">u.setName(<span class="string">"tony"</span>);   //瞬时状态</div><div class="line">u.setPassword(<span class="string">"132"</span>);//瞬时状态</div><div class="line">session.save(u);//持久状态</div><div class="line">//事务提交时，会把持久化状态对象同步到数据库中</div><div class="line">session.getTransaction().commit();//持久状态</div><div class="line">session.close();//游离状态</div></pre></td></tr></table></figure>
+<p>当主键自增时：<br>通过debug发现save()方法仅是获得id,在commit处才会insert</p>
+<p>当increment时:<br>select max(id)</p>
+<p>当assigned时：<br>需要手动指定主键，不指定将会报错</p>
+<h3 id="三种状态的作用"><a href="#三种状态的作用" class="headerlink" title="三种状态的作用"></a>三种状态的作用</h3><p>持久状态，我恶魔你使用Hibernate主要是为了持久化我们的数据，对于对象的状态，我们期望我们需要同步到数据库的数据，都被转换成持久化状态</p>
+<p>持久化状态的特点：Hibernate会自动将持久化状态对象的变化同步到数据库中</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj18xrsmg0007gktxuovy8ptp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/25/hello-world/" class="article-date">
@@ -99,7 +156,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/25/hello-world/" data-id="cj166plu7000ao4tx7s2guvl7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/25/hello-world/" data-id="cj18xrsmp0008gktxdgs0xt4n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -143,6 +200,10 @@
       <ul>
         
           <li>
+            <a href="/2017/04/08/spring框架学习二/">spring框架学习二</a>
+          </li>
+        
+          <li>
             <a href="/2017/04/06/Spring框架学习一/">(no title)</a>
           </li>
         
@@ -156,10 +217,6 @@
         
           <li>
             <a href="/2017/04/01/log4j/">log4j</a>
-          </li>
-        
-          <li>
-            <a href="/2017/03/31/Struts2未登录拦截和权限控制/">Struts2未登录拦截和权限控制</a>
           </li>
         
       </ul>

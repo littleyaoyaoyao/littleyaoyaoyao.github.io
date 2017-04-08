@@ -64,6 +64,73 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-spring框架学习二" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/08/spring框架学习二/" class="article-date">
+  <time datetime="2017-04-08T07:24:57.990Z" itemprop="datePublished">2017-04-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/08/spring框架学习二/">spring框架学习二</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： spring </p>
+<hr>
+<h2 id="一-AOP"><a href="#一-AOP" class="headerlink" title="一 . AOP"></a>一 . AOP</h2><h3 id="1-AOP介绍"><a href="#1-AOP介绍" class="headerlink" title="1. AOP介绍"></a>1. AOP介绍</h3><p>aop底层将采用代理机制进行实现<br>接口 + 实现类：spring采用jdk的动态代理Proxy<br>实现类：spring采用cglib字节码增强</p>
+<h4 id="AOP术语"><a href="#AOP术语" class="headerlink" title="AOP术语"></a><strong>AOP术语</strong></h4><ol>
+<li><p>target：目标类，需要被代理的类。例如：UserSerVice</p>
+</li>
+<li><p>Joinpoint：指那些可能被拦截的方法，例如:所有方法</p>
+</li>
+<li><p>PointCut : 已经被增强的连接点。例如：addUser()</p>
+</li>
+<li><p>advice : 通知，增强代码。例如：after()、befor()</p>
+</li>
+<li><p>Weaving ： 织入，把增强advice应用到目标对象target来创建新的代理对象proxy的过程</p>
+</li>
+<li><p>proxy ： 代理类</p>
+</li>
+<li><p>Aspect : 切入点pointcut和通知advice的结合</p>
+</li>
+</ol>
+<h3 id="2-手动方式"><a href="#2-手动方式" class="headerlink" title="2. 手动方式"></a>2. 手动方式</h3><h4 id="2-1-JDK的动态代理"><a href="#2-1-JDK的动态代理" class="headerlink" title="2.1 JDK的动态代理"></a>2.1 JDK的动态代理</h4><p>JDK动态代理对“装饰者”设计模式简化。使用前提：必须有接口<br>目标类：接口 + 实现类<br>切面类：用于存放通知<br>工厂类：编写工厂生成代理<br>测试 : </p>
+<p>UserService.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">()</span></span>;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateUser</span><span class="params">()</span></span>;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteUser</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>UserServiceImpl.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"addUser"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateUser</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"updateUser"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteUser</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">		System.out.println(<span class="string">"adeleteUser"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>MyAspect.java<br>切面类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAspect</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"假设开启事务"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"假设关闭事务"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>MyBeanFactory.java<br>工厂类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBeanFactory</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> UserService <span class="title">createService</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">//1 目标类</span></div><div class="line">		<span class="keyword">final</span> UserService userService = <span class="keyword">new</span> UserServiceImpl();</div><div class="line">		<span class="comment">//2切面类</span></div><div class="line">		<span class="keyword">final</span> MyAspect myAspect = <span class="keyword">new</span> MyAspect();</div><div class="line">		<span class="comment">/* 3 代理类：将目标类（切入点）和 切面类（通知） 结合 --&gt; 切面</span></div><div class="line">		 * 	Proxy.newProxyInstance</div><div class="line">		 * 		参数1：loader ，类加载器，动态代理类 运行时创建，任何类都需要类加载器将其加载到内存。</div><div class="line">		 * 			一般情况：当前类.class.getClassLoader();</div><div class="line">		 * 					目标类实例.getClass().get...</div><div class="line">		 * 		参数2：Class[] interfaces 代理类需要实现的所有接口</div><div class="line">		 * 			方式1：目标类实例.getClass().getInterfaces()  ;注意：只能获得自己接口，不能获得父元素接口</div><div class="line">		 * 			方式2：new Class[]&#123;UserService.class&#125;   </div><div class="line">		 * 			例如：jdbc 驱动  --&gt; DriverManager  获得接口 Connection</div><div class="line">		 * 		参数3：InvocationHandler  处理类，接口，必须进行实现类，一般采用匿名内部</div><div class="line">		 * 			提供 invoke 方法，代理类的每一个方法执行时，都将调用一次invoke</div><div class="line">		 * 				参数31：Object proxy ：代理对象</div><div class="line">		 * 				参数32：Method method : 代理对象当前执行的方法的描述对象（反射）</div><div class="line">		 * 					执行方法名：method.getName()</div><div class="line">		 * 					执行方法：method.invoke(对象，实际参数)</div><div class="line">		 * 				参数33：Object[] args :方法实际参数</div><div class="line">		 * </div><div class="line">		 */</div><div class="line">		UserService proxService = (UserService)Proxy.newProxyInstance(</div><div class="line">								MyBeanFactory.class.getClassLoader(), </div><div class="line">								userService.getClass().getInterfaces(), </div><div class="line">								<span class="keyword">new</span> InvocationHandler() &#123;</div><div class="line">									</div><div class="line">									<span class="meta">@Override</span></div><div class="line">									<span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">										<span class="comment">//前执行</span></div><div class="line">										myAspect.before();</div><div class="line">										<span class="comment">//执行目标类的方法</span></div><div class="line">										Object obj = method.invoke(userService, args);</div><div class="line">										<span class="comment">//后执行</span></div><div class="line">										myAspect.after();</div><div class="line">										<span class="keyword">return</span> obj;</div><div class="line">									&#125;</div><div class="line">								&#125;);</div><div class="line">		<span class="keyword">return</span> proxService;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Test01.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test01</span> </span>&#123;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demo01</span><span class="params">()</span></span>&#123;</div><div class="line">		UserService userService = MyBeanFactory.createService();</div><div class="line">		userService.addUser();</div><div class="line">		userService.updateUser();</div><div class="line">		userService.deleteUser();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果：<br>假设开启事务<br>addUser<br>假设关闭事务<br>假设开启事务<br>updateUser<br>假设关闭事务<br>假设开启事务<br>deleteUser<br>假设关闭事务</p>
+<h4 id="2-2-CGLIB字节码增强"><a href="#2-2-CGLIB字节码增强" class="headerlink" title="2.2 CGLIB字节码增强"></a>2.2 CGLIB字节码增强</h4><h3 id="3-spring编写代理：半自动"><a href="#3-spring编写代理：半自动" class="headerlink" title="3. spring编写代理：半自动"></a>3. spring编写代理：半自动</h3><h3 id="4-spring-aop变成：全自动"><a href="#4-spring-aop变成：全自动" class="headerlink" title="4. spring aop变成：全自动"></a>4. spring aop变成：全自动</h3><h3 id="5-aspect"><a href="#5-aspect" class="headerlink" title="5. aspect"></a>5. aspect</h3><h2 id="二-JdbcTemplate"><a href="#二-JdbcTemplate" class="headerlink" title="二 . JdbcTemplate"></a>二 . JdbcTemplate</h2><h2 id="三-整合Junit"><a href="#三-整合Junit" class="headerlink" title="三 . 整合Junit"></a>三 . 整合Junit</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/08/spring框架学习二/" data-id="cj18xrsn8000bgktxsqnkt1fu" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Spring框架学习一" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/04/06/Spring框架学习一/" class="article-date">
@@ -230,7 +297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj166plu00007o4tx2nwoidh4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj18xrsme0006gktxiytr87dx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -317,7 +384,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj166pltr0001o4tx77hntwx6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj18xrsm40001gktx9627i5o4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -358,7 +425,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj166pltm0000o4txowfh1hoi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj18xrsm80003gktx0vov5psz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -406,7 +473,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj166plu50008o4tx1udz5x9q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj18xrsmt000agktxu6lao3z7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -444,7 +511,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj166plu60009o4txhre0o8px" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj18xrsmr0009gktxqjk04yul" class="article-share-link">Share</a>
       
       
     </footer>
@@ -526,7 +593,7 @@ static{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj166pltt0002o4txatzdae7j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj18xrsm60002gktxs02r4cvk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -663,7 +730,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj166pltx0005o4txi9rfo8qa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj18xrsmb0005gktxqm6g7tj9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -739,7 +806,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj166pltu0003o4txyk5ntvq5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj18xrsly0000gktxecz7p882" class="article-share-link">Share</a>
       
       
     </footer>
@@ -864,64 +931,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj166plu00006o4txs7jd5g4i" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Hibernate对象状态" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/28/Hibernate对象状态/" class="article-date">
-  <time datetime="2017-03-28T11:54:09.938Z" itemprop="datePublished">2017-03-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/28/Hibernate对象状态/">Hibernate对象状态</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Hibernate对象状态"><a href="#Hibernate对象状态" class="headerlink" title="Hibernate对象状态"></a>Hibernate对象状态</h1><p>标签（空格分隔）： Hibernate 对象状态</p>
-<hr>
-<p>Hibernate中的对象状态有三种：</p>
-<h2 id="瞬时态-临时态"><a href="#瞬时态-临时态" class="headerlink" title="瞬时态/临时态"></a>瞬时态/临时态</h2><ol>
-<li>没有与Hibernate产生关联</li>
-<li>与数据库中的记录没有产生关联</li>
-</ol>
-<h2 id="持久态"><a href="#持久态" class="headerlink" title="持久态"></a>持久态</h2><ol>
-<li>与Hibernate有关联</li>
-<li>对象有ID</li>
-</ol>
-<h2 id="游离态"><a href="#游离态" class="headerlink" title="游离态"></a>游离态</h2><ol>
-<li>没有与Hibernate产生关联</li>
-<li>对象有ID</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">      Session session = HibernateUtils.openSession();</div><div class="line">session.beginTransaction();</div><div class="line">	</div><div class="line">User u = new User(); //瞬时状态</div><div class="line">u.setName(<span class="string">"tony"</span>);   //瞬时状态</div><div class="line">u.setPassword(<span class="string">"132"</span>);//瞬时状态</div><div class="line">session.save(u);//持久状态</div><div class="line">//事务提交时，会把持久化状态对象同步到数据库中</div><div class="line">session.getTransaction().commit();//持久状态</div><div class="line">session.close();//游离状态</div></pre></td></tr></table></figure>
-<p>当主键自增时：<br>通过debug发现save()方法仅是获得id,在commit处才会insert</p>
-<p>当increment时:<br>select max(id)</p>
-<p>当assigned时：<br>需要手动指定主键，不指定将会报错</p>
-<h3 id="三种状态的作用"><a href="#三种状态的作用" class="headerlink" title="三种状态的作用"></a>三种状态的作用</h3><p>持久状态，我恶魔你使用Hibernate主要是为了持久化我们的数据，对于对象的状态，我们期望我们需要同步到数据库的数据，都被转换成持久化状态</p>
-<p>持久化状态的特点：Hibernate会自动将持久化状态对象的变化同步到数据库中</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj166pltv0004o4txldf2vlhe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj18xrsm90004gktx2uelq3ac" class="article-share-link">Share</a>
       
       
     </footer>
@@ -965,6 +975,10 @@ false : 与get一致，会理解加载数据
       <ul>
         
           <li>
+            <a href="/2017/04/08/spring框架学习二/">spring框架学习二</a>
+          </li>
+        
+          <li>
             <a href="/2017/04/06/Spring框架学习一/">(no title)</a>
           </li>
         
@@ -978,10 +992,6 @@ false : 与get一致，会理解加载数据
         
           <li>
             <a href="/2017/04/01/log4j/">log4j</a>
-          </li>
-        
-          <li>
-            <a href="/2017/03/31/Struts2未登录拦截和权限控制/">Struts2未登录拦截和权限控制</a>
           </li>
         
       </ul>
