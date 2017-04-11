@@ -51,9 +51,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -63,6 +63,131 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Hibernate入门学习二" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/28/Hibernate入门学习二/" class="article-date">
+  <time datetime="2017-03-28T12:25:56.991Z" itemprop="datePublished">2017-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/Hibernate入门学习二/">Hibernate入门学习二</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="Hibernate的api详解"><a href="#Hibernate的api详解" class="headerlink" title="Hibernate的api详解"></a>Hibernate的api详解</h2><p>Bean — PO对象 （持久化对象） 在实际开发中PO对象更普遍</p>
+<p>BO：BUsiness object业务数据对象   service层<br>VO：Value Object值对象   Web层</p>
+<h3 id="Configuration对象详解"><a href="#Configuration对象详解" class="headerlink" title="Configuration对象详解"></a>Configuration对象详解</h3><pre><code>- property元素用于配置Hibernate中的属性  键:值 
+- 调用configure(),加载src下名为hibernate.cfg.xml
+</code></pre><h3 id="SessionFactory"><a href="#SessionFactory" class="headerlink" title="SessionFactory"></a>SessionFactory</h3><ol>
+<li>使用session访问数据库，简单类似为连接池，但是session是由Hibernate产生</li>
+<li>session对象根据Configuration配置信息创建SessionFactory</li>
+<li>session的获得：<ul>
+<li>openSession方法会得一个全新的Session对象</li>
+<li>getCurrentSession()获得当前线程绑定的session对象；调用getCurrentSession() 需要加上一个配置：</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;property name=<span class="string">"hibernate.current_session_context_class"</span>&gt;thread&lt;/property&gt;</div></pre></td></tr></table></figure>
+<pre><code>将session与线程绑定，只有配置了该配置，才能使用getCurrentSession
+
+事务关闭时,会自动把与当前线程关联的session关闭,并删除
+</code></pre><h3 id="Session对象"><a href="#Session对象" class="headerlink" title="Session对象"></a>Session对象</h3><p>功能：操作数据库CRUD</p>
+<h4 id="增"><a href="#增" class="headerlink" title="增"></a>增</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">      User u = new User();</div><div class="line">u.setName(<span class="string">"tom"</span>);</div><div class="line">u.setPassword(<span class="string">"123"</span>);</div><div class="line">session.save(u);//面向对象的操作</div><div class="line">//5.关闭资源</div><div class="line">session.close();</div><div class="line">sessionFactory.close()</div></pre></td></tr></table></figure>
+<h4 id="改"><a href="#改" class="headerlink" title="改"></a>改</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">      //打开事务</div><div class="line">Transaction ts = session.beginTransaction();</div><div class="line">//先查询出你要修改的对象</div><div class="line">User user = (User) session.get(User.class,1);</div><div class="line">//在查询结果上,进行修改</div><div class="line">user.setName(<span class="string">"汤姆"</span>);</div><div class="line">session.update(user);</div><div class="line">//提交事务</div><div class="line">ts.commit();</div><div class="line">//关闭资源</div><div class="line">session.close();</div><div class="line">sf.close();</div></pre></td></tr></table></figure>
+<h4 id="删"><a href="#删" class="headerlink" title="删"></a>删</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">      //打开事务</div><div class="line">Transaction ts = session.beginTransaction();</div><div class="line">//先查询出你要修改的对象</div><div class="line">User user = (User)session.get(User.class,2);</div><div class="line">/*User user = new User();</div><div class="line">user.setId(1);*/</div><div class="line">//根据ID删除</div><div class="line">session.delete(user);</div><div class="line">//---------------------------------------------------------</div><div class="line">//提交事务</div><div class="line">ts.commit();</div><div class="line">//关闭资源</div><div class="line">session.close();</div><div class="line">sf.close();</div></pre></td></tr></table></figure>
+<h4 id="查"><a href="#查" class="headerlink" title="查"></a>查</h4><h5 id="get方法查询"><a href="#get方法查询" class="headerlink" title="get方法查询"></a>get方法查询</h5><p><code>User user = (User)session.get(User.class,2);</code></p>
+<h5 id="load方法查询"><a href="#load方法查询" class="headerlink" title="load方法查询"></a>load方法查询</h5><p> <code>User user = (User) session.load(User.class,3);</code></p>
+<p>get和load方法的区别：</p>
+<ul>
+<li>get:get方法被调用时，立刻调用sql语句查询；</li>
+<li>load:调用时并没有查询数据库，当我们需要使用该对象的时候，才查询数据。</li>
+</ul>
+<p>load对象原理和设计：</p>
+<ul>
+<li>load方法用于提高Hibernate的执行效率（延迟加载）</li>
+<li>使用代理技术，创建一个代理对象，属性只有ID有值</li>
+<li>返回代理对象</li>
+<li>使用代理对象（属性）时，</li>
+<li>代理对象调用Hibernate查询数据库，初始化属性</li>
+</ul>
+<h5 id="查询所有"><a href="#查询所有" class="headerlink" title="查询所有"></a>查询所有</h5><p>方法一</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">      //打开事务</div><div class="line">Transaction ts = session.beginTransaction();</div><div class="line">//--------------------------------------------------------</div><div class="line">//HQL语言 =&gt; Hibernate Query Language</div><div class="line">//createQuery 传入hql语句查询</div><div class="line">//select * from t_user;</div><div class="line">Query query = session.createQuery(<span class="string">"from com.itheima.a_hello.User"</span>);</div><div class="line">//list 将语句执行,并返回结果</div><div class="line">List&lt;User&gt; list =  query.list();</div><div class="line">System.out.println(list);</div><div class="line">//---------------------------------------------------------</div><div class="line">//提交事务</div><div class="line">ts.commit();</div><div class="line">//关闭资源</div><div class="line">session.close();</div><div class="line">sf.close();</div></pre></td></tr></table></figure>
+<p>方法二</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">      //省略事务和关闭</div><div class="line">      //Criteria 查询 =&gt; Hibernate独创的面向对象的查询=&gt; 无语句</div><div class="line">Criteria criteria = session.createCriteria(User.class);</div><div class="line">//select * from t_user;</div><div class="line">List&lt;User&gt; list =	criteria.list();</div></pre></td></tr></table></figure>
+<p>方法三（原生SQL语句）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">      //省略事务和关闭</div><div class="line">SQLQuery query = session.createSQLQuery(<span class="string">"select * from t_user"</span>);</div><div class="line">//addEntity 将查询结果封装到指定对象中</div><div class="line">query.addEntity(User.class);</div><div class="line">//SQL语句，不能确定泛型的类型，将查询结果封装到Object数组中</div><div class="line">List&lt;User&gt; list = query.list();</div></pre></td></tr></table></figure>
+<h4 id="session方法总结"><a href="#session方法总结" class="headerlink" title="session方法总结"></a>session方法总结</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">   /*</div><div class="line">* session.save();</div><div class="line">* session.update();</div><div class="line">* session.delete();</div><div class="line">* session.get();</div><div class="line">* session.load(); 对比get</div><div class="line">* session.createQuery()</div><div class="line">* session.createCritieria();</div><div class="line">* session.createSqlQuery();</div><div class="line">* </div><div class="line">*/</div></pre></td></tr></table></figure>
+<h3 id="Query对象"><a href="#Query对象" class="headerlink" title="Query对象"></a>Query对象</h3><p> Query对象封装HQL语句的对象</p>
+<ul>
+<li>Query中封装查询细节api</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//query.list()将hql语句执行并返回结果（多行）</div><div class="line">List&lt;User&gt; list =  query.list();</div><div class="line">//uniqueResult 将hql语句执行,并返回结果(一行)</div><div class="line">Query query = session.createQuery(<span class="string">"from com.itheima.a_hello.User where name='tom'"</span>);</div><div class="line">User u = (User) query.uniqueResult();</div></pre></td></tr></table></figure>
+<ul>
+<li>分页<br>limit index count是之前分页中常用到的变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//开始索引数</div><div class="line">query.setFirstResult(0);</div><div class="line">//指定拿几个结果</div><div class="line">query.setMaxResults(2);</div></pre></td></tr></table></figure>
+<h3 id="Cretiaria对象"><a href="#Cretiaria对象" class="headerlink" title="Cretiaria对象"></a>Cretiaria对象</h3><p>查找name属性值为tom的一条记录：<br><code>cretiaria.add(Restrictions.eq(&quot;name&quot;,&quot;tom&quot;));</code></p>
+<p><code>User user = (User)cretiaria.uniqueResult();</code></p>
+<p>查找name属性值中包含o的记录（一条或多条）：<br><code>cretiaria.add(Restrictions.like(&quot;name&quot;,&quot;%o%&quot;));</code></p>
+<p>查找id属性值中大于2的记录<br><code>cretiaria.add(Restrictions.gt(&quot;id&quot;,3));</code></p>
+<p> 补充：gt(&gt;) lt(&lt;) eq(=) ge(&gt;=) le(&lt;=) </p>
+<h3 id="配置文件hibernate-cfg-xml详解"><a href="#配置文件hibernate-cfg-xml详解" class="headerlink" title="配置文件hibernate.cfg.xml详解"></a>配置文件hibernate.cfg.xml详解</h3><p><code>&lt;property name=&quot;hbm2ddl.auto&quot;&gt;update&lt;/property&gt;</code></p>
+<p> /project/etc 中包含诸多配置文件</p>
+<p> 其中hibernate.properties中可以找到hbm2ddl的配置策</p>
+<ul>
+<li><p>update(最常用) </p>
+<p> 如果当前数据库中不存在表结构，那么自动创建表结构。如果存在表结构，并且表结构与实体一致，不作修改；若表结构不一致，会修改表结构，但是会保留原有列。</p>
+</li>
+<li><p>creat（极少使用）</p>
+<p> 无论是否存在表结构，每次启动Hibernate都会重新创建表结构，即数据会丢失。</p>
+</li>
+<li><p>creat-drop(极少使用)</p>
+<p> 无论是否存在表结构，每次启动Hibernate都会重新创建表结构，即数据会丢失。每次Hibernate运行结束时，删除表结构。</p>
+</li>
+<li><p>validate</p>
+<p> 不会自动创建表结构，也不会自动维护表结构。Hibernate只校验表结构，如果表结构不一致会抛出异常</p>
+</li>
+</ul>
+<h3 id="配置文件–数据库方言配置详解"><a href="#配置文件–数据库方言配置详解" class="headerlink" title="配置文件–数据库方言配置详解"></a>配置文件–数据库方言配置详解</h3><p><code>&lt;property name=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.MySQLDialect&lt;/property&gt;</code> </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//数据库方言配置</div><div class="line">org.hibernate.dialect.MySQLDialect</div><div class="line">org.hibernate.dialect.MySQLInnoDBDialect</div><div class="line">org.hibernate.dialect.MySQLMyISAMDialect</div></pre></td></tr></table></figure>
+<h3 id="实体配置与实体规则"><a href="#实体配置与实体规则" class="headerlink" title="实体配置与实体规则"></a>实体配置与实体规则</h3><h4 id="编写规则"><a href="#编写规则" class="headerlink" title="编写规则"></a>编写规则</h4><ul>
+<li>提供一个无参public访问控制符的控制器（可无）</li>
+<li>提供一个标识属性，映射数据表主键字段</li>
+<li>所有属性提供public访问控制符的setter getter(javaBean)</li>
+<li>标识属性应尽量使用基本数据类型的包装类型</li>
+<li>不要用final修饰实体（final实体不能被继承，则无法生成代理对象） </li>
+</ul>
+<h3 id="主键生成策略"><a href="#主键生成策略" class="headerlink" title="主键生成策略"></a>主键生成策略</h3><h4 id="class属性"><a href="#class属性" class="headerlink" title="class属性"></a>class属性</h4><p><code>&lt;class name=&quot;User&quot; table=&quot;t_user&quot; dynamic-insert=&quot;false&quot;&gt;</code></p>
+<p><code>&lt;class name=&quot;User&quot; table=&quot;t_user&quot; dynamic-update=&quot;false&quot;&gt;</code> </p>
+<h4 id="id属性"><a href="#id属性" class="headerlink" title="id属性"></a>id属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">           &lt;!-- id: 配置实体与表中 id对应</div><div class="line">			name: user对象中标识主键的属性名称</div><div class="line">			column: 主键在表中的列名</div><div class="line">			length: 列的数据长度</div><div class="line">			unsaved-value(不常用): 指定主键为什么值时,当做null来处理.</div><div class="line">		access(强烈推荐不要用):field 操作属性时,会直接操作对应的字段而不是get/<span class="built_in">set</span>方法</div><div class="line">--&gt;</div><div class="line">           &lt;id name=<span class="string">"id"</span> column=<span class="string">"id"</span> length=<span class="string">"255"</span>   &gt;</div></pre></td></tr></table></figure>
+<h4 id="主键生成策略-1"><a href="#主键生成策略-1" class="headerlink" title="主键生成策略"></a>主键生成策略</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">    &lt;!-- generator:主键生成策略</div><div class="line">     1.increment  数据库自己生成主键. 先从数据库中查询最大的ID值,将ID值加1作为新的主键</div><div class="line">    2.identity  依赖于数据的主键自增功能</div><div class="line">    3.sequence	序列,依赖于数据中的序列功能(Oracle).</div><div class="line">    4.hilo(纯了解,永远用不到) : Hibernate自己实现序列的算法,自己生成主键. (hilo算法 )</div><div class="line">    5.native 自动根据数据库判断,三选一. identity|sequence|hilo</div><div class="line">    6.uuid  生成32位的不重复随机字符串当做主键</div><div class="line">    7.assigned 自己指定主键值. 表的主键是自然主键时使用.</div><div class="line">    --&gt;</div><div class="line">	&lt;generator class=<span class="string">"uuid"</span>&gt;&lt;/generator&gt;</div><div class="line">&lt;/id&gt;</div></pre></td></tr></table></figure>
+<h4 id="property属性"><a href="#property属性" class="headerlink" title="property属性"></a>property属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">  &lt;!-- property : 实体中属性与表中列的对应</div><div class="line">name : 实体中属性名称</div><div class="line">column : 表中列的名称</div><div class="line">length : 数据长度</div><div class="line">precision: 小数点后的精度</div><div class="line">scale:	有效位数</div><div class="line">insert(一般不用): 该属性是否加入insert语句.</div><div class="line">update(一般不用): 该属性是否加入update语句.</div><div class="line">not-null : 指定属性的约束是否使用 非空</div><div class="line">unique : 指定属性的约束是否使用唯一</div><div class="line">--&gt;</div></pre></td></tr></table></figure>
+<h4 id="type属性"><a href="#type属性" class="headerlink" title="type属性"></a>type属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;!-- </div><div class="line"> <span class="built_in">type</span>: 表达该属性的类型</div><div class="line"> 可以用三种方式指定属性</div><div class="line"> java类型		   数据库类型指定	 Hibernate类型指定</div><div class="line"> java.lang.String	varchar				string</div><div class="line">--&gt;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj1dmu2xm0003zctxb19umj6w" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-Hibernate对象状态" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -111,7 +236,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj1d881sr0006zctx89uhq7he" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj1dmu2yu000bzctxtn33r0ba" class="article-share-link">Share</a>
       
       
     </footer>
@@ -156,7 +281,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/25/hello-world/" data-id="cj1d881sx0008zctx64z42rpb" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/03/25/hello-world/" data-id="cj1dmu2yp0008zctxqg3sykwg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -195,9 +320,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/04/11/spring框架学习三/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2017/04/11/spring框架学习二/">spring框架学习二</a>
@@ -215,10 +344,6 @@
             <a href="/2017/04/01/Hibernate一对一关系 ---- 主键同步/">Hibernate一对一关系 ---- 主键同步</a>
           </li>
         
-          <li>
-            <a href="/2017/04/01/log4j/">log4j</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -232,7 +357,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Yao<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
