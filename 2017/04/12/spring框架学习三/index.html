@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>We-Param</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title : spring框架学习三标签 ： spring 事务
+
+一.spring事务管理1.1 事务
+事务：一组业务操作ABCD，要么全部成功，要么全部不成功。
+
+特性：ACID  原子性：整体  一致性：完成  隔离性：并发  持久性：结果
+
+隔离问题：  脏读：一个事务读到另一个事务没有提交的数据  不可重复读：一个事务读到另一个事务已提交的数据（update）  虚读(幻读)：一个事">
+<meta property="og:type" content="article">
+<meta property="og:title" content="We-Param">
+<meta property="og:url" content="http://yoursite.com/2017/04/12/spring框架学习三/index.html">
+<meta property="og:site_name" content="We-Param">
+<meta property="og:description" content="title : spring框架学习三标签 ： spring 事务
+
+一.spring事务管理1.1 事务
+事务：一组业务操作ABCD，要么全部成功，要么全部不成功。
+
+特性：ACID  原子性：整体  一致性：完成  隔离性：并发  持久性：结果
+
+隔离问题：  脏读：一个事务读到另一个事务没有提交的数据  不可重复读：一个事务读到另一个事务已提交的数据（update）  虚读(幻读)：一个事">
+<meta property="og:updated_time" content="2017-04-12T15:24:22.598Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="We-Param">
+<meta name="twitter:description" content="title : spring框架学习三标签 ： spring 事务
+
+一.spring事务管理1.1 事务
+事务：一组业务操作ABCD，要么全部成功，要么全部不成功。
+
+特性：ACID  原子性：整体  一致性：完成  隔离性：并发  持久性：结果
+
+隔离问题：  脏读：一个事务读到另一个事务没有提交的数据  不可重复读：一个事务读到另一个事务已提交的数据（update）  虚读(幻读)：一个事">
+  
+    <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">We-Param</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-spring框架学习三" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/12/spring框架学习三/" class="article-date">
+  <time datetime="2017-04-12T15:24:15.371Z" itemprop="datePublished">2017-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="title-spring框架学习三"><a href="#title-spring框架学习三" class="headerlink" title="title : spring框架学习三"></a>title : spring框架学习三</h2><p>标签 ： spring 事务</p>
+<hr>
+<h2 id="一-spring事务管理"><a href="#一-spring事务管理" class="headerlink" title="一.spring事务管理"></a>一.spring事务管理</h2><h3 id="1-1-事务"><a href="#1-1-事务" class="headerlink" title="1.1 事务"></a>1.1 事务</h3><ul>
+<li><p>事务：一组业务操作ABCD，要么全部成功，要么全部不成功。</p>
+</li>
+<li><p>特性：ACID<br>  原子性：整体<br>  一致性：完成<br>  隔离性：并发<br>  持久性：结果</p>
+</li>
+<li><p>隔离问题：<br>  脏读：一个事务读到另一个事务没有提交的数据<br>  不可重复读：一个事务读到另一个事务已提交的数据（update）<br>  虚读(幻读)：一个事务读到另一个事务已提交的数据（insert）</p>
+</li>
+<li><p>隔离级别：<br>  read uncommitted：读未提交。存在3个问题<br>  read committed：读已提交。解决脏读，存在2个问题<br>  repeatable read：可重复读。解决：脏读、不可重复读，存在1个问题。<br>  serializable ：串行化。都解决，单事务。</p>
+</li>
+</ul>
+<h3 id="1-2-mysql事务操作"><a href="#1-2-mysql事务操作" class="headerlink" title="1.2 mysql事务操作"></a>1.2 mysql事务操作</h3><ul>
+<li><p>简单操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//ABCD 一个事务</span></div><div class="line">Connection conn = <span class="keyword">null</span>;</div><div class="line"><span class="keyword">try</span>&#123;</div><div class="line">  <span class="comment">//1 获得连接</span></div><div class="line">  conn = ...;</div><div class="line">  <span class="comment">//2 开启事务</span></div><div class="line">  conn.setAutoCommit(<span class="keyword">false</span>);</div><div class="line">  A</div><div class="line">  B</div><div class="line">  C</div><div class="line">  D</div><div class="line">  <span class="comment">//3 提交事务</span></div><div class="line">  conn.commit();</div><div class="line">&#125; <span class="keyword">catch</span>()&#123;</div><div class="line">  <span class="comment">//4 回滚事务</span></div><div class="line">  conn.rollback();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>Savepoint</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">需求：AB（必须），CD（可选） </div><div class="line">Connection conn = <span class="keyword">null</span>;</div><div class="line">Savepoint savepoint = <span class="keyword">null</span>;  <span class="comment">//保存点，记录操作的当前位置，之后可以回滚到指定的位置。（可以回滚一部分）</span></div><div class="line"><span class="keyword">try</span>&#123;</div><div class="line">  <span class="comment">//1 获得连接</span></div><div class="line">  conn = ...;</div><div class="line">  <span class="comment">//2 开启事务</span></div><div class="line">  conn.setAutoCommit(<span class="keyword">false</span>);</div><div class="line">  A</div><div class="line">  B</div><div class="line">  savepoint = conn.setSavepoint();</div><div class="line">  C</div><div class="line">  D</div><div class="line">  <span class="comment">//3 提交事务</span></div><div class="line">  conn.commit();</div><div class="line">&#125; <span class="keyword">catch</span>()&#123;</div><div class="line">     <span class="comment">// 回滚到CD之前</span></div><div class="line">     conn.rollback(savepoint);</div><div class="line">     <span class="comment">// 提交AB</span></div><div class="line">     conn.commit();</div><div class="line">  &#125; <span class="keyword">else</span>&#123;   <span class="comment">//AB异常</span></div><div class="line">     <span class="comment">// 回滚AB</span></div><div class="line">     conn.rollback();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1-3-spring事务————管理器和状态"><a href="#1-3-spring事务————管理器和状态" class="headerlink" title="1.3 spring事务————管理器和状态"></a>1.3 spring事务————管理器和状态</h3><ul>
+<li><p>导入jar包<br>transaction —&gt; tx</p>
+</li>
+<li><p>三个顶级接口</p>
+</li>
+</ul>
+<ul>
+<li><p>常见的事务管理器<br><strong><em>DataSourceTransactionManager</em></strong>：jdbc开发时事务管理器，采用JdbcTemplate<br><strong><em>HibernateTransactionManager</em></strong>：hibernate开发时事务管理器，整合hibernate</p>
+</li>
+<li><p>api详解<br>TransactionStatus getTransaction(TransactionDefinition definition) ，事务管理器 通过“事务详情”，获得“事务状态”，从而管理事务。<br>void commit(TransactionStatus status)  根据状态提交<br>void rollback(TransactionStatus status) 根据状态回滚</p>
+</li>
+<li><p>TransactionStatus</p>
+</li>
+<li><p><strong><em>事务详情TransactionDefinition</em></strong></p>
+</li>
+</ul>
+<h2 id="二-案例"><a href="#二-案例" class="headerlink" title="二.案例"></a>二.案例</h2><h2 id="三-SSH整合"><a href="#三-SSH整合" class="headerlink" title="三.SSH整合"></a>三.SSH整合</h2><h3 id="3-1-jar包整合"><a href="#3-1-jar包整合" class="headerlink" title="3.1 jar包整合"></a>3.1 jar包整合</h3><hr>
+<h3 id="3-2-spring整合hibernate-—–-有hibernate-cfg-xml"><a href="#3-2-spring整合hibernate-—–-有hibernate-cfg-xml" class="headerlink" title="3.2 spring整合hibernate —– 有hibernate.cfg.xml"></a>3.2 spring整合hibernate —– 有hibernate.cfg.xml</h3><h4 id="3-2-1-创建表"><a href="#3-2-1-创建表" class="headerlink" title="3.2.1 创建表"></a>3.2.1 创建表</h4><h4 id="3-2-2-PO类"><a href="#3-2-2-PO类" class="headerlink" title="3.2.2 PO类"></a>3.2.2 PO类</h4><p>javaBean and hbm.xml</p>
+<h4 id="3-2-3-dao层"><a href="#3-2-3-dao层" class="headerlink" title="3.2.3 dao层"></a>3.2.3 dao层</h4><p>spring提供HibernateTemplate用于操作PO对象，类似Hibernate Session对象</p>
+<h4 id="3-2-4-service层"><a href="#3-2-4-service层" class="headerlink" title="3.2.4 service层"></a>3.2.4 service层</h4><h4 id="3-2-5-Hibernate-cfg-xml"><a href="#3-2-5-Hibernate-cfg-xml" class="headerlink" title="3.2.5 Hibernate.cfg.xml"></a>3.2.5 Hibernate.cfg.xml</h4><h4 id="3-2-6-applicationContext-xml"><a href="#3-2-6-applicationContext-xml" class="headerlink" title="3.2.6 applicationContext.xml"></a>3.2.6 applicationContext.xml</h4><hr>
+<h3 id="3-3-spring整合hibernate-—–-无hibernate-cfg-xml"><a href="#3-3-spring整合hibernate-—–-无hibernate-cfg-xml" class="headerlink" title="3.3 spring整合hibernate —– 无hibernate.cfg.xml"></a>3.3 spring整合hibernate —– 无hibernate.cfg.xml</h3><p>删除hibernate.cfg.xml ， 但需要保存文件内容，将其配置spring中</p>
+<p>修改dao层，继承hibernateDaoSupport</p>
+<hr>
+<h3 id="3-4-struts整合spring-—–"><a href="#3-4-struts整合spring-—–" class="headerlink" title="3.4 struts整合spring —–"></a>3.4 struts整合spring —–</h3><hr>
+<h3 id="3-4-struts整合spring-—–-1"><a href="#3-4-struts整合spring-—–-1" class="headerlink" title="3.4 struts整合spring —–"></a>3.4 struts整合spring —–</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/12/spring框架学习三/" data-id="cj1f4n2hn000ar0txw2uvezg7" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/04/11/spring框架学习二/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">spring框架学习二</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/04/12/spring框架学习三/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/11/spring框架学习二/">spring框架学习二</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/06/Spring框架学习一/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/02/Hibernate 二级缓存/">Hibernate 二级缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/01/Hibernate一对一关系 ---- 主键同步/">Hibernate一对一关系 ---- 主键同步</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Yao<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
