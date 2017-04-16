@@ -51,9 +51,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -67,7 +67,7 @@
     <article id="post-spring框架学习三" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/04/16/spring框架学习三/" class="article-date">
-  <time datetime="2017-04-16T13:20:30.963Z" itemprop="datePublished">2017-04-16</time>
+  <time datetime="2017-04-16T13:52:46.238Z" itemprop="datePublished">2017-04-16</time>
 </a>
     
   </div>
@@ -127,7 +127,7 @@
 <p>AccountDaoImpl.java<br><strong><em>继承JdbcDaoSupport</em></strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//继承了JdbcDaoSupport</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountDaoImpl</span> <span class="keyword">extends</span> <span class="title">JdbcDaoSupport</span> <span class="keyword">implements</span> <span class="title">AccountDao</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">out</span><span class="params">(String outer, Integer money)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.getJdbcTemplate().update(<span class="string">"update account set money = money - ? where username = ?"</span> , money , outer);</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">in</span><span class="params">(String inner, Integer money)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.getJdbcTemplate().update(<span class="string">"update account set money = money - ? where username = ?"</span> , money , inner);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>AccountService.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AccountService</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transfer</span><span class="params">(String outer , String inner , Integer money)</span></span>;</div></pre></td></tr></table></figure></p>
 <p>AccountServiceImpl.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> AccountDao accountDao;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAccountDao</span><span class="params">(AccountDao accountDao)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.accountDao = accountDao;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transfer</span><span class="params">(String outer, String inner, Integer money)</span> </span>&#123;</div><div class="line">		accountDao.out(outer, money);</div><div class="line">		accountDao.in(inner, money);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>applicationContext.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></div><div class="line">       <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span></div><div class="line">       <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span></div><div class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></div><div class="line">       					   http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">       					   http://www.springframework.org/schema/aop </div><div class="line">       					   http://www.springframework.org/schema/aop/spring-aop.xsd</div><div class="line">       					   http://www.springframework.org/schema/context </div><div class="line">       					   http://www.springframework.org/schema/context/spring-context.xsd</div><div class="line">       					   http://www.springframework.org/schema/tx </div><div class="line">       					   http://www.springframework.org/schema/tx/spring-tx.xsd"&gt;</div><div class="line"><span class="comment">&lt;!-- 配置的顺序：</span></div><div class="line">	1.datasource</div><div class="line">	2.dao</div><div class="line">	3.service</div><div class="line">	4.事务管理&#123;</div><div class="line">		</div><div class="line">		4.1 事务管理器</div><div class="line">		4.2 事务详情</div><div class="line">		4.3 aop编程</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"> --&gt;</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"com.mchange.v2.c3p0.ComboPooledDataSource"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClass"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jdbcUrl"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql:///day0301"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">value</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"admin"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountDao"</span> <span class="attr">class</span>=<span class="string">"com.yao.dao.impl.AccountDaoImpl"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">  </div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span> <span class="attr">class</span>=<span class="string">"com.yao.service.impl.AccountServiceImpl"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"accountDao"</span> <span class="attr">ref</span>=<span class="string">"accountDao"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"txManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> 	</div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">"txAdvice"</span> <span class="attr">transaction-manager</span>=<span class="string">"txManager"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></div><div class="line"> 			<span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"transfer"</span> <span class="attr">isolation</span>=<span class="string">"DEFAULT"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRED"</span>/&gt;</span></div><div class="line"> 		<span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">"txManager"</span> <span class="attr">pointcut</span>=<span class="string">"execution(* com.yao.service..*.*(..))"</span>/&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>applicationContext.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></div><div class="line">       <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span></div><div class="line">       <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span></div><div class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></div><div class="line">       					   http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">       					   http://www.springframework.org/schema/aop </div><div class="line">       					   http://www.springframework.org/schema/aop/spring-aop.xsd</div><div class="line">       					   http://www.springframework.org/schema/context </div><div class="line">       					   http://www.springframework.org/schema/context/spring-context.xsd</div><div class="line">       					   http://www.springframework.org/schema/tx </div><div class="line">       					   http://www.springframework.org/schema/tx/spring-tx.xsd"&gt;</div><div class="line"><span class="comment">&lt;!-- 配置的顺序：</span></div><div class="line">	1.datasource</div><div class="line">	2.dao</div><div class="line">	3.service</div><div class="line">	4.事务管理&#123;</div><div class="line">		</div><div class="line">		4.1 事务管理器</div><div class="line">		4.2 事务详情</div><div class="line">		4.3 aop编程</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"> --&gt;</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"com.mchange.v2.c3p0.ComboPooledDataSource"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClass"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jdbcUrl"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql:///day0301"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">value</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"admin"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountDao"</span> <span class="attr">class</span>=<span class="string">"com.yao.dao.impl.AccountDaoImpl"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">  </div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span> <span class="attr">class</span>=<span class="string">"com.yao.service.impl.AccountServiceImpl"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"accountDao"</span> <span class="attr">ref</span>=<span class="string">"accountDao"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"txManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> 	</div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">"txAdvice"</span> <span class="attr">transaction-manager</span>=<span class="string">"txManager"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></div><div class="line"> 			<span class="comment">&lt;!-- name可以写成类似 name="add*" ， 这样要在service中的方法以add开头--&gt;</span></div><div class="line"> 			<span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"transfer"</span> <span class="attr">isolation</span>=<span class="string">"DEFAULT"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRED"</span>/&gt;</span></div><div class="line"> 		<span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">"txManager"</span> <span class="attr">pointcut</span>=<span class="string">"execution(* com.yao.service..*.*(..))"</span>/&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <hr>
 <h3 id="2-2-AOP配置基于注释"><a href="#2-2-AOP配置基于注释" class="headerlink" title="2.2 AOP配置基于注释"></a>2.2 AOP配置基于注释</h3><p><strong>1. 配置事务管理器，将并事务管理器交予spring</strong><br><strong>2. 在目标类或目标方法添加注解即可@Transactional</strong></p>
 <p>Dao接口和实现类没有变化，与使用XML配置时相同。</p>
@@ -172,7 +172,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/16/spring框架学习三/" data-id="cj1kpz7zx000b98txilb9vwap" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/04/16/spring框架学习三/" data-id="cj1kr4dew0008vgtxovlf5b8m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -361,7 +361,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/11/spring框架学习二/" data-id="cj1kpz7zu000a98txhozvllc0" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/04/11/spring框架学习二/" data-id="cj1kr4df5000avgtxkttu8suv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -537,7 +537,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj1kpz7zz000c98tx6ygmrmdg" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj1kr4dfj000cvgtxqgb4md1l" class="article-share-link">Share</a>
       
       
     </footer>
@@ -624,7 +624,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj1kpz7yd000098txv39ao67r" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj1kr4dea0000vgtxr5zqb649" class="article-share-link">Share</a>
       
       
     </footer>
@@ -665,7 +665,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj1kpz7yo000198tx7g4nx6nr" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj1kr4deh0002vgtxwgzih8bf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -713,7 +713,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj1kpz7zs000898tx70fqc65l" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj1kr4des0007vgtxoim1ay2c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -751,7 +751,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj1kpz7zl000598txeje03kx7" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj1kr4den0005vgtx3xhbn8ni" class="article-share-link">Share</a>
       
       
     </footer>
@@ -833,7 +833,7 @@ static{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj1kpz7zi000398txho01q0jq" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj1kr4del0004vgtx3muircw8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -970,7 +970,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj1kpz7zm000698txtfh4vvq4" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj1kr4dey0009vgtxoqayxyg3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1046,7 +1046,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj1kpz7z3000298txjy4juhk3" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj1kr4def0001vgtxq3sf6tzr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1085,7 +1085,7 @@ false : 与get一致，会理解加载数据
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -1122,7 +1122,7 @@ false : 与get一致，会理解加载数据
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Yao<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
