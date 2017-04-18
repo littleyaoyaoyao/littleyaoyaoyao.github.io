@@ -64,6 +64,66 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-SVN" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/18/SVN/" class="article-date">
+  <time datetime="2017-04-18T08:31:19.120Z" itemprop="datePublished">2017-04-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/18/SVN/">SVN</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： SVN</p>
+<hr>
+<p>版本控制（Revision Control）：是维护工程蓝图的标准做法，能追踪工程蓝图从诞生一直到定案的过程。是一种记录若干文件内容变化，以便将来查阅特定版本修订情况的系统。</p>
+<h2 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h2><p>在硬盘中创建一个空的文件夹，如F:\repository\svn\repo1<br>在cmd窗口中可以完成创建仓库操作，包括在指定目录创建仓库和当前目录创建仓库。<br>指定目录创建：svnadmin create F:\repository\svn\repo1<br>当前目录创建：svnadmin create .</p>
+<h2 id="启动仓库"><a href="#启动仓库" class="headerlink" title="启动仓库"></a>启动仓库</h2><ul>
+<li><p>多仓库<br>cmd &gt; svnserve -d -r F:\repository\svn<br>要访问某一特定的仓库：svn://localhost:3690/repo1</p>
+</li>
+<li><p>单仓库<br>cmd &gt; svnserve -d -r F:\repository\svn\repo1<br>此时只能访问该已经启动的仓库repo1：svn://localhost:3690</p>
+</li>
+</ul>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a><strong>checkout</strong></h3><p>svn checkout svn://localhost:3690/repo1</p>
+<h3 id="commit"><a href="#commit" class="headerlink" title="commit"></a><strong>commit</strong></h3><p>commit需要有权限，需要修改仓库目录中conf\svnserve.conf的配置</p>
+<ul>
+<li>将<code># anon-access = read</code>修改为<code>anon-access = write</code></li>
+<li>使用add子命令添加到本地版本库</li>
+</ul>
+<p>然后执行语句：<br><code>svn commit -m &quot;user1 add content&quot; test.txt</code><br>其中，语句中包括了-m设置日志信息</p>
+<h3 id="update"><a href="#update" class="headerlink" title="update"></a><strong>update</strong></h3><p><strong><em>在每次提交版本之前先执行更新操作</em></strong><br><code>svn update</code></p>
+<h2 id="目录规范"><a href="#目录规范" class="headerlink" title="目录规范"></a>目录规范</h2><ul>
+<li>trunk 主线 ， 用于存在程序整个进度</li>
+<li>branches 分支 ， 例如bug修复、特殊功能</li>
+<li>tags 标签（版本） ， 此目录下的内容不能修改 </li>
+</ul>
+<h2 id="CRM"><a href="#CRM" class="headerlink" title="CRM"></a>CRM</h2><p>CRM：custom relation manager 客户关系管理系统<br>用于维护客户和公司之间的关系</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/18/SVN/" data-id="cj1najxqh0006dotxmxqz1c12" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-spring框架学习三" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/04/16/spring框架学习三/" class="article-date">
@@ -172,7 +232,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/16/spring框架学习三/" data-id="cj1kr4dew0008vgtxovlf5b8m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/16/spring框架学习三/" data-id="cj1najxri000ddotx12qfhx5q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -361,7 +421,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/11/spring框架学习二/" data-id="cj1kr4df5000avgtxkttu8suv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/11/spring框架学习二/" data-id="cj1najxr4000bdotxala833ie" class="article-share-link">Share</a>
       
       
     </footer>
@@ -537,7 +597,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj1kr4dfj000cvgtxqgb4md1l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj1najxr7000cdotxiyouxhqi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -624,7 +684,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj1kr4dea0000vgtxr5zqb649" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj1najxpl0000dotxpdepnae4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -665,7 +725,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj1kr4deh0002vgtxwgzih8bf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj1najxq50002dotx9o7tqnon" class="article-share-link">Share</a>
       
       
     </footer>
@@ -713,7 +773,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj1kr4des0007vgtxoim1ay2c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj1najxqp0009dotxn728gcmi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -751,7 +811,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj1kr4den0005vgtx3xhbn8ni" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj1najxqj0007dotxnc39vmox" class="article-share-link">Share</a>
       
       
     </footer>
@@ -833,7 +893,7 @@ static{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj1kr4del0004vgtx3muircw8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj1najxqc0004dotxcaseiqyn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -970,83 +1030,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj1kr4dey0009vgtxoqayxyg3" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Hibernate一级缓存" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/30/Hibernate一级缓存/" class="article-date">
-  <time datetime="2017-03-30T09:14:40.954Z" itemprop="datePublished">2017-03-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/30/Hibernate一级缓存/">Hibernate一级缓存</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>标签 ： Hibernate 一级缓存</p>
-<hr>
-<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>Hibernate中也存在缓存，Hibernate中存在的缓存也是用来提高效率的</p>
-<p>在session对象中，有一个缓存</p>
-<p>本质：Map  键是ID  值是对象  。hibernate会把所有查询到对象放入缓存中，如果再次查询相同的对象，会从缓存中找，为了提高效率。</p>
-<p>Hibernate中存在两种缓存：</p>
-<ol>
-<li>线程级别的缓存：Session缓存</li>
-<li>进程级别的缓存： Hibernate二级缓存</li>
-</ol>
-<p>session缓存：就是session对象中存在的缓存，缓存中存在的是（持久化）对象</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">      Session session = HibernateUtils.openSession();</div><div class="line">session.beginTransaction();</div><div class="line">//------------------------------------------------</div><div class="line">User u1 = (User) session.get(User.class, 1);</div><div class="line">// 发送select语句,从数据库取出记录.并封装成对象</div><div class="line">   // 持久化状态对象=&gt; 存到缓存中</div><div class="line">User u2 = (User) session.get(User.class, 1);//再次查询时,会从缓存中查找,不会发送select</div><div class="line">User u3 = (User) session.get(User.class, 1);//再次查询时,会从缓存中查找,不会发送select</div><div class="line">System.out.println(u1==u2);//<span class="literal">true</span></div><div class="line">System.out.println(u1==u3);//<span class="literal">true</span></div><div class="line">//------------------------------------------------</div><div class="line">session.getTransaction().commit();</div><div class="line">session.close(); // 游离状态</div></pre></td></tr></table></figure>
-<h3 id="一级缓存，对象快照"><a href="#一级缓存，对象快照" class="headerlink" title="一级缓存，对象快照"></a>一级缓存，对象快照</h3><h4 id="缓存中的快照"><a href="#缓存中的快照" class="headerlink" title="缓存中的快照"></a>缓存中的快照</h4><p>在从数据库中取得数据时，会将数据一式两份，一份作为缓存中的对象，一份作为快照（快照与数据库中保持一致），在session提交时作为对比</p>
-<h4 id="持久化状态"><a href="#持久化状态" class="headerlink" title="持久化状态"></a>持久化状态</h4><p>本质就是存在缓存中的对象，就是持久化状态</p>
-<h4 id="session缓存的细节问题"><a href="#session缓存的细节问题" class="headerlink" title="session缓存的细节问题"></a>session缓存的细节问题</h4><p>save()方法：<br>来自于Hibernate</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">      User u = new User();</div><div class="line">u.setName(<span class="string">"张三"</span>);</div><div class="line">session.save(u); //insert语句被打印=&gt; 目的:获得id</div></pre></td></tr></table></figure>
-<p>persist() :<br>来自于JPA接口</p>
-<h4 id="HQL语句批量查询"><a href="#HQL语句批量查询" class="headerlink" title="HQL语句批量查询"></a>HQL语句批量查询</h4><ul>
-<li>HQL语句会使用一级缓存，因为session将结果组装成对象之前，会先检查session中是否已经存在了对象；若已经存在，直接返回已经存在的对象</li>
-<li>每次调用HQL查询都会生成sql语句，但是并不代表HQL不会使用一级缓存</li>
-<li>HQL查询结果会放入缓存当中</li>
-</ul>
-<h4 id="SQL语句查询"><a href="#SQL语句查询" class="headerlink" title="SQL语句查询"></a>SQL语句查询</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">List&lt;User&gt; list1 = session.createSQLQuery(<span class="string">"select * from t_user"</span>).addEntity(User.class).list();</div><div class="line">User u = (User) session.get(User.class, 1);</div></pre></td></tr></table></figure>
-<p>SQL查询结果会放入一级缓存中，但是前提是要把查询结果封装到对象中。</p>
-<h4 id="其他API"><a href="#其他API" class="headerlink" title="其他API"></a>其他API</h4><ul>
-<li><p>evict(): 将缓存中的对象移除</p>
-</li>
-<li><p>clear(): 清空一级缓存</p>
-</li>
-<li><p>refresh(): 将缓存中的对象立刻与数据库同步，会再发送一个sql语句 </p>
-<pre><code>对比快照，并提交缓存对象
-</code></pre></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public void <span class="function"><span class="title">test1</span></span>()&#123;</div><div class="line">		Session session = HibernateUtils.openSession();</div><div class="line">		session.beginTransaction();</div><div class="line">		//------------------------------------------------</div><div class="line">		User u1 = (User) session.get(User.class, 1);</div><div class="line">		u1.setName(<span class="string">"zhangsan"</span>);</div><div class="line">		session.flush();// 立刻提交session缓存中的对象到数据库</div><div class="line">		//------------------------------------------------</div><div class="line">		session.getTransaction().commit();</div><div class="line">		session.close(); // 游离状态</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>debug发现，第5行会发送select语句；执行到第7行flush()时会发送update语句，此时commit就不会在发送update语句了；若注释掉第6行，则执行到flush()处不会有任何变化。</p>
-<ul>
-<li>saveOrUpdate()<br>在代理主键的条件（native）下，saveOrUpdate 可以同时完成保存或更新操作;若主键为空=&gt;save()，若主键有值=&gt; update()</li>
-</ul>
-<p>在自然主键条件下（assigned）下，<br>主键为空=&gt; 报错,因为无论是save还是update 都必须指定id；<br>主键有值=&gt; 先会根据主键查询数据库。</p>
-<p>saveOrUpdate()会先执行select语句查询数据库中的信息。若：<br>数据库中存在=&gt; 执行update；<br>数据库中不存在=&gt; 执行insert。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj1kr4def0001vgtxq3sf6tzr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj1najxqs000adotxx4gz7egb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1090,6 +1074,10 @@ false : 与get一致，会理解加载数据
       <ul>
         
           <li>
+            <a href="/2017/04/18/SVN/">SVN</a>
+          </li>
+        
+          <li>
             <a href="/2017/04/16/spring框架学习三/">spring框架学习三</a>
           </li>
         
@@ -1103,10 +1091,6 @@ false : 与get一致，会理解加载数据
         
           <li>
             <a href="/2017/04/02/Hibernate 二级缓存/">Hibernate 二级缓存</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/01/Hibernate一对一关系 ---- 主键同步/">Hibernate一对一关系 ---- 主键同步</a>
           </li>
         
       </ul>
