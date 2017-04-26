@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CRM | We-Param</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="标签 ： CRM
+
+数据回显在查询了所有员工信息之后，需要增加编辑员工信息的功能。编辑员工信息需要用到信息的回显，若需要回显员工的信息，需要得到该员工的id来唯一确定员工。listStaff.jsp1234&amp;lt;s:a namespace=&quot;/&quot; action=&quot;staffAction_editUI&quot;&amp;gt;	  		&amp;lt;s:param name=&quot;staffId&quot; value=&quot;staff">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CRM">
+<meta property="og:url" content="http://yoursite.com/2017/04/26/CRM/index.html">
+<meta property="og:site_name" content="We-Param">
+<meta property="og:description" content="标签 ： CRM
+
+数据回显在查询了所有员工信息之后，需要增加编辑员工信息的功能。编辑员工信息需要用到信息的回显，若需要回显员工的信息，需要得到该员工的id来唯一确定员工。listStaff.jsp1234&amp;lt;s:a namespace=&quot;/&quot; action=&quot;staffAction_editUI&quot;&amp;gt;	  		&amp;lt;s:param name=&quot;staffId&quot; value=&quot;staff">
+<meta property="og:updated_time" content="2017-04-26T14:23:55.971Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CRM">
+<meta name="twitter:description" content="标签 ： CRM
+
+数据回显在查询了所有员工信息之后，需要增加编辑员工信息的功能。编辑员工信息需要用到信息的回显，若需要回显员工的信息，需要得到该员工的id来唯一确定员工。listStaff.jsp1234&amp;lt;s:a namespace=&quot;/&quot; action=&quot;staffAction_editUI&quot;&amp;gt;	  		&amp;lt;s:param name=&quot;staffId&quot; value=&quot;staff">
+  
+    <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">We-Param</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CRM" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/26/CRM/" class="article-date">
+  <time datetime="2017-04-26T14:23:43.070Z" itemprop="datePublished">2017-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CRM
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： CRM</p>
+<hr>
+<h2 id="数据回显"><a href="#数据回显" class="headerlink" title="数据回显"></a>数据回显</h2><p>在查询了所有员工信息之后，需要增加编辑员工信息的功能。<br>编辑员工信息需要用到信息的回显，若需要回显员工的信息，需要得到该员工的id来唯一确定员工。<br>listStaff.jsp<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;s:a namespace="/" action="staffAction_editUI"&gt;</div><div class="line">	  		&lt;s:param name="staffId" value="staffId"&gt;&lt;/s:param&gt;</div><div class="line">	  		&lt;img src="$&#123;pageContext.request.contextPath&#125;/images/button/modify.gif" class="img" /&gt;</div><div class="line">&lt;/s:a&gt;</div></pre></td></tr></table></figure></p>
+<p>上述为struts2的a标签来发送action，<code>&lt;s:param name=&quot;staffId&quot; value=&quot;staffId&quot;&gt;&lt;/s:param&gt;</code>相当于以get的形式添加到action后，即以类似于<code>action?staffId=</code>的形式完成信息传递。</p>
+<p>staffAction.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">editUI</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//jsp中返回了一个get方法，封装到了staff对象中</span></div><div class="line">	CrmStaff findStaff = <span class="keyword">this</span>.staffService.findById(staff.getStaffId());</div><div class="line">	</div><div class="line">	ActionContext.getContext().getValueStack().push(findStaff);</div><div class="line">	</div><div class="line">	<span class="comment">//查询所有部门</span></div><div class="line">	List&lt;CrmDepartment&gt; allDepartment = departmentService.findAllDepartments();</div><div class="line">	<span class="comment">//存在栈顶，在数据回显的时候从栈顶照下来。因为底层使用的是findValue，会从栈顶先开始找，再找contextMap 。即使在栈顶找到了对象的key是null,也会回显</span></div><div class="line">	ActionContext.getContext().getValueStack().set(<span class="string">"allDepartment"</span>, allDepartment);</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> <span class="string">"editUI"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在staffAction.java中将findStaff放入栈顶。<br>在editStaff.jsp中，例如<code>&lt;s:textfield name=&quot;staffName&quot;&gt;</code>则可以完成信息的回显。struts2底层会调用findValue，先从root开始查询staffName,若为null，则向下contextMap中查询，若仍为null，则会返回空。</p>
+<h3 id="checkbox-select-radio标签的使用"><a href="#checkbox-select-radio标签的使用" class="headerlink" title="checkbox \ select \ radio标签的使用"></a>checkbox \ select \ radio标签的使用</h3><p>三者本身都需要有数据。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">   &lt;td&gt;</div><div class="line">   	&lt;s:radio list="&#123;'男','女'&#125;" name="gender"&gt;&lt;/s:radio&gt;</div><div class="line">   &lt;/td&gt;</div><div class="line"> &lt;/tr&gt;</div><div class="line">&lt;tr&gt;</div><div class="line">   &lt;td width="10%"&gt;所属部门：&lt;/td&gt;</div><div class="line">   &lt;td width="20%"&gt;</div><div class="line">   	&lt;s:select list="allDepartment" name="post.department.depId"</div><div class="line">					listKey="depId" listValue="depName"</div><div class="line">					headerKey=""	headerValue="----请选择----"  	    	</div><div class="line">   	&gt;&lt;/s:select&gt;</div><div class="line">   &lt;/td&gt;</div><div class="line">   &lt;td width="8%"&gt;职务：&lt;/td&gt;</div><div class="line">   &lt;td width="62%"&gt;</div><div class="line">   	&lt;s:select list="post != null ? post.department.postSet : &#123;&#125;" name="post.postId"</div><div class="line">					listKey="postId" listValue="postName"</div><div class="line">					headerKey=""	headerValue="----请选择----"	    	</div><div class="line">   	&gt;&lt;/s:select&gt;</div><div class="line">   &lt;/td&gt;</div><div class="line"> &lt;/tr&gt;</div><div class="line"> &lt;tr&gt;</div><div class="line">   &lt;td width="10%"&gt;入职时间：&lt;/td&gt;</div><div class="line">   &lt;td width="20%"&gt;</div><div class="line">   	&lt;s:date name="onDutyDate" format="yyyy-MM-dd" var="myDate"/&gt;</div><div class="line">   	&lt;s:textfield name="onDutyDate" readonly="true" value="%&#123;#myDate&#125;" onfocus="c.showMoreDay=true; c.show(this);"&gt;&lt;/s:textfield&gt;</div><div class="line">   &lt;/td&gt;</div></pre></td></tr></table></figure></p>
+<p>对于所属部门：</p>
+<p>list中的allDepartment，是在StaffAction中存入root中，完成了查询所有部门的功能，其本身返回的是对象。</p>
+<p>其中list表示的是下拉菜单中所有的内容，但此时里面是对象（包括map、javaBean）,因此需要listKey和listValue辅助来完成下拉菜单的显示。</p>
+<p>listKey:数据源中元素对象的属性, 用于获取选项的值，对应于select标签中的value。<br>listValue:数据源中元素对象的属性, 用于获取选项的文本内容，对应于select标签中的option。<br>name:完成数据回显，同之前标签的name，从值栈中寻找值，利用listKey来匹配。</p>
+<p>但是，下拉菜单中仍存在一定的问题，所属部门和职务应该是存在约束关系的，即选定了所属部门，在职务的菜单中应该只显示该部门中的职务。由此，引申出了<strong><em>ajax二级联动</em></strong>的概念</p>
+<h2 id="ajax二级联动"><a href="#ajax二级联动" class="headerlink" title="ajax二级联动"></a>ajax二级联动</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/26/CRM/" data-id="cj1z2nwwp0002r0tx7x82dibr" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/04/18/SVN/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">SVN</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/04/26/CRM/">CRM</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/18/SVN/">SVN</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/16/spring框架学习三/">spring框架学习三</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/11/spring框架学习二/">spring框架学习二</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/06/Spring框架学习一/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Yao<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
