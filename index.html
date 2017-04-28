@@ -51,9 +51,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -63,6 +63,89 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-JavaScript学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/29/JavaScript学习/" class="article-date">
+  <time datetime="2017-04-28T16:06:56.232Z" itemprop="datePublished">2017-04-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/29/JavaScript学习/">JavaScript学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： JavaScript</p>
+<hr>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><p>###字符串<br>toUpperCase()把一个字符串全部变为大写;<br>toLowerCase()把一个字符串全部变为小写;<br>indexOf()会搜索指定字符串出现的位置;<br>substring()返回指定索引区间的子串;</p>
+<h3 id="布尔型"><a href="#布尔型" class="headerlink" title="布尔型"></a>布尔型</h3><h2 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h2><p>需要注意的是:=== 它不会自动转换数据类型，如果数据类型不一致，返回false，如果一致，再比较。</p>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>JavaScript的数组可以包括任意数据类型。<br>在数组中直接给数组的长度赋值会导致数组的长度发生变化。</p>
+<ul>
+<li><p>创建数组：<br><code>var arr=[1,2,3];</code><br><code>new Array[1,2,3];</code></p>
+</li>
+<li><p>Array也可以通过indexOf()来搜索一个指定的元素的位置</p>
+</li>
+<li><p><strong>slice()</strong>就是对应String的substring()版本，它截取Array的部分元素，然后返回一个新的Array</p>
+</li>
+<li><p><strong>push()</strong>向Array的末尾添加若干元素，<strong>pop()</strong>则把Array的最后一个元素删除掉</p>
+</li>
+<li><p>如果要往Array的头部添加若干元素，使用<strong>unshift()</strong>方法，<strong>shift()</strong>方法则把Array的第一个元素删掉</p>
+</li>
+<li><p><strong>sort()</strong>可以对当前Array进行排序，它会直接修改当前Array的元素位置，直接调用时，按照默认顺序排序</p>
+</li>
+<li><p><strong>reverse()</strong>把整个Array的元素反转</p>
+</li>
+<li><p><strong>splice()</strong>方法是修改Array的“万能方法”，它可以从指定的索引开始删除若干元素，然后再从该位置添加若干元素</p>
+</li>
+<li><p><strong>concat()</strong>方法把当前的Array和另一个Array连接起来，并返回一个新的Array</p>
+</li>
+<li><p><strong><em>join()</em></strong>方法把当前Array的每个元素都用指定的字符串连接起来，然后返回连接后的字符串</p>
+</li>
+</ul>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>JavaScrpitpt的对象是一组由键-值组成的<strong>无序</strong>集合。<br>JavaScript对象的键都是字符串类型，值可以是任意数据类型。<br>要获取一个对象的属性，我们用<strong>对象变量.属性名</strong>的方式。</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>可以把任意数据类型赋值给变量，同一个变量可以反复赋值，而且可以是不同类型的变量，但是要注意只能用var申明一次。<br>如果一个变量没有通过var申明就被使用的话，那么这个变量就会自动被申明为全局变量。使用var申明的变量则不是全局变量，它的范围被限制在该变量被申明的函数体内，同名变量在不同函数体内互不冲突。</p>
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>普通的循环不做赘述，for循环的一个变体是for…in循环，它可以把一个对象的所有属性依次循环出来</p>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p><code>var m = new Map([[&#39;sam&#39;, 110], [&#39;Bob&#39;, 120], [&#39;T-mac&#39;, 119]])</code></p>
+<p>由于一个key只能对应一个value，所以，多次对一个key放入value，后面的值会把前面的值冲掉:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> m = <span class="keyword">new</span> <span class="built_in">Map</span>();</div><div class="line">m.set(<span class="string">'Adam'</span>, <span class="number">67</span>);</div><div class="line">m.set(<span class="string">'Adam'</span>, <span class="number">88</span>);</div><div class="line">m.get(<span class="string">'Adam'</span>); <span class="comment">// 88</span></div></pre></td></tr></table></figure></p>
+<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><p><code>var s1 = new Set([1, 2, 3]); // 含1, 2, 3</code></p>
+<h2 id="iterable"><a href="#iterable" class="headerlink" title="iterable"></a>iterable</h2><p>注意：Array、Map和Set都属于iterable类型；<br>具有iterable类型的集合可以通过新的<strong><em>for … of</em></strong>循环来遍历。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>];</div><div class="line"><span class="keyword">var</span> s = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>]);</div><div class="line"><span class="keyword">var</span> m = <span class="keyword">new</span> <span class="built_in">Map</span>([[<span class="number">1</span>, <span class="string">'x'</span>], [<span class="number">2</span>, <span class="string">'y'</span>], [<span class="number">3</span>, <span class="string">'z'</span>]]);</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> x <span class="keyword">of</span> a) &#123; <span class="comment">// 遍历Array</span></div><div class="line">    alert(x);</div><div class="line">&#125;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> x <span class="keyword">of</span> s) &#123; <span class="comment">// 遍历Set</span></div><div class="line">    alert(x);</div><div class="line">&#125;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> x <span class="keyword">of</span> m) &#123; <span class="comment">// 遍历Map</span></div><div class="line">    alert(x[<span class="number">0</span>] + <span class="string">'='</span> + x[<span class="number">1</span>]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="定义函数"><a href="#定义函数" class="headerlink" title="定义函数"></a>定义函数</h3><p>函数的定义方法有两种：<br><code>function abs(x)</code><br><code>var abc = fucntion abs(x) //注意这种定义方法的末尾需要加上;</code><br>第二种方式可以通过变量abc来调用函数,且abc是一个<strong><em>全局变量</em></strong></p>
+<h3 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h3><p>由于JavaScript允许传入任意个参数而不影响调用，因此传入的参数比定义的参数多也没有问题，虽然函数内部并不需要这些参数。例如：<br><code>abc(10,‘what are you doing’)</code>;</p>
+<h3 id="arguments"><a href="#arguments" class="headerlink" title="arguments"></a>arguments</h3><p>JavaScript还有一个的关键字arguments，它只在函数内部起作用，并且永远指向当前函数的调用者传入的所有参数.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">    alert(x); <span class="comment">// 10</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="built_in">arguments</span>.length; i++) &#123;</div><div class="line">        alert(<span class="built_in">arguments</span>[i]); <span class="comment">// 10, 20, 30</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">func(<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>);</div></pre></td></tr></table></figure></p>
+<h3 id="rest"><a href="#rest" class="headerlink" title="rest"></a>rest</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a, b, ...rest</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'a = '</span> + a);</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'b = '</span> + b);</div><div class="line">    <span class="built_in">console</span>.log(rest);</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</div><div class="line"><span class="comment">// 结果:</span></div><div class="line"><span class="comment">// a = 1</span></div><div class="line"><span class="comment">// b = 2</span></div><div class="line"><span class="comment">// Array [ 3, 4, 5 ]</span></div><div class="line"></div><div class="line">foo(<span class="number">1</span>);</div><div class="line"><span class="comment">// 结果:</span></div><div class="line"><span class="comment">// a = 1</span></div><div class="line"><span class="comment">// b = undefined</span></div><div class="line"><span class="comment">// Array []</span></div></pre></td></tr></table></figure>
+<h3 id="全局作用域"><a href="#全局作用域" class="headerlink" title="全局作用域"></a>全局作用域</h3><p>JavaScript默认有一个全局对象window，全局作用域的变量实际上被绑定到window的一个属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> course = <span class="string">'Learn JavaScript'</span>;</div><div class="line">alert(course); <span class="comment">// 'Learn JavaScript'</span></div><div class="line">alert(<span class="built_in">window</span>.course); <span class="comment">// 'Learn JavaScript'</span></div></pre></td></tr></table></figure></p>
+<h3 id="局部作用域"><a href="#局部作用域" class="headerlink" title="局部作用域"></a>局部作用域</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">100</span>; i++) &#123;</div><div class="line">        sum += i;</div><div class="line">    &#125;</div><div class="line">    i += <span class="number">1</span>; <span class="comment">// SyntaxError</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x, y, f</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> f(x) + f(y);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>由于map()方法定义在JavaScript的Array中，我们调用Array的map()方法，传入我们自己的函数，就得到了一个新的Array作为结果：</p>
+<h4 id="map"><a href="#map" class="headerlink" title="map()"></a>map()</h4><p>Array中有map()方法，其作用用下面的例子来展示：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">pow</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> x * x;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>];</div><div class="line">arr.map(pow); <span class="comment">// [1, 4, 9, 16, 25, 36, 49, 64, 81]</span></div></pre></td></tr></table></figure></p>
+<p>map()传入的参数是pow，即函数对象本身。</p>
+<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce()"></a>reduce()</h4><p>Array的reduce()把一个函数作用在这个Array的[x1,x2,x3…]上，这个函数必须接收两个参数，reduce()把结果继续和序列的下一个元素做累积计算。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>];</div><div class="line">arr.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">x, y</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> x + y;</div><div class="line">&#125;); <span class="comment">// 25</span></div></pre></td></tr></table></figure></p>
+<p>其作用就相当于是做了累加。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/29/JavaScript学习/" data-id="cj2217gsy00054wtxfhsahpzt" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-CRM" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -117,7 +200,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/28/CRM/" data-id="cj220y2vv0000sstxushrp1j4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/28/CRM/" data-id="cj2217gri00004wtxpz7epx9f" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -176,7 +259,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/18/SVN/" data-id="cj220y2x9000esstxcwiibpmp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/18/SVN/" data-id="cj2217gtq000e4wtxmbr0k2i7" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -294,7 +377,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/16/spring框架学习三/" data-id="cj220y2x8000dsstxmlkbjpc0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/16/spring框架学习三/" data-id="cj2217gts000f4wtxl979cdgz" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -483,7 +566,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/11/spring框架学习二/" data-id="cj220y2wq000bsstxg4u67miv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/11/spring框架学习二/" data-id="cj2217gtd000c4wtxys8r9ad0" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -659,7 +742,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj220y2ws000csstxpz2o73zu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj2217gt800094wtxpnt9cln6" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -746,7 +829,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj220y2wh0006sstx4e80coce" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj2217gs200014wtxinosv6r4" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -787,7 +870,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj220y2wd0005sstxc6gvspwf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj2217gs700034wtx79z4pbf3" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -835,7 +918,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj220y2wo0009sstxll5brhfp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj2217gte000d4wtxequjrhya" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -873,89 +956,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj220y2wl0008sstxifqn9aob" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Hibernate入门" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/31/Hibernate入门/" class="article-date">
-  <time datetime="2017-03-31T14:21:20.474Z" itemprop="datePublished">2017-03-31</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/31/Hibernate入门/">Hibernate入门</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>date: 2017-03-25 15:14:21</p>
-<h1 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h1><h2 id="sample1"><a href="#sample1" class="headerlink" title="sample1"></a>sample1</h2><h3 id="三层框架"><a href="#三层框架" class="headerlink" title="三层框架"></a>三层框架</h3><p>Spring管理每一个架构层<br>Struts2 架构最简单（<strong>源码相对简单</strong>）<br>Hibernate 架构最复杂，使用以及思想都很简单</p>
-<h3 id="ORM框架"><a href="#ORM框架" class="headerlink" title="ORM框架"></a>ORM框架</h3><p>ORM Object Relational Mapping 对象关系映射<br>O：对象<br>R：关系（表）<br>M：映射</p>
-<p>Orm元素—》配置文件</p>
-<p>常用的ORM框架：Hibernate  MyBatis</p>
-<h3 id="Hibernate的作用"><a href="#Hibernate的作用" class="headerlink" title="Hibernate的作用"></a>Hibernate的作用</h3><ul>
-<li>会使对数据库的操作变成对对象的操作</li>
-</ul>
-<h3 id="我们需要做的"><a href="#我们需要做的" class="headerlink" title="我们需要做的"></a>我们需要做的</h3><ul>
-<li>自动生成sql语句</li>
-<li>配置对象和表的对应关系</li>
-</ul>
-<h3 id="Hibernate配置"><a href="#Hibernate配置" class="headerlink" title="Hibernate配置"></a>Hibernate配置</h3><ol>
-<li>导包 ： 核心 必须  jpa规范  数据库驱动</li>
-</ol>
-<p>创建lib文件夹 ：hibernate-distribution-3.6.10.Final —-&gt;  required jpa                                       mysql-connector-java-5.0.8-bin mysql-connector-java-5.0.8-bin.jar</p>
-<ol>
-<li>build path</li>
-<li>创建数据库和表</li>
-<li>配置核心配置文件 hibernate.cfg.xml</li>
-<li>自己编写映射文件 User.hbm.xml  复制/org/hibernate/hibernate-mapping-3.0.dtd中的语句</li>
-</ol>
-<h4 id="使用资源"><a href="#使用资源" class="headerlink" title="使用资源"></a>使用资源</h4><p>读取配置文件:</p>
-<p><code>Configuration conf = new Configuration().configure();</code></p>
-<p>根据配置创建Factory:</p>
-<p><code>SessionFactory sessionFactory = conf.buildSessionFactory();</code></p>
-<p>创建session对象:</p>
-<p><code>Session session = sessionFactory.openSession();</code></p>
-<p>操作数据库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">      User u = new User();</div><div class="line">u.setName(<span class="string">"san"</span>);</div><div class="line">u.setPassword(<span class="string">"123"</span>);</div><div class="line">session.save(u);//面向对象的操作</div></pre></td></tr></table></figure></p>
-<p>关闭资源：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">session.close();</div><div class="line">sessionFactory.close();</div></pre></td></tr></table></figure></p>
-<h4 id="创建HibernateUtils类"><a href="#创建HibernateUtils类" class="headerlink" title="创建HibernateUtils类"></a>创建HibernateUtils类</h4><p>创建HibernateUtils类可以简化开发，避免在开发中重复使用相同的语句。</p>
-<pre><code class="bash">private static SessionFactory sf;
-static{
-    //1.加载配置
-    Configuration conf = new Configuration().configure();
-    //2.创建sessionFactory;
-    SessionFactory sf = conf.buildSessionFactory();
-    Runtime.getRuntime().addShutdownHook(new Thread(new <span class="function"><span class="title">Runnable</span></span>() {
-            @Override
-            public void <span class="function"><span class="title">run</span></span>() {
-                System.out.println(<span class="string">"虚拟机关闭!释放资源"</span>);
-                sf.close();
-            }
-        }));
-    }
-</code></pre>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj220y2w80003sstx60r099xw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj2217gt100074wtx0j2bj4b2" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -994,9 +995,13 @@ static{
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/04/29/JavaScript学习/">JavaScript学习</a>
+          </li>
         
           <li>
             <a href="/2017/04/28/CRM/">CRM</a>
@@ -1014,10 +1019,6 @@ static{
             <a href="/2017/04/11/spring框架学习二/">spring框架学习二</a>
           </li>
         
-          <li>
-            <a href="/2017/04/06/Spring框架学习一/">(no title)</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -1031,7 +1032,7 @@ static{
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Yao<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
