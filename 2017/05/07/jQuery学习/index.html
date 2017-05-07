@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>jQuery学习 | We-Param</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="标签 ： jQuery
+
+[属性名]       获得指定属性名的元素[属性名=值]    获得属性名 等于 指定值的元素[属性名！=值]  获得属性名 不等于 指定值 的元素
+[as1][as2][as3]… 复合选择器，多个条件同时成立。类似 where …and…and
+[属性名^=值]   获得以属性值  开头  的元素[属性名$=值]   获得以属性值  结尾  的元素[属性名*=值]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery学习">
+<meta property="og:url" content="http://yoursite.com/2017/05/07/jQuery学习/index.html">
+<meta property="og:site_name" content="We-Param">
+<meta property="og:description" content="标签 ： jQuery
+
+[属性名]       获得指定属性名的元素[属性名=值]    获得属性名 等于 指定值的元素[属性名！=值]  获得属性名 不等于 指定值 的元素
+[as1][as2][as3]… 复合选择器，多个条件同时成立。类似 where …and…and
+[属性名^=值]   获得以属性值  开头  的元素[属性名$=值]   获得以属性值  结尾  的元素[属性名*=值]">
+<meta property="og:updated_time" content="2017-05-07T13:36:23.031Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery学习">
+<meta name="twitter:description" content="标签 ： jQuery
+
+[属性名]       获得指定属性名的元素[属性名=值]    获得属性名 等于 指定值的元素[属性名！=值]  获得属性名 不等于 指定值 的元素
+[as1][as2][as3]… 复合选择器，多个条件同时成立。类似 where …and…and
+[属性名^=值]   获得以属性值  开头  的元素[属性名$=值]   获得以属性值  结尾  的元素[属性名*=值]">
+  
+    <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">We-Param</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-jQuery学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/07/jQuery学习/" class="article-date">
+  <time datetime="2017-05-07T13:36:16.624Z" itemprop="datePublished">2017-05-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jQuery学习
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： jQuery</p>
+<hr>
+<p>[属性名]       获得指定属性名的元素<br>[属性名=值]    获得属性名 等于 指定值的元素<br>[属性名！=值]  获得属性名 不等于 指定值 的元素</p>
+<p>[as1][as2][as3]… 复合选择器，多个条件同时成立。类似 where …and…and</p>
+<p>[属性名^=值]   获得以属性值  开头  的元素<br>[属性名$=值]   获得以属性值  结尾  的元素<br>[属性名*=值]   获得   含有属性值   的元素<br>[属性名]  获得指定属性名的元素</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>)</span>&#123;</div><div class="line">        $(<span class="string">"#btn1"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            $(<span class="string">"div[title]"</span>).css(<span class="string">"background-color"</span>,<span class="string">"#000"</span>);</div><div class="line">        &#125;);</div><div class="line"></div><div class="line"></div><div class="line">        $(<span class="string">"#btn1"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            $(<span class="string">"div[title='test']"</span>).css(<span class="string">"background-color"</span>,<span class="string">"#000"</span>);</div><div class="line">        &#125;);</div><div class="line"></div><div class="line"></div><div class="line">        $(<span class="string">"#btn1"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            $(<span class="string">"div[title!='test']"</span>).css(<span class="string">"background-color"</span>,<span class="string">"#000"</span>);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="文档处理"><a href="#文档处理" class="headerlink" title="文档处理"></a>文档处理</h2><h3 id="一-内部插入"><a href="#一-内部插入" class="headerlink" title="一 内部插入"></a>一 内部插入</h3><p>append(content | fn)<br>appendTo(content)<br>prepend(content | fn)<br>prependTo(content) </p>
+<p>A.append(B)  将B插入到A的内部后面（之后的串联操作，操作A）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">A</span>&gt;</span></div><div class="line">	....</div><div class="line">	<span class="tag">&lt;<span class="name">B</span>&gt;</span><span class="tag">&lt;/<span class="name">B</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">A</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>A.prepend(B) 将B插入到A的内部前面<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">A</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">B</span>&gt;</span><span class="tag">&lt;/<span class="name">B</span>&gt;</span></div><div class="line">	....</div><div class="line"><span class="tag">&lt;<span class="name">A</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>A.appendTo(B) 将A插入到B的内部后面 （之后的串联操作，操作A）<br>A.prependTo(B) 将A插入到B的内部前面</p>
+<h3 id="二-外部插入"><a href="#二-外部插入" class="headerlink" title="二 外部插入"></a>二 外部插入</h3><p>after(content | fn)<br>before(content | fn)<br>insertAfter(content)<br>insertBefore(content) </p>
+<p>A.after(B)  , 将B插入到A后面（同级）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">A</span>&gt;</span><span class="tag">&lt;/<span class="name">A</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">B</span>&gt;</span><span class="tag">&lt;/<span class="name">B</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>A.before(B) ，将B插入到A前面<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">B</span>&gt;</span><span class="tag">&lt;/<span class="name">B</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">A</span>&gt;</span><span class="tag">&lt;/<span class="name">A</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<hr>
+<p>A.insertAfter(B) , 将A插入到B后面（同级）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">B</span>&gt;</span><span class="tag">&lt;/<span class="name">B</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">A</span>&gt;</span><span class="tag">&lt;/<span class="name">A</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>A.insertBefore(B) 将A插入到B前面<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">A</span>&gt;</span><span class="tag">&lt;/<span class="name">A</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">B</span>&gt;</span><span class="tag">&lt;/<span class="name">B</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h3 id="三-删除"><a href="#三-删除" class="headerlink" title="三 删除"></a>三 删除</h3><p>empty()<br>remove([expr])<br>detach([expr]) </p>
+<p>empty()  清空标签体<br>remove() 删除当前对象。如果之后再使用，元素本身保留，绑定事件 或 绑定数据 都会被移除<br>detach() 删除当前对象。如果之后再使用，元素本身保留，绑定事件 或 绑定数据 都保留</p>
+<ul>
+<li>绑定数据<br>  data(name) 获得<br>  data(name,value) 设置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">// 将city移除，再追加body后面</div><div class="line">	</div><div class="line">	//#1 绑定事件</div><div class="line">	$(&quot;#city&quot;).click(function()&#123;</div><div class="line">		alert(&quot;哈哈&quot;);</div><div class="line">	&#125;);</div><div class="line">	//#2 绑定数据</div><div class="line">	$(&quot;#city&quot;).data(&quot;yao&quot;,&quot;bang&quot;);</div><div class="line">	</div><div class="line">	</div><div class="line">	//1 移除</div><div class="line">	var $city = $(&quot;#city&quot;).remove(); //移除绑定的事件、移除绑定的数据</div><div class="line">//	var $city = $(&quot;#city&quot;).detach(); //保留绑定的事件、保留绑定的数据</div><div class="line">	</div><div class="line">	</div><div class="line">	//2 追加</div><div class="line">	$(&quot;body&quot;).append($city);</div><div class="line">	</div><div class="line">	</div><div class="line">	//#3获得绑定的数据</div><div class="line">	alert($(&quot;#city&quot;).data(&quot;yao&quot;));</div></pre></td></tr></table></figure>
+<h2 id="筛选"><a href="#筛选" class="headerlink" title="筛选"></a>筛选</h2><h3 id="一-过滤"><a href="#一-过滤" class="headerlink" title="一 过滤"></a>一 过滤</h3><p>eq(index)<br>first()<br>last()<br>hasClass(class)<br>filter(expr | fn)<br>is(expr)<br>map(callback)<br>has(expr)<br>not(expr)<br>slice(start, [end]) </p>
+<p>eq(index | -index)  类型 :eq()<br>····    index：正数，从头开始获得指定索引的元素。这个元素的位置是从0算起。0表示第一个<br>····     -index：负数，从尾开始获得指定索引的元素。1算起。 -1表示最后一个</p>
+<p>first()    第一个  :first</p>
+<p>last()    最后一个  :last</p>
+<p>is()        判断</p>
+<p>hasClass()    判断是否是指定class 。<xxx class="my"><br>    这其实就是 is(“.” + class)。</xxx></p>
+<p>filter()  筛选出与指定表达式匹配的元素集合</p>
+<p>not()    将指定内容删除</p>
+<p>has()   子元素是否有</p>
+<p>slice(start , end)  截取元素 ，[2,4)  –&gt; 2,3</p>
+<p>map()  jQuery对象 拆分成  jQuery对象数组</p>
+<h3 id="二-查找"><a href="#二-查找" class="headerlink" title="二 查找"></a>二 查找</h3><p>children([expr])<br>closest([expr])<br>find(expr)<br>next([expr])<br>nextAll([expr])<br>nextUntil([expr])<br>offsetParent()<br>parent([expr])<br>parents([expr])<br>parentsUntil([expr])<br>prev([expr])<br>prevAll([expr])<br>prevUntil([expr])<br>siblings([expr]) </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">A</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">B</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">C</span>&gt;</span><span class="tag">&lt;/<span class="name">C</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">D</span>&gt;</span><span class="tag">&lt;/<span class="name">D</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">E</span>&gt;</span><span class="tag">&lt;/<span class="name">E</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">F</span>&gt;</span><span class="tag">&lt;/<span class="name">F</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">B</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">A</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>B.children([…])   获得所有的子元素。CDEF<br>A.find(D)  从指定的区域查询指定元素。D<br>D.next()    下一个兄弟。E<br>D.nextAll() 后面的所有兄弟。EF<br>E.prev()    上一个兄弟。D  （previous）<br>E.prevAll()  前面的所有兄弟。CD<br>E.siblings()    所有兄弟。CDF<br>E.parent()  父元素。B<br>E.closest(A)  向上获得指定的父元素（含自己），如果获得返回一个对象，如果没有没有对象。<br>//——————————</p>
+<p>C.nextUntil(E)  获得后面所有兄弟，直到指定条件位置。DE<br>F.prevUntil(D)  获得前面所有兄弟，直到指定条件位置。DE</p>
+<p>E.parents()   获得所有的父元素。AB</p>
+<ul>
+<li>closest和parents的主要区别是：<br>1，前者从当前元素开始匹配寻找，后者从父元素开始匹配寻找；<br>2，前者逐级向上查找，直到发现匹配的元素后就停止了，后者一直向上查找直到根元素，然后把这些元素放进一个临时集合中，再用给定的选择器表达式去过滤；<br>3，前者返回0或1个元素，后者可能包含0个，1个，或者多个元素。</li>
+</ul>
+<h3 id="三-串联"><a href="#三-串联" class="headerlink" title="三 串联"></a>三 串联</h3><p>A.add(B)  将A和B组合一个对象 。类型 $(“A,B”)<br>andSelf() ： 将之前对象添加到操作集合中<br>    A.children().andSelf()<br>       A    孩子    孩子和A<br>end() ：回到最近的一个”破坏性”操作之前<br>    A.children().children().end() .end()<br>    A   孩子   孙子        孩子  A<br>//———————————–<br>contents()  获得所有的子节点（子元素 和 文本）</p>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="comment">//1所有分组列表项默认都是隐藏的。</span></div><div class="line">		<span class="comment">//2 分组（span）可以点击，控制下面的列表项显示或隐藏</span></div><div class="line">		<span class="comment">//3 当前分组列表项显示，其他分页隐藏（同时只有一个显示）</span></div><div class="line">		</div><div class="line">		$(<span class="string">"div"</span>).children(<span class="string">"a"</span>).hide().prev(<span class="string">"span"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			$(<span class="keyword">this</span>).nextAll(<span class="string">"a"</span>).toggle().parent().siblings(<span class="string">"div"</span>).find(<span class="string">"a"</span>).hide();</div><div class="line">		&#125;);</div><div class="line">		</div><div class="line">	&#125;);</div></pre></td></tr></table></figure>
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><h3 id="一-事件"><a href="#一-事件" class="headerlink" title="一 . 事件"></a>一 . 事件</h3><p>blur( [fn] )      失去焦点<br>change( [fn] )    改变<br>click( [fn] )     单击<br>dblclick( [fn] )  双击<br>error( [fn] )     页面异常<br>focus( [fn] )     获得焦点<br>focusin( [fn] )<br>focusout( [fn] )<br>keydown( [fn] )<br>keypress( [fn] )<br>keyup( [fn] )<br>mousedown(fn)<br>mousemove(fn)<br>mouseout(fn)      鼠标移出<br>mouseover(fn)     鼠标移入<br>mouseup(fn)       鼠标弹起<br>resize(fn)        改变大小<br>scroll(fn)        滚动<br>select( [fn] )    选择<br>submit( [fn] )<br>unload(fn)        页面卸载</p>
+<ul>
+<li>jQuery 提供额外的事件，用于完善javascript缺失的</li>
+<li><p>focusin 和 focusout<br>  focusin 获得焦点。js focus。</p>
+<pre><code>focusin事件跟focus事件区别在于，他可以在父元素上检测子元素获取焦点的情况。
+</code></pre><p>  focusout 失去焦点。js blur。</p>
+<pre><code>focusout事件跟blur事件区别在于，他可以在父元素上检测子元素失去焦点的情况。
+</code></pre></li>
+<li><p>mouseenter 和 mouseleave<br>  mouseenter 鼠标移入。js mouseover</p>
+<pre><code>与 mouseover 事件不同，只有在鼠标指针穿过被选元素时，才会触发 mouseenter 事件。如果鼠标指针穿过任何子元素，同样会触发 mouseover 事件。
+</code></pre><p>  mouseleave 鼠标移出。js mouseout</p>
+<pre><code>与 mouseout 事件不同，只有在鼠标指针离开被选元素时，才会触发 mouseleave 事件。如果鼠标指针离开任何子元素，同样会触发 mouseout 事件。
+</code></pre></li>
+</ul>
+<h3 id="二-页面加载"><a href="#二-页面加载" class="headerlink" title="二 . 页面加载"></a>二 . 页面加载</h3><p><strong><em>ready(in)</em></strong></p>
+<ul>
+<li><p>方式一：标准api<br>$(document).ready(function(){<br>});<br>等效于<br>jQuery(document).ready(fn);</p>
+</li>
+<li><p>方式二：简化版<br>$(function(){<br>});<br>等效于<br>jQuery(function{<br>});</p>
+</li>
+</ul>
+<p><strong>分析源码后总结</strong>：<br>$(document).ready(function(){<br>});</p>
+<p><strong><em>等效于</em></strong></p>
+<p>$(function(){<br>});</p>
+<h3 id="三-处理"><a href="#三-处理" class="headerlink" title="三 . 处理"></a><strong><em>三 . 处理</em></strong></h3><p>bind(type, [data], fn)   给当前对象绑定一个事件。例如：A.bind(“click”, fn );  类型：A.click( fn );<br>unbind(type )            解绑bind绑定事件</p>
+<p>one(type, [data], fn)    给当前对象绑定一次事件。<br>//——————————————————————————<br>trigger(type, [data])<br>triggerHandler(type, [data])<br>unbind([type], [data])</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">	&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"../js/jquery-1.8.3.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">	&lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line">		$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"><span class="comment">//	&lt;input id="h01" type="button" value="1 只能点击一次，之后失效" /&gt; </span></div><div class="line">			$(<span class="string">"#h01"</span>).one(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				alert(<span class="string">"看到一次"</span>);</div><div class="line">			&#125;);</div><div class="line"><span class="comment">//	&lt;input id="h02" type="button" value="2可以点击多次" /&gt;</span></div><div class="line">			<span class="comment">//jQuery 事件别名，格式：事件.别名</span></div><div class="line">			$(<span class="string">"#h02"</span>).bind(<span class="string">"click.a"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				alert(<span class="string">"111"</span>);</div><div class="line">			&#125;);</div><div class="line">			$(<span class="string">"#h02"</span>).bind(<span class="string">"click.b"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				alert(<span class="string">"222"</span>);</div><div class="line">			&#125;);</div><div class="line"><span class="comment">//	&lt;input id="h03" type="button" value="3解绑2" /&gt; </span></div><div class="line">			$(<span class="string">"#h03"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				$(<span class="string">"#h02"</span>).unbind(<span class="string">"click.b"</span>);</div><div class="line">			&#125;);</div><div class="line"><span class="comment">//	&lt;input type="button" value="4 添加一个按钮，样式为myClass，且拥有相同的事件" class="myClass" /&gt;</span></div><div class="line">			$(<span class="string">".myClass"</span>).live(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				$(<span class="string">"body"</span>).append(<span class="string">"&lt;input type='button' class='myClass' /&gt;"</span>);</div><div class="line">			&#125;);</div><div class="line"><span class="comment">//	&lt;input id="h05" type="button" value="5 解绑4"/&gt; </span></div><div class="line">			$(<span class="string">"#h05"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				$(<span class="string">".myClass"</span>).die(<span class="string">"click"</span>);</div><div class="line">			&#125;);</div><div class="line">		&#125;);</div><div class="line">	<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure>
+<p>3.3.2    委派<br>live(type , fn) 绑定事件，之后动态添加同样的成员，也具有相同的事件。<br>die(type) 解绑事件</p>
+<p>3.3.3    切换</p>
+<p>hover(over , out)<br>简化版，鼠标移入和移出  ，A.mouseover( fn ).mouseout( fn)  简化 A.hover( fn , fn )</p>
+<p>toggle( fn , fn , fn ,…) 执行click事件，每点击一次执行一个fn</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/07/jQuery学习/" data-id="cj2eqstd5000a4ktxipo6o9ny" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/05/04/JavaScript学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JavaScript学习</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/07/jQuery学习/">jQuery学习</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/JavaScript学习/">JavaScript学习</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/28/CRM/">CRM</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/18/SVN/">SVN</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/16/spring框架学习三/">spring框架学习三</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Yao<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
