@@ -66,8 +66,8 @@
   
     <article id="post-Mybatis学习" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/05/13/Mybatis学习/" class="article-date">
-  <time datetime="2017-05-13T14:03:16.040Z" itemprop="datePublished">2017-05-13</time>
+    <a href="/2017/05/14/Mybatis学习/" class="article-date">
+  <time datetime="2017-05-14T14:21:09.349Z" itemprop="datePublished">2017-05-14</time>
 </a>
     
   </div>
@@ -78,7 +78,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/13/Mybatis学习/">Mybatis学习</a>
+      <a class="article-title" href="/2017/05/14/Mybatis学习/">Mybatis学习</a>
     </h1>
   
 
@@ -132,7 +132,8 @@
 <li>包装Pojo类型</li>
 <li>Map</li>
 </ul>
-<h3 id="5-2-输出映射"><a href="#5-2-输出映射" class="headerlink" title="5.2 输出映射"></a>5.2 输出映射</h3><h4 id="5-2-1-resultType"><a href="#5-2-1-resultType" class="headerlink" title="5.2.1 resultType"></a>5.2.1 resultType</h4><h4 id="5-2-2-resultMap"><a href="#5-2-2-resultMap" class="headerlink" title="5.2.2    resultMap"></a>5.2.2    resultMap</h4><ul>
+<h3 id="5-2-输出映射"><a href="#5-2-输出映射" class="headerlink" title="5.2 输出映射"></a>5.2 输出映射</h3><h4 id="5-2-1-resultType"><a href="#5-2-1-resultType" class="headerlink" title="5.2.1 resultType"></a>5.2.1 resultType</h4><h4 id="5-2-2-resultMap"><a href="#5-2-2-resultMap" class="headerlink" title="5.2.2    resultMap"></a>5.2.2    resultMap</h4><p>resultMap可以进行高级结果映射<strong>（一对一、一对多映射)</strong></p>
+<ul>
 <li><p>使用resultType进行结果映射时，需要查询出的列名和映射的对象的属性名一致，才能映射成功。</p>
 </li>
 <li><p>如果查询的列名和对象的属性名全部不一致，那么映射的对象为空。</p>
@@ -144,13 +145,21 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;!-- resultMap入门 --&gt;</div><div class="line">	&lt;!-- id标签：专门为查询结果中唯一列映射 --&gt;</div><div class="line">	&lt;!-- result标签：映射查询结果中的普通列 --&gt;</div><div class="line">	&lt;resultMap type=&quot;user&quot; id=&quot;UserRstMap&quot;&gt;</div><div class="line">		&lt;id column=&quot;id_&quot; property=&quot;id&quot; /&gt;</div><div class="line">		&lt;result column=&quot;username_&quot; property=&quot;username&quot; /&gt;</div><div class="line">		&lt;result column=&quot;sex_&quot; property=&quot;sex&quot; /&gt;</div><div class="line">	&lt;/resultMap&gt;</div><div class="line"></div><div class="line">	&lt;select id=&quot;findUserRstMap&quot; parameterType=&quot;int&quot; resultMap=&quot;UserRstMap&quot;&gt;</div><div class="line">		Select id id_,username username_,sex sex_ from user where id = #&#123;id&#125;</div><div class="line">	&lt;/select&gt;</div></pre></td></tr></table></figure>
 <h3 id="5-3-动态sql"><a href="#5-3-动态sql" class="headerlink" title="5.3 动态sql"></a>5.3 动态sql</h3><p>在mybatis中，它提供了一些动态sql标签，可以更快地进行mybatis的开发，这些动态sql可以提高sql的可重用性。<br>常用的动态sql标签：if标签、where标签、sql片段、foreach标签</p>
+<ul>
+<li><p>If标签：作为判断入参来使用的，如果符合条件，则把if标签体内的SQL拼接上。<br>注意：用if进行判断是否为空时，不仅要判断null，也要判断空字符串‘’；</p>
+</li>
+<li><p>Where标签：会去掉条件中的第一个and符号。</p>
+</li>
+<li><p>向sql传递数组或List时，mybatis使用foreach解析数组里的参数并拼接到SQL中。</p>
+</li>
+</ul>
 <p><strong><em>sql片段</em></strong><br>sql片段可提高代码的重用性。<br>sql片段需要先定义后使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 定义sql片段 --&gt;</div><div class="line">	&lt;!-- sql片段内，可以定义sql语句中任何部分 --&gt;</div><div class="line">	&lt;!-- sql片段内，最好不用将where和select关键字声明在内 --&gt;</div><div class="line">	&lt;sql id=&quot;whereClause&quot;&gt;</div><div class="line">		&lt;!-- if标签：可以对输入的参数进行判断 --&gt;</div><div class="line">		&lt;!-- test:指定判断表达式 --&gt;</div><div class="line">		&lt;if test=&quot;user != null&quot;&gt;</div><div class="line">			&lt;if test=&quot;user.username != null and user.username != &apos;&apos;&quot;&gt;</div><div class="line">				AND username LIKE &apos;%$&#123;user.username&#125;%&apos;</div><div class="line">			&lt;/if&gt;</div><div class="line">			&lt;if test=&quot;user.sex != null and user.sex != &apos;&apos;&quot;&gt;</div><div class="line">				AND sex = #&#123;user.sex&#125;</div><div class="line">			&lt;/if&gt;</div><div class="line">		&lt;/if&gt;</div><div class="line">		</div><div class="line">&lt;!-- 综合查询，查询用户列表 --&gt;</div><div class="line">	&lt;select id=&quot;findUserList&quot; parameterType=&quot;com.yao.mybatis.po.UserQueryVO&quot;</div><div class="line">		resultType=&quot;user&quot;&gt;</div><div class="line">		SELECT * FROM user</div><div class="line">		&lt;!-- where标签：默认去掉后面第一个AND，如果没有参数，则把自己干掉 --&gt;</div><div class="line">		&lt;where&gt;</div><div class="line">			&lt;!-- 引入sql片段 --&gt;</div><div class="line">			&lt;include refid=&quot;whereClause&quot; /&gt;</div><div class="line">		&lt;/where&gt;</div><div class="line">	&lt;/select&gt;</div><div class="line"></div><div class="line">	&lt;!-- 综合查询用户总数 --&gt;</div><div class="line">	&lt;select id=&quot;findUserCount&quot; parameterType=&quot;com.yao.mybatis.po.UserQueryVO&quot;</div><div class="line">		resultType=&quot;int&quot;&gt;</div><div class="line">		SELECT count(*) FROM user</div><div class="line">		&lt;!-- where标签：默认去掉后面第一个AND，如果没有参数，则把自己干掉 --&gt;</div><div class="line">		&lt;where&gt;</div><div class="line">			&lt;!-- 引入sql片段 --&gt;</div><div class="line">			&lt;include refid=&quot;whereClause&quot; /&gt;</div><div class="line">		&lt;/where&gt;</div><div class="line">	&lt;/select&gt;</div></pre></td></tr></table></figure></p>
 <p><strong><em><code>&lt;for:each&gt;</code>标签</em></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;if test=&quot;idList != null&quot;&gt;</div><div class="line">			&lt;!-- AND id IN (#&#123;id&#125;,#&#123;id&#125;,#&#123;id&#125;) --&gt;</div><div class="line"></div><div class="line">			&lt;!-- collection：表示pojo中集合属性的属性名称 --&gt;</div><div class="line">			&lt;!-- item:为遍历出的结果声明一个变量名称 --&gt;</div><div class="line">			&lt;!-- open：遍历开始时，需要拼接的字符串 --&gt;</div><div class="line">			&lt;!-- close:遍历结束时，需要拼接的字符串 --&gt;</div><div class="line">			&lt;!-- separator：遍历中间需要拼接的连接符 --&gt;</div><div class="line">			AND id IN</div><div class="line">			&lt;foreach collection=&quot;idList&quot; item=&quot;id&quot; open=&quot;(&quot; close=&quot;)&quot;</div><div class="line">				separator=&quot;,&quot;&gt;</div><div class="line">				#&#123;id&#125;</div><div class="line">			&lt;/foreach&gt;</div><div class="line">		&lt;/if&gt;</div></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/13/Mybatis学习/" data-id="cj2ncg0y8000hjstxirsut54h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/14/Mybatis学习/" data-id="cj2ou0ox4000i9ctxra06e4c2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -203,7 +212,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/10/Webservice/" data-id="cj2ncg0y9000ijstx61mx96n6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/10/Webservice/" data-id="cj2ou0owz000h9ctxx68bhwvs" class="article-share-link">Share</a>
       
       
     </footer>
@@ -331,7 +340,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/08/jQuery学习/" data-id="cj2ncg0xr000cjstx348upkan" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/08/jQuery学习/" data-id="cj2ou0ows000g9ctx6frqlrnb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -458,7 +467,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/04/JavaScript学习/" data-id="cj2ncg0w40005jstxx02ryicu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/04/JavaScript学习/" data-id="cj2ou0ow300089ctxrro3o4g0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -521,7 +530,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/28/CRM/" data-id="cj2ncg0wm0006jstxqfnap8zv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/28/CRM/" data-id="cj2ou0ovh00009ctxr93y7kjc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -580,7 +589,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/18/SVN/" data-id="cj2ncg0xt000ejstxveb1npkb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/18/SVN/" data-id="cj2ou0ow500099ctxcypwza22" class="article-share-link">Share</a>
       
       
     </footer>
@@ -698,7 +707,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/16/spring框架学习三/" data-id="cj2ncg0xu000fjstx94i08sog" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/16/spring框架学习三/" data-id="cj2ou0owa000e9ctxspl2ozi9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -887,7 +896,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/11/spring框架学习二/" data-id="cj2ncg0y5000gjstxgdkfgjf8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/11/spring框架学习二/" data-id="cj2ou0owb000f9ctxz7efgp8b" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1063,7 +1072,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj2ncg0xn000ajstx79h9dxsd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj2ou0ow5000a9ctx6fqky8a1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1150,7 +1159,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj2ncg0uv0000jstxhueq6gbf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj2ou0ovm00019ctxbzlf7pat" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1194,7 +1203,7 @@ throws ,可省略，一般不写。
       <ul>
         
           <li>
-            <a href="/2017/05/13/Mybatis学习/">Mybatis学习</a>
+            <a href="/2017/05/14/Mybatis学习/">Mybatis学习</a>
           </li>
         
           <li>
