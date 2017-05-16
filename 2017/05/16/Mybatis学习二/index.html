@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Mybatis学习二 | We-Param</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="标签 ： Mybatis
+
+一 . 高级结果映射高级结果映射包括：一对一、一对多、多对多（没有多对一）
+结果映射可以使用两种方式：resultType resultMap
+两者存在一定的区别：
+
+resultType使用resultType来进行一对一结果映射，查询出的列的个数和映射的属性的个数要一致。而且映射的属性要存在于一个大对象中，它是一种平铺式的映射，即数据库查询出多少条记录，则映射成多少">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis学习二">
+<meta property="og:url" content="http://yoursite.com/2017/05/16/Mybatis学习二/index.html">
+<meta property="og:site_name" content="We-Param">
+<meta property="og:description" content="标签 ： Mybatis
+
+一 . 高级结果映射高级结果映射包括：一对一、一对多、多对多（没有多对一）
+结果映射可以使用两种方式：resultType resultMap
+两者存在一定的区别：
+
+resultType使用resultType来进行一对一结果映射，查询出的列的个数和映射的属性的个数要一致。而且映射的属性要存在于一个大对象中，它是一种平铺式的映射，即数据库查询出多少条记录，则映射成多少">
+<meta property="og:updated_time" content="2017-05-16T15:10:41.845Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mybatis学习二">
+<meta name="twitter:description" content="标签 ： Mybatis
+
+一 . 高级结果映射高级结果映射包括：一对一、一对多、多对多（没有多对一）
+结果映射可以使用两种方式：resultType resultMap
+两者存在一定的区别：
+
+resultType使用resultType来进行一对一结果映射，查询出的列的个数和映射的属性的个数要一致。而且映射的属性要存在于一个大对象中，它是一种平铺式的映射，即数据库查询出多少条记录，则映射成多少">
+  
+    <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">We-Param</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Mybatis学习二" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/16/Mybatis学习二/" class="article-date">
+  <time datetime="2017-05-16T15:10:37.012Z" itemprop="datePublished">2017-05-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mybatis学习二
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： Mybatis</p>
+<hr>
+<h2 id="一-高级结果映射"><a href="#一-高级结果映射" class="headerlink" title="一 . 高级结果映射"></a>一 . 高级结果映射</h2><p>高级结果映射包括：<strong><em>一对一、一对多、多对多（没有多对一）</em></strong></p>
+<p>结果映射可以使用两种方式：<strong><em>resultType</em></strong> <strong><em>resultMap</em></strong></p>
+<p>两者存在一定的区别：</p>
+<ul>
+<li><p><strong>resultType</strong><br>使用resultType来进行一对一结果映射，查询出的列的个数和映射的属性的个数要一致。而且映射的属性要存在于一个大对象中，它是一种平铺式的映射，即数据库查询出多少条记录，则映射成多少个对象。</p>
+</li>
+<li><p><strong>resultMap</strong><br>在一对一结果映射时，使用resultType更加简单方便，如果有特殊要求（对象嵌套对象）时，需要使用resultMap进行映射。比如：查询订单列表，然后在点击列表中的查看订单明细按钮，这个时候就需要使用resultMap进行结果映射。而resultType更适应于查询明细信息，比如，查询订单明细列表。</p>
+</li>
+</ul>
+<p>在实际开发中，从对象的角度出发，resultMap使用相对更多。</p>
+<h3 id="resultType使用示例"><a href="#resultType使用示例" class="headerlink" title="resultType使用示例"></a>resultType使用示例</h3><p>想要实现的功能：查询订单信息，并关联用户的信息</p>
+<ul>
+<li><p>拓展orders类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrdersExt</span> <span class="keyword">extends</span> <span class="title">Orders</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> String username;</div><div class="line">	<span class="keyword">private</span> String sex;</div></pre></td></tr></table></figure>
+</li>
+<li><p>映射文件<br>注意sql语句（即需要打印的信息）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"com.yao.mybatis.mapper.OrdersMapper"</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!-- 一对一映射之resultType --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findOrdersAndUser"</span> <span class="attr">resultType</span>=<span class="string">"com.yao.mybatis.po.OrdersExt"</span>&gt;</span></div><div class="line">		SELECT</div><div class="line">		orders.`id`,</div><div class="line">		orders.`user_id`,</div><div class="line">		orders.`number`,</div><div class="line">		user.`username`,</div><div class="line">		user.`sex`</div><div class="line">		FROM</div><div class="line">		orders,</div><div class="line">		USER</div><div class="line">		WHERE orders.`user_id` = user.`id`</div><div class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">mapper</span>/&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>Mapper接口</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> interface <span class="title">OrderMapper</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;OrderExt&gt; <span class="title">findOrdersAndUser</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>测试代码<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> SqlSessionFactory sqlSessionFactory;</div><div class="line"></div><div class="line">	<span class="meta">@Before</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">		<span class="comment">// 读取配置文件</span></div><div class="line">		<span class="comment">// 全局配置文件的路径</span></div><div class="line">		String resource = <span class="string">"SqlMapConfig.xml"</span>;</div><div class="line">		InputStream inputStream = Resources.getResourceAsStream(resource);</div><div class="line">		<span class="comment">// 创建SqlSessionFactory</span></div><div class="line">		sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindOrdersAndUser</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="comment">// 创建OrdersMapper对象</span></div><div class="line">		SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line"></div><div class="line">		OrdersMapper mapper = sqlSession.getMapper(OrdersMapper.class);</div><div class="line"></div><div class="line">		List&lt;OrdersExt&gt; list = mapper.findOrdersAndUser();</div><div class="line"></div><div class="line">		sqlSession.close();</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>打印出的结果是平铺的，有几条查询结果就有几个对象。</p>
+<h2 id="二-延迟加载"><a href="#二-延迟加载" class="headerlink" title="二 . 延迟加载"></a>二 . 延迟加载</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/16/Mybatis学习二/" data-id="cj2rp4vne00094otx4emj9n8u" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/05/15/Mybatis学习一/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mybatis学习一</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/16/Mybatis学习二/">Mybatis学习二</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/15/Mybatis学习一/">Mybatis学习一</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/14/Mybatis学习/">Mybatis学习</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/10/Webservice/">Webservice</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/08/jQuery学习/">jQuery学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Yao<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
