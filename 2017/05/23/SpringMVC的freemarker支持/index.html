@@ -3,18 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Struts2未登录拦截和权限控制 | We-Param</title>
+  <title>SpringMVC的freemarker支持 | We-Param</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="标签 ： Struts2 拦截器">
+  <meta name="description" content="标签 ： SpringMVC freemarker
+
+一 . 简介FreeMarker是一款模板引擎：即一种基于模板和要改变的数据，并用来生成输出文本（HTML网页、电子邮件、配置文件、源代码等）的通用工具。
+FreeMarker 的设计实际上是被用来生成HTML网页，尤其是通过基于实现了MVC模式的Servlet应用程序。使用MVC 模式的动态网页的构思使得你可以将前端设计者(编写HTML)从程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Struts2未登录拦截和权限控制">
-<meta property="og:url" content="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/index.html">
+<meta property="og:title" content="SpringMVC的freemarker支持">
+<meta property="og:url" content="http://yoursite.com/2017/05/23/SpringMVC的freemarker支持/index.html">
 <meta property="og:site_name" content="We-Param">
-<meta property="og:description" content="标签 ： Struts2 拦截器">
-<meta property="og:updated_time" content="2017-03-31T14:47:37.736Z">
+<meta property="og:description" content="标签 ： SpringMVC freemarker
+
+一 . 简介FreeMarker是一款模板引擎：即一种基于模板和要改变的数据，并用来生成输出文本（HTML网页、电子邮件、配置文件、源代码等）的通用工具。
+FreeMarker 的设计实际上是被用来生成HTML网页，尤其是通过基于实现了MVC模式的Servlet应用程序。使用MVC 模式的动态网页的构思使得你可以将前端设计者(编写HTML)从程">
+<meta property="og:updated_time" content="2017-05-23T13:48:50.390Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Struts2未登录拦截和权限控制">
-<meta name="twitter:description" content="标签 ： Struts2 拦截器">
+<meta name="twitter:title" content="SpringMVC的freemarker支持">
+<meta name="twitter:description" content="标签 ： SpringMVC freemarker
+
+一 . 简介FreeMarker是一款模板引擎：即一种基于模板和要改变的数据，并用来生成输出文本（HTML网页、电子邮件、配置文件、源代码等）的通用工具。
+FreeMarker 的设计实际上是被用来生成HTML网页，尤其是通过基于实现了MVC模式的Servlet应用程序。使用MVC 模式的动态网页的构思使得你可以将前端设计者(编写HTML)从程">
   
     <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
   
@@ -63,10 +72,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Struts2未登录拦截和权限控制" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-SpringMVC的freemarker支持" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/03/31/Struts2未登录拦截和权限控制/" class="article-date">
-  <time datetime="2017-03-31T14:47:32.921Z" itemprop="datePublished">2017-03-31</time>
+    <a href="/2017/05/23/SpringMVC的freemarker支持/" class="article-date">
+  <time datetime="2017-05-23T13:48:35.767Z" itemprop="datePublished">2017-05-23</time>
 </a>
     
   </div>
@@ -77,7 +86,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Struts2未登录拦截和权限控制
+      SpringMVC的freemarker支持
     </h1>
   
 
@@ -85,13 +94,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>标签 ： Struts2 拦截器</p>
+        <p>标签 ： SpringMVC freemarker</p>
 <hr>
+<h2 id="一-简介"><a href="#一-简介" class="headerlink" title="一 . 简介"></a>一 . 简介</h2><p>FreeMarker是一款模板引擎：即一种基于模板和要改变的数据，并用来生成输出文本（HTML网页、电子邮件、配置文件、源代码等）的通用工具。</p>
+<p>FreeMarker 的设计实际上是被用来生成HTML网页，尤其是通过基于实现了MVC模式的Servlet应用程序。使用MVC 模式的动态网页的构思使得你可以将前端设计者(编写HTML)从程序员中分离出来。所有人各司其职，发挥其擅长的一面。网页设计师可以改写页面的显示效果而不受程序员编译代码的影响，因为应用程序的逻辑(Java程序)和页面设计(FreeMarker模板)已经分开了。页面模板代码不会受到复杂的程序代码影响。这种分离的思想即便对一个程序员和页面设计师是同一个人的项目来说都是非常有用的，因为分离使得代码保持简洁而且便于维护。</p>
+<p>尽管FreeMarker 也有编程能力，但它也不是像PHP那样的一种全面的编程语言。反而，Java程序准备的数据来显示(比如SQL 查询)，FreeMarker 仅仅使用模板生成文本页面来呈现已经准备好的数据。</p>
+<h2 id="二-实例编写"><a href="#二-实例编写" class="headerlink" title="二 . 实例编写"></a>二 . 实例编写</h2><ol>
+<li><p>jar包<br>包括Freemarker包和spring-context-support.jar</p>
+</li>
+<li><p>配置freemarker视图支持</p>
+</li>
+</ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj31o9508000bpwtx63bvs195" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/23/SpringMVC的freemarker支持/" data-id="cj31o950a000cpwtxq7ip8sj5" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -100,19 +118,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/04/01/log4j/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/05/23/SpringMVC学习/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Récent</strong>
       <div class="article-nav-title">
         
-          log4j
+          SpringMVC学习
         
       </div>
     </a>
   
   
-    <a href="/2017/03/31/Hibernate入门/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/05/18/Mybatis学习二/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Ancien</strong>
-      <div class="article-nav-title">Hibernate入门</div>
+      <div class="article-nav-title">Mybatis学习二</div>
     </a>
   
 </nav>

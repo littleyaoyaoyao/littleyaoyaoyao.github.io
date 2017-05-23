@@ -51,9 +51,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -63,6 +63,124 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-spring框架学习三" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/16/spring框架学习三/" class="article-date">
+  <time datetime="2017-04-16T13:52:46.238Z" itemprop="datePublished">2017-04-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/16/spring框架学习三/">spring框架学习三</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： spring 事务</p>
+<hr>
+<h2 id="一-spring事务管理"><a href="#一-spring事务管理" class="headerlink" title="一.spring事务管理"></a>一.spring事务管理</h2><h3 id="1-1-事务"><a href="#1-1-事务" class="headerlink" title="1.1 事务"></a>1.1 事务</h3><ul>
+<li><p>事务：一组业务操作ABCD，要么全部成功，要么全部不成功。</p>
+</li>
+<li><p>特性：ACID<br>  原子性：整体<br>  一致性：完成<br>  隔离性：并发<br>  持久性：结果</p>
+</li>
+<li><p>隔离问题：<br>  脏读：一个事务读到另一个事务没有提交的数据<br>  不可重复读：一个事务读到另一个事务已提交的数据（update）<br>  虚读(幻读)：一个事务读到另一个事务已提交的数据（insert）</p>
+</li>
+<li><p>隔离级别：<br>  read uncommitted：读未提交。存在3个问题<br>  read committed：读已提交。解决脏读，存在2个问题<br>  repeatable read：可重复读。解决：脏读、不可重复读，存在1个问题。<br>  serializable ：串行化。都解决，单事务。</p>
+</li>
+</ul>
+<h3 id="1-2-mysql事务操作"><a href="#1-2-mysql事务操作" class="headerlink" title="1.2 mysql事务操作"></a>1.2 mysql事务操作</h3><ul>
+<li><p>简单操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//ABCD 一个事务</span></div><div class="line">Connection conn = <span class="keyword">null</span>;</div><div class="line"><span class="keyword">try</span>&#123;</div><div class="line">  <span class="comment">//1 获得连接</span></div><div class="line">  conn = ...;</div><div class="line">  <span class="comment">//2 开启事务</span></div><div class="line">  conn.setAutoCommit(<span class="keyword">false</span>);</div><div class="line">  A</div><div class="line">  B</div><div class="line">  C</div><div class="line">  D</div><div class="line">  <span class="comment">//3 提交事务</span></div><div class="line">  conn.commit();</div><div class="line">&#125; <span class="keyword">catch</span>()&#123;</div><div class="line">  <span class="comment">//4 回滚事务</span></div><div class="line">  conn.rollback();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>Savepoint</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">需求：AB（必须），CD（可选） </div><div class="line">Connection conn = <span class="keyword">null</span>;</div><div class="line">Savepoint savepoint = <span class="keyword">null</span>;  <span class="comment">//保存点，记录操作的当前位置，之后可以回滚到指定的位置。（可以回滚一部分）</span></div><div class="line"><span class="keyword">try</span>&#123;</div><div class="line">  <span class="comment">//1 获得连接</span></div><div class="line">  conn = ...;</div><div class="line">  <span class="comment">//2 开启事务</span></div><div class="line">  conn.setAutoCommit(<span class="keyword">false</span>);</div><div class="line">  A</div><div class="line">  B</div><div class="line">  savepoint = conn.setSavepoint();</div><div class="line">  C</div><div class="line">  D</div><div class="line">  <span class="comment">//3 提交事务</span></div><div class="line">  conn.commit();</div><div class="line">&#125; <span class="keyword">catch</span>()&#123;</div><div class="line">     <span class="comment">// 回滚到CD之前</span></div><div class="line">     conn.rollback(savepoint);</div><div class="line">     <span class="comment">// 提交AB</span></div><div class="line">     conn.commit();</div><div class="line">  &#125; <span class="keyword">else</span>&#123;   <span class="comment">//AB异常</span></div><div class="line">     <span class="comment">// 回滚AB</span></div><div class="line">     conn.rollback();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1-3-spring事务————管理器和状态"><a href="#1-3-spring事务————管理器和状态" class="headerlink" title="1.3 spring事务————管理器和状态"></a>1.3 spring事务————管理器和状态</h3><ul>
+<li><p>导入jar包<br>transaction —&gt; tx</p>
+</li>
+<li><p>三个顶级接口</p>
+</li>
+</ul>
+<ul>
+<li><p>常见的事务管理器<br><strong><em>DataSourceTransactionManager</em></strong>：jdbc开发时事务管理器，采用JdbcTemplate<br><strong><em>HibernateTransactionManager</em></strong>：hibernate开发时事务管理器，整合hibernate</p>
+</li>
+<li><p>api详解<br>TransactionStatus getTransaction(TransactionDefinition definition) ，事务管理器 通过“事务详情”，获得“事务状态”，从而管理事务。<br>void commit(TransactionStatus status)  根据状态提交<br>void rollback(TransactionStatus status) 根据状态回滚</p>
+</li>
+<li><p>TransactionStatus</p>
+</li>
+<li><p><strong><em>事务详情TransactionDefinition</em></strong></p>
+</li>
+</ul>
+<h2 id="二-案例"><a href="#二-案例" class="headerlink" title="二.案例"></a>二.案例</h2><h3 id="2-1-AOP配置基于XML"><a href="#2-1-AOP配置基于XML" class="headerlink" title="2.1 AOP配置基于XML"></a>2.1 AOP配置基于XML</h3><p><strong>在spring xml 配置aop 自动生成代理，进行事务的管理</strong></p>
+<p>AccountDao.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AccountDao</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">out</span><span class="params">(String outer , Integer money)</span></span>;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">in</span><span class="params">(String inner , Integer money)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>AccountDaoImpl.java<br><strong><em>继承JdbcDaoSupport</em></strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//继承了JdbcDaoSupport</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountDaoImpl</span> <span class="keyword">extends</span> <span class="title">JdbcDaoSupport</span> <span class="keyword">implements</span> <span class="title">AccountDao</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">out</span><span class="params">(String outer, Integer money)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.getJdbcTemplate().update(<span class="string">"update account set money = money - ? where username = ?"</span> , money , outer);</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">in</span><span class="params">(String inner, Integer money)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.getJdbcTemplate().update(<span class="string">"update account set money = money - ? where username = ?"</span> , money , inner);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>AccountService.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AccountService</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transfer</span><span class="params">(String outer , String inner , Integer money)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>AccountServiceImpl.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> AccountDao accountDao;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAccountDao</span><span class="params">(AccountDao accountDao)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.accountDao = accountDao;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transfer</span><span class="params">(String outer, String inner, Integer money)</span> </span>&#123;</div><div class="line">		accountDao.out(outer, money);</div><div class="line">		accountDao.in(inner, money);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>applicationContext.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></div><div class="line">       <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span></div><div class="line">       <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span></div><div class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></div><div class="line">       					   http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">       					   http://www.springframework.org/schema/aop </div><div class="line">       					   http://www.springframework.org/schema/aop/spring-aop.xsd</div><div class="line">       					   http://www.springframework.org/schema/context </div><div class="line">       					   http://www.springframework.org/schema/context/spring-context.xsd</div><div class="line">       					   http://www.springframework.org/schema/tx </div><div class="line">       					   http://www.springframework.org/schema/tx/spring-tx.xsd"&gt;</div><div class="line"><span class="comment">&lt;!-- 配置的顺序：</span></div><div class="line">	1.datasource</div><div class="line">	2.dao</div><div class="line">	3.service</div><div class="line">	4.事务管理&#123;</div><div class="line">		</div><div class="line">		4.1 事务管理器</div><div class="line">		4.2 事务详情</div><div class="line">		4.3 aop编程</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"> --&gt;</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"com.mchange.v2.c3p0.ComboPooledDataSource"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClass"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jdbcUrl"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql:///day0301"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">value</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"admin"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountDao"</span> <span class="attr">class</span>=<span class="string">"com.yao.dao.impl.AccountDaoImpl"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">  </div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span> <span class="attr">class</span>=<span class="string">"com.yao.service.impl.AccountServiceImpl"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"accountDao"</span> <span class="attr">ref</span>=<span class="string">"accountDao"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"txManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> 	</div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">"txAdvice"</span> <span class="attr">transaction-manager</span>=<span class="string">"txManager"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></div><div class="line"> 			<span class="comment">&lt;!-- name可以写成类似 name="add*" ， 这样要在service中的方法以add开头--&gt;</span></div><div class="line"> 			<span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">"transfer"</span> <span class="attr">isolation</span>=<span class="string">"DEFAULT"</span> <span class="attr">propagation</span>=<span class="string">"REQUIRED"</span>/&gt;</span></div><div class="line"> 		<span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">"txManager"</span> <span class="attr">pointcut</span>=<span class="string">"execution(* com.yao.service..*.*(..))"</span>/&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="2-2-AOP配置基于注释"><a href="#2-2-AOP配置基于注释" class="headerlink" title="2.2 AOP配置基于注释"></a>2.2 AOP配置基于注释</h3><p><strong>1. 配置事务管理器，将并事务管理器交予spring</strong><br><strong>2. 在目标类或目标方法添加注解即可@Transactional</strong></p>
+<p>Dao接口和实现类没有变化，与使用XML配置时相同。</p>
+<p>AccountService.java没有变化。</p>
+<p>AccountServiceImpl.java<br><strong>添加了注释</strong><br>`transactional() 并且可以在注释中添加配置事务详情</p>
+<p>此时需要使用业务管理的方法上添加注释或；或者在类上添加注释，这样整个类中的方法都添加了事务。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Transactional</span>(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">AccountService</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> AccountDao accountDao;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAccountDao</span><span class="params">(AccountDao accountDao)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.accountDao = accountDao;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transfer</span><span class="params">(String outer, String inner, Integer money)</span> </span>&#123;</div><div class="line">		accountDao.out(outer, money);</div><div class="line">		<span class="comment">//int i = 1/0;</span></div><div class="line">		accountDao.in(inner, money);</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>applicationContext.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></div><div class="line">       <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span></div><div class="line">       <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span></div><div class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></div><div class="line">       					   http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">       					   http://www.springframework.org/schema/aop </div><div class="line">       					   http://www.springframework.org/schema/aop/spring-aop.xsd</div><div class="line">       					   http://www.springframework.org/schema/context </div><div class="line">       					   http://www.springframework.org/schema/context/spring-context.xsd</div><div class="line">       					   http://www.springframework.org/schema/tx </div><div class="line">       					   http://www.springframework.org/schema/tx/spring-tx.xsd"&gt;</div><div class="line"><span class="comment">&lt;!-- 配置的顺序：</span></div><div class="line">	1.datasource</div><div class="line">	2.dao</div><div class="line">	3.service</div><div class="line">	4.事务管理交给spring&#123;</div><div class="line">	    4.1 配置事务管理器</div><div class="line">	    （可以选择使用试用cglib代理）</div><div class="line">	&#125;</div><div class="line"> --&gt;</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"com.mchange.v2.c3p0.ComboPooledDataSource"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClass"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jdbcUrl"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql:///day0301"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">value</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"admin"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountDao"</span> <span class="attr">class</span>=<span class="string">"com.yao.dao.impl.AccountDaoImpl"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">  </div><div class="line"> </div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span> <span class="attr">class</span>=<span class="string">"com.yao.service.impl.AccountServiceImpl"</span>&gt;</span></div><div class="line"> 		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"accountDao"</span> <span class="attr">ref</span>=<span class="string">"accountDao"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"txManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> 	</div><div class="line"> 	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="comment">&lt;!-- 4.2 将管理器交予spring </span></div><div class="line">		* transaction-manager 配置事务管理器</div><div class="line">		* proxy-target-class</div><div class="line">			true ： 底层强制使用cglib 代理</div><div class="line">	--&gt;</div><div class="line"> 	<span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">proxy-target-class</span>=<span class="string">"true"</span> <span class="attr">transaction-manager</span>=<span class="string">"txManager"</span>/&gt;</span></div><div class="line"> 	</div><div class="line"> 	<span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="2-3-Junit"><a href="#2-3-Junit" class="headerlink" title="2.3 Junit"></a>2.3 Junit</h3><ol>
+<li>Runwith()</li>
+<li>contextConfiguration</li>
+<li>Autowired</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</div><div class="line"><span class="meta">@ContextConfiguration</span>(locations=<span class="string">"classpath:applicationContext.xml"</span>)</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> AccountService accountService;</div><div class="line">	</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demo1</span><span class="params">()</span></span>&#123;</div><div class="line">		</div><div class="line">		</div><div class="line"><span class="comment">//		String xmlPath = "applicationContext.xml";</span></div><div class="line"><span class="comment">//		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(xmlPath);</span></div><div class="line"><span class="comment">//		AccountService accountService = (AccountService) applicationContext.getBean("accountService");</span></div><div class="line">		accountService.transfer(<span class="string">"abc"</span>,<span class="string">"eee"</span>,<span class="number">140</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="三-SSH整合"><a href="#三-SSH整合" class="headerlink" title="三.SSH整合"></a>三.SSH整合</h2><h3 id="3-1-jar包整合"><a href="#3-1-jar包整合" class="headerlink" title="3.1 jar包整合"></a>3.1 jar包整合</h3><hr>
+<h3 id="3-2-spring整合hibernate-—–-有hibernate-cfg-xml"><a href="#3-2-spring整合hibernate-—–-有hibernate-cfg-xml" class="headerlink" title="3.2 spring整合hibernate —– 有hibernate.cfg.xml"></a>3.2 spring整合hibernate —– 有hibernate.cfg.xml</h3><h4 id="3-2-1-创建表"><a href="#3-2-1-创建表" class="headerlink" title="3.2.1 创建表"></a>3.2.1 创建表</h4><h4 id="3-2-2-PO类"><a href="#3-2-2-PO类" class="headerlink" title="3.2.2 PO类"></a>3.2.2 PO类</h4><p>javaBean and hbm.xml</p>
+<h4 id="3-2-3-dao层"><a href="#3-2-3-dao层" class="headerlink" title="3.2.3 dao层"></a>3.2.3 dao层</h4><p>spring提供HibernateTemplate用于操作PO对象，类似Hibernate Session对象</p>
+<h4 id="3-2-4-service层"><a href="#3-2-4-service层" class="headerlink" title="3.2.4 service层"></a>3.2.4 service层</h4><h4 id="3-2-5-Hibernate-cfg-xml"><a href="#3-2-5-Hibernate-cfg-xml" class="headerlink" title="3.2.5 Hibernate.cfg.xml"></a>3.2.5 Hibernate.cfg.xml</h4><h4 id="3-2-6-applicationContext-xml"><a href="#3-2-6-applicationContext-xml" class="headerlink" title="3.2.6 applicationContext.xml"></a>3.2.6 applicationContext.xml</h4><hr>
+<h3 id="3-3-spring整合hibernate-—–-无hibernate-cfg-xml"><a href="#3-3-spring整合hibernate-—–-无hibernate-cfg-xml" class="headerlink" title="3.3 spring整合hibernate —– 无hibernate.cfg.xml"></a>3.3 spring整合hibernate —– 无hibernate.cfg.xml</h3><p>删除hibernate.cfg.xml ， 但需要保存文件内容，将其配置spring中</p>
+<p>修改dao层，继承hibernateDaoSupport</p>
+<hr>
+<h3 id="3-4-struts整合spring-—–-spring创建action"><a href="#3-4-struts整合spring-—–-spring创建action" class="headerlink" title="3.4 struts整合spring —– spring创建action"></a>3.4 struts整合spring —– spring创建action</h3><ol>
+<li>编写action,并将action配置给spring,spring可以注入service</li>
+<li>编写strut.xml</li>
+<li>jsp页面</li>
+<li>web.xml配置<ul>
+<li>确定未知文件contextConfigLocation</li>
+<li>配置监听器ContextLoaderListener</li>
+<li>配置前端控制器StrutsPrepareAndExecuteFilter</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="3-4-struts整合spring-—–-struts创建action"><a href="#3-4-struts整合spring-—–-struts创建action" class="headerlink" title="3.4 struts整合spring —– struts创建action"></a>3.4 struts整合spring —– struts创建action</h3><h4 id="实例-SSH整合"><a href="#实例-SSH整合" class="headerlink" title="实例 SSH整合"></a><strong><em>实例 SSH整合</em></strong></h4><ul>
+<li>spring整合hibernate,无hibernate.cfg.xml</li>
+<li>spring整合struts,struts创建action</li>
+</ul>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/16/spring框架学习三/" data-id="cj31o9519000mpwtxpxbmulut" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-spring框架学习二" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -243,7 +361,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/11/spring框架学习二/" data-id="cj2xcbghb000kmstxycm23fqj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/11/spring框架学习二/" data-id="cj31o950z000lpwtxat13pcxk" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -419,7 +537,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj2xcbggy000cmstx0azygwuf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj31o950m000ipwtxob5vlcfb" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -506,7 +624,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj2xcbgge0007mstx6839dw98" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj31o94zj0007pwtxwjh7fait" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -547,7 +665,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj2xcbgfv0002mstx7680cb9l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj31o94z70002pwtxbk8pfofv" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -595,7 +713,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj2xcbgh6000imstx66wjtxph" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj31o950i000gpwtxtg7zc4iz" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -633,7 +751,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj2xcbgh5000hmstximwm7woq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj31o9508000bpwtx63bvs195" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -715,7 +833,7 @@ static{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj2xcbgfy0003mstxr8wpuof9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj31o94zc0004pwtxm0d3wfa2" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -852,7 +970,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj2xcbgha000jmstxbr4davqq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj31o94zf0005pwtx4kqiflgj" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -928,132 +1046,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj2xcbgfn0001mstxkbbp2ofx" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Hibernate入门学习二" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/28/Hibernate入门学习二/" class="article-date">
-  <time datetime="2017-03-28T12:25:56.991Z" itemprop="datePublished">2017-03-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/28/Hibernate入门学习二/">Hibernate入门学习二</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h2 id="Hibernate的api详解"><a href="#Hibernate的api详解" class="headerlink" title="Hibernate的api详解"></a>Hibernate的api详解</h2><p>Bean — PO对象 （持久化对象） 在实际开发中PO对象更普遍</p>
-<p>BO：BUsiness object业务数据对象   service层<br>VO：Value Object值对象   Web层</p>
-<h3 id="Configuration对象详解"><a href="#Configuration对象详解" class="headerlink" title="Configuration对象详解"></a>Configuration对象详解</h3><pre><code>- property元素用于配置Hibernate中的属性  键:值 
-- 调用configure(),加载src下名为hibernate.cfg.xml
-</code></pre><h3 id="SessionFactory"><a href="#SessionFactory" class="headerlink" title="SessionFactory"></a>SessionFactory</h3><ol>
-<li>使用session访问数据库，简单类似为连接池，但是session是由Hibernate产生</li>
-<li>session对象根据Configuration配置信息创建SessionFactory</li>
-<li>session的获得：<ul>
-<li>openSession方法会得一个全新的Session对象</li>
-<li>getCurrentSession()获得当前线程绑定的session对象；调用getCurrentSession() 需要加上一个配置：</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;property name=<span class="string">"hibernate.current_session_context_class"</span>&gt;thread&lt;/property&gt;</div></pre></td></tr></table></figure>
-<pre><code>将session与线程绑定，只有配置了该配置，才能使用getCurrentSession
-
-事务关闭时,会自动把与当前线程关联的session关闭,并删除
-</code></pre><h3 id="Session对象"><a href="#Session对象" class="headerlink" title="Session对象"></a>Session对象</h3><p>功能：操作数据库CRUD</p>
-<h4 id="增"><a href="#增" class="headerlink" title="增"></a>增</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">      User u = new User();</div><div class="line">u.setName(<span class="string">"tom"</span>);</div><div class="line">u.setPassword(<span class="string">"123"</span>);</div><div class="line">session.save(u);//面向对象的操作</div><div class="line">//5.关闭资源</div><div class="line">session.close();</div><div class="line">sessionFactory.close()</div></pre></td></tr></table></figure>
-<h4 id="改"><a href="#改" class="headerlink" title="改"></a>改</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">      //打开事务</div><div class="line">Transaction ts = session.beginTransaction();</div><div class="line">//先查询出你要修改的对象</div><div class="line">User user = (User) session.get(User.class,1);</div><div class="line">//在查询结果上,进行修改</div><div class="line">user.setName(<span class="string">"汤姆"</span>);</div><div class="line">session.update(user);</div><div class="line">//提交事务</div><div class="line">ts.commit();</div><div class="line">//关闭资源</div><div class="line">session.close();</div><div class="line">sf.close();</div></pre></td></tr></table></figure>
-<h4 id="删"><a href="#删" class="headerlink" title="删"></a>删</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">      //打开事务</div><div class="line">Transaction ts = session.beginTransaction();</div><div class="line">//先查询出你要修改的对象</div><div class="line">User user = (User)session.get(User.class,2);</div><div class="line">/*User user = new User();</div><div class="line">user.setId(1);*/</div><div class="line">//根据ID删除</div><div class="line">session.delete(user);</div><div class="line">//---------------------------------------------------------</div><div class="line">//提交事务</div><div class="line">ts.commit();</div><div class="line">//关闭资源</div><div class="line">session.close();</div><div class="line">sf.close();</div></pre></td></tr></table></figure>
-<h4 id="查"><a href="#查" class="headerlink" title="查"></a>查</h4><h5 id="get方法查询"><a href="#get方法查询" class="headerlink" title="get方法查询"></a>get方法查询</h5><p><code>User user = (User)session.get(User.class,2);</code></p>
-<h5 id="load方法查询"><a href="#load方法查询" class="headerlink" title="load方法查询"></a>load方法查询</h5><p> <code>User user = (User) session.load(User.class,3);</code></p>
-<p>get和load方法的区别：</p>
-<ul>
-<li>get:get方法被调用时，立刻调用sql语句查询；</li>
-<li>load:调用时并没有查询数据库，当我们需要使用该对象的时候，才查询数据。</li>
-</ul>
-<p>load对象原理和设计：</p>
-<ul>
-<li>load方法用于提高Hibernate的执行效率（延迟加载）</li>
-<li>使用代理技术，创建一个代理对象，属性只有ID有值</li>
-<li>返回代理对象</li>
-<li>使用代理对象（属性）时，</li>
-<li>代理对象调用Hibernate查询数据库，初始化属性</li>
-</ul>
-<h5 id="查询所有"><a href="#查询所有" class="headerlink" title="查询所有"></a>查询所有</h5><p>方法一</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">      //打开事务</div><div class="line">Transaction ts = session.beginTransaction();</div><div class="line">//--------------------------------------------------------</div><div class="line">//HQL语言 =&gt; Hibernate Query Language</div><div class="line">//createQuery 传入hql语句查询</div><div class="line">//select * from t_user;</div><div class="line">Query query = session.createQuery(<span class="string">"from com.itheima.a_hello.User"</span>);</div><div class="line">//list 将语句执行,并返回结果</div><div class="line">List&lt;User&gt; list =  query.list();</div><div class="line">System.out.println(list);</div><div class="line">//---------------------------------------------------------</div><div class="line">//提交事务</div><div class="line">ts.commit();</div><div class="line">//关闭资源</div><div class="line">session.close();</div><div class="line">sf.close();</div></pre></td></tr></table></figure>
-<p>方法二</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">      //省略事务和关闭</div><div class="line">      //Criteria 查询 =&gt; Hibernate独创的面向对象的查询=&gt; 无语句</div><div class="line">Criteria criteria = session.createCriteria(User.class);</div><div class="line">//select * from t_user;</div><div class="line">List&lt;User&gt; list =	criteria.list();</div></pre></td></tr></table></figure>
-<p>方法三（原生SQL语句）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">      //省略事务和关闭</div><div class="line">SQLQuery query = session.createSQLQuery(<span class="string">"select * from t_user"</span>);</div><div class="line">//addEntity 将查询结果封装到指定对象中</div><div class="line">query.addEntity(User.class);</div><div class="line">//SQL语句，不能确定泛型的类型，将查询结果封装到Object数组中</div><div class="line">List&lt;User&gt; list = query.list();</div></pre></td></tr></table></figure>
-<h4 id="session方法总结"><a href="#session方法总结" class="headerlink" title="session方法总结"></a>session方法总结</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">   /*</div><div class="line">* session.save();</div><div class="line">* session.update();</div><div class="line">* session.delete();</div><div class="line">* session.get();</div><div class="line">* session.load(); 对比get</div><div class="line">* session.createQuery()</div><div class="line">* session.createCritieria();</div><div class="line">* session.createSqlQuery();</div><div class="line">* </div><div class="line">*/</div></pre></td></tr></table></figure>
-<h3 id="Query对象"><a href="#Query对象" class="headerlink" title="Query对象"></a>Query对象</h3><p> Query对象封装HQL语句的对象</p>
-<ul>
-<li>Query中封装查询细节api</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//query.list()将hql语句执行并返回结果（多行）</div><div class="line">List&lt;User&gt; list =  query.list();</div><div class="line">//uniqueResult 将hql语句执行,并返回结果(一行)</div><div class="line">Query query = session.createQuery(<span class="string">"from com.itheima.a_hello.User where name='tom'"</span>);</div><div class="line">User u = (User) query.uniqueResult();</div></pre></td></tr></table></figure>
-<ul>
-<li>分页<br>limit index count是之前分页中常用到的变量</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//开始索引数</div><div class="line">query.setFirstResult(0);</div><div class="line">//指定拿几个结果</div><div class="line">query.setMaxResults(2);</div></pre></td></tr></table></figure>
-<h3 id="Cretiaria对象"><a href="#Cretiaria对象" class="headerlink" title="Cretiaria对象"></a>Cretiaria对象</h3><p>查找name属性值为tom的一条记录：<br><code>cretiaria.add(Restrictions.eq(&quot;name&quot;,&quot;tom&quot;));</code></p>
-<p><code>User user = (User)cretiaria.uniqueResult();</code></p>
-<p>查找name属性值中包含o的记录（一条或多条）：<br><code>cretiaria.add(Restrictions.like(&quot;name&quot;,&quot;%o%&quot;));</code></p>
-<p>查找id属性值中大于2的记录<br><code>cretiaria.add(Restrictions.gt(&quot;id&quot;,3));</code></p>
-<p> 补充：gt(&gt;) lt(&lt;) eq(=) ge(&gt;=) le(&lt;=) </p>
-<h3 id="配置文件hibernate-cfg-xml详解"><a href="#配置文件hibernate-cfg-xml详解" class="headerlink" title="配置文件hibernate.cfg.xml详解"></a>配置文件hibernate.cfg.xml详解</h3><p><code>&lt;property name=&quot;hbm2ddl.auto&quot;&gt;update&lt;/property&gt;</code></p>
-<p> /project/etc 中包含诸多配置文件</p>
-<p> 其中hibernate.properties中可以找到hbm2ddl的配置策</p>
-<ul>
-<li><p>update(最常用) </p>
-<p> 如果当前数据库中不存在表结构，那么自动创建表结构。如果存在表结构，并且表结构与实体一致，不作修改；若表结构不一致，会修改表结构，但是会保留原有列。</p>
-</li>
-<li><p>creat（极少使用）</p>
-<p> 无论是否存在表结构，每次启动Hibernate都会重新创建表结构，即数据会丢失。</p>
-</li>
-<li><p>creat-drop(极少使用)</p>
-<p> 无论是否存在表结构，每次启动Hibernate都会重新创建表结构，即数据会丢失。每次Hibernate运行结束时，删除表结构。</p>
-</li>
-<li><p>validate</p>
-<p> 不会自动创建表结构，也不会自动维护表结构。Hibernate只校验表结构，如果表结构不一致会抛出异常</p>
-</li>
-</ul>
-<h3 id="配置文件–数据库方言配置详解"><a href="#配置文件–数据库方言配置详解" class="headerlink" title="配置文件–数据库方言配置详解"></a>配置文件–数据库方言配置详解</h3><p><code>&lt;property name=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.MySQLDialect&lt;/property&gt;</code> </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//数据库方言配置</div><div class="line">org.hibernate.dialect.MySQLDialect</div><div class="line">org.hibernate.dialect.MySQLInnoDBDialect</div><div class="line">org.hibernate.dialect.MySQLMyISAMDialect</div></pre></td></tr></table></figure>
-<h3 id="实体配置与实体规则"><a href="#实体配置与实体规则" class="headerlink" title="实体配置与实体规则"></a>实体配置与实体规则</h3><h4 id="编写规则"><a href="#编写规则" class="headerlink" title="编写规则"></a>编写规则</h4><ul>
-<li>提供一个无参public访问控制符的控制器（可无）</li>
-<li>提供一个标识属性，映射数据表主键字段</li>
-<li>所有属性提供public访问控制符的setter getter(javaBean)</li>
-<li>标识属性应尽量使用基本数据类型的包装类型</li>
-<li>不要用final修饰实体（final实体不能被继承，则无法生成代理对象） </li>
-</ul>
-<h3 id="主键生成策略"><a href="#主键生成策略" class="headerlink" title="主键生成策略"></a>主键生成策略</h3><h4 id="class属性"><a href="#class属性" class="headerlink" title="class属性"></a>class属性</h4><p><code>&lt;class name=&quot;User&quot; table=&quot;t_user&quot; dynamic-insert=&quot;false&quot;&gt;</code></p>
-<p><code>&lt;class name=&quot;User&quot; table=&quot;t_user&quot; dynamic-update=&quot;false&quot;&gt;</code> </p>
-<h4 id="id属性"><a href="#id属性" class="headerlink" title="id属性"></a>id属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">           &lt;!-- id: 配置实体与表中 id对应</div><div class="line">			name: user对象中标识主键的属性名称</div><div class="line">			column: 主键在表中的列名</div><div class="line">			length: 列的数据长度</div><div class="line">			unsaved-value(不常用): 指定主键为什么值时,当做null来处理.</div><div class="line">		access(强烈推荐不要用):field 操作属性时,会直接操作对应的字段而不是get/<span class="built_in">set</span>方法</div><div class="line">--&gt;</div><div class="line">           &lt;id name=<span class="string">"id"</span> column=<span class="string">"id"</span> length=<span class="string">"255"</span>   &gt;</div></pre></td></tr></table></figure>
-<h4 id="主键生成策略-1"><a href="#主键生成策略-1" class="headerlink" title="主键生成策略"></a>主键生成策略</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">    &lt;!-- generator:主键生成策略</div><div class="line">     1.increment  数据库自己生成主键. 先从数据库中查询最大的ID值,将ID值加1作为新的主键</div><div class="line">    2.identity  依赖于数据的主键自增功能</div><div class="line">    3.sequence	序列,依赖于数据中的序列功能(Oracle).</div><div class="line">    4.hilo(纯了解,永远用不到) : Hibernate自己实现序列的算法,自己生成主键. (hilo算法 )</div><div class="line">    5.native 自动根据数据库判断,三选一. identity|sequence|hilo</div><div class="line">    6.uuid  生成32位的不重复随机字符串当做主键</div><div class="line">    7.assigned 自己指定主键值. 表的主键是自然主键时使用.</div><div class="line">    --&gt;</div><div class="line">	&lt;generator class=<span class="string">"uuid"</span>&gt;&lt;/generator&gt;</div><div class="line">&lt;/id&gt;</div></pre></td></tr></table></figure>
-<h4 id="property属性"><a href="#property属性" class="headerlink" title="property属性"></a>property属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">  &lt;!-- property : 实体中属性与表中列的对应</div><div class="line">name : 实体中属性名称</div><div class="line">column : 表中列的名称</div><div class="line">length : 数据长度</div><div class="line">precision: 小数点后的精度</div><div class="line">scale:	有效位数</div><div class="line">insert(一般不用): 该属性是否加入insert语句.</div><div class="line">update(一般不用): 该属性是否加入update语句.</div><div class="line">not-null : 指定属性的约束是否使用 非空</div><div class="line">unique : 指定属性的约束是否使用唯一</div><div class="line">--&gt;</div></pre></td></tr></table></figure>
-<h4 id="type属性"><a href="#type属性" class="headerlink" title="type属性"></a>type属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;!-- </div><div class="line"> <span class="built_in">type</span>: 表达该属性的类型</div><div class="line"> 可以用三种方式指定属性</div><div class="line"> java类型		   数据库类型指定	 Hibernate类型指定</div><div class="line"> java.lang.String	varchar				string</div><div class="line">--&gt;</div></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj2xcbgfz0004mstxa037mv9a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj31o94z30001pwtxkh4o9ahk" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -1082,7 +1075,7 @@ false : 与get一致，会理解加载数据
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Arkiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
     </div>
@@ -1092,12 +1085,16 @@ false : 与get一致，会理解加载数据
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Siste innlegg</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/05/20/SpringMVC学习/">SpringMVC学习</a>
+            <a href="/2017/05/23/SpringMVC学习/">SpringMVC学习</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/23/SpringMVC的freemarker支持/">SpringMVC的freemarker支持</a>
           </li>
         
           <li>
@@ -1110,10 +1107,6 @@ false : 与get一致，会理解加载数据
         
           <li>
             <a href="/2017/05/14/Mybatis学习/">Mybatis学习</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/10/Webservice/">Webservice</a>
           </li>
         
       </ul>
@@ -1129,7 +1122,7 @@ false : 与get一致，会理解加载数据
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Yao<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
