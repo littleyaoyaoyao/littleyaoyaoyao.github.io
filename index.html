@@ -64,10 +64,94 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Nginx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/31/Nginx/" class="article-date">
+  <time datetime="2017-05-31T09:42:19.633Z" itemprop="datePublished">2017-05-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1 . 介绍"></a>1 . 介绍</h2><p>Nginx是一个使用c语言开发的高性能的http服务器及反向代理服务器。</p>
+<p>Nginx是一款高性能的http服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。由俄罗斯的程序设计师Igor Sysoev所开发，官方测试nginx能够支支撑5万并发链接，并且cpu、内存等资源消耗却非常低，运行非常稳定。</p>
+<h2 id="2-应用场景"><a href="#2-应用场景" class="headerlink" title="2 . 应用场景"></a>2 . 应用场景</h2><ol>
+<li>http服务器。Nginx是一个http服务可以独立提供http服务。可以做网页静态服务器。</li>
+<li>虚拟主机。可以实现在一台服务器虚拟出多个网站。例如个人网站使用的虚拟主机。</li>
+<li>反向代理，负载均衡。当网站的访问量达到一定程度后，单台服务器不能满足用户的请求时，需要用多台服务器集群可以使用n ginx做反向代理。并且多台服务器可以平均分担负载，不会因为某台服务器负载高宕机而某台服务器闲置的情况。</li>
+</ol>
+<h2 id="3-Nginx的安装"><a href="#3-Nginx的安装" class="headerlink" title="3 . Nginx的安装"></a>3 . Nginx的安装</h2><p>Nginx一般推荐安装在Linux系统，并且要安装c语言的编译环境gcc.</p>
+<h3 id="3-1-安装nginx依赖的包"><a href="#3-1-安装nginx依赖的包" class="headerlink" title="3.1 安装nginx依赖的包"></a>3.1 安装nginx依赖的包</h3><ul>
+<li><p>gcc</p>
+<p>  安装nginx需要先将官网下载的源码进行编译，编译依赖gcc环境，如果没有gcc环境，需要安装gcc：yum install gcc-c++ </p>
+</li>
+<li><p>PCRE</p>
+<p>  PCRE(Perl Compatible RegularExpressions)是一个Perl库，包括perl兼容的正则表达式库。<br>nginx的http模块使用pcre来解析正则表达式，所以需要在linux上安装pcre库。<br>yum install -y pcre pcre-devel</p>
+<p>  注：pcre-devel是使用pcre开发的一个二次开发库。nginx也需要此库。</p>
+</li>
+<li><p>zlib</p>
+<p>  zlib库提供了很多种压缩和解压缩的方式，nginx使用zlib对http包的内容进行gzip，所以需要在linux上安装zlib库。yum install -y zlib zlib-devel</p>
+</li>
+<li><p>OpenSSL</p>
+<p>  是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。<br>  nginx不仅支持http协议，还支持https（即在ssl协议上传输http），所以需要在linux安装openssl库。yum install -y openssl openssl-devel</p>
+</li>
+</ul>
+<h3 id="3-2-安装nginx步骤"><a href="#3-2-安装nginx步骤" class="headerlink" title="3.2 安装nginx步骤"></a>3.2 安装nginx步骤</h3><ol>
+<li>把nginx的源码上传到linux系统</li>
+<li>把压缩包解压缩。</li>
+<li><p>在当前文件夹中进行configure。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">./configure \</div><div class="line">--prefix=/usr/local/nginx \</div><div class="line">--pid-path=/var/run/nginx/nginx.pid \</div><div class="line">--lock-path=/var/lock/nginx.lock \</div><div class="line">--error-log-path=/var/log/nginx/error.log \</div><div class="line">--http-log-path=/var/log/nginx/access.log \</div><div class="line">--with-http_gzip_static_module \</div><div class="line">--http-client-body-temp-path=/var/temp/nginx/client \</div><div class="line">--http-proxy-temp-path=/var/temp/nginx/proxy \</div><div class="line">--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \</div><div class="line">--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \</div><div class="line">--http-scgi-temp-path=/var/temp/nginx/scgi</div></pre></td></tr></table></figure>
+<p> 注意：上边将临时文件目录指定为/var/temp/nginx，需要在/var下创建temp及nginx目录</p>
+</li>
+<li><p>在当前文件夹中执行：make</p>
+</li>
+<li>在当前文件夹中执行：make install . 执行完毕后，在/usr/local/nginx/文件夹下会生成新的nginx文件夹</li>
+</ol>
+<h2 id="4-Nginx的启动和停止"><a href="#4-Nginx的启动和停止" class="headerlink" title="4 . Nginx的启动和停止"></a>4 . Nginx的启动和停止</h2><ul>
+<li><p>启动</p>
+<p>  进入nginx的sbin目录，./nginx就可以启动。<br>  如果正常启动但是无法访问，可能是防火墙造成的问题，使用指令：<br>  vim /etc/sysconfig/iptables来将端口号打开，再重启service iptables restart</p>
+</li>
+<li><p>停止</p>
+<p>  关闭nginx：可以使用kill命令，但是不推荐使用。推荐使用：./nginx -s stop</p>
+</li>
+<li><p>刷新配置</p>
+<p>  ./nginx -s reload</p>
+</li>
+</ul>
+<h2 id="5-Nginx的配置"><a href="#5-Nginx的配置" class="headerlink" title="5 . Nginx的配置"></a>5 . Nginx的配置</h2><p>在/usr/local/nginx/conf目录下nginx.conf文件是nginx的配置文件。</p>
+<p>截取部分配置代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">       listen       80;</div><div class="line">       server_name  localhost;</div><div class="line"></div><div class="line">       #charset koi8-r;</div><div class="line"></div><div class="line">       #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">       location / &#123;</div><div class="line">           root   html;</div><div class="line">           index  index.html index.htm;</div><div class="line">       &#125;</div></pre></td></tr></table></figure>
+<p>其中，<br>一个server就是一个虚拟机；<br>80表示端口号；<br>root html表示虚拟主机的根目录；若配置了另一个虚拟主机，在改变了这个虚拟主机的端口号之后，可以重新配置root html至新的根目录，并且可以修改根目录中的显示内容。</p>
+<h2 id="5-使用Nginx配置虚拟机，通过域名区分虚拟机"><a href="#5-使用Nginx配置虚拟机，通过域名区分虚拟机" class="headerlink" title="5 . 使用Nginx配置虚拟机，通过域名区分虚拟机"></a>5 . 使用Nginx配置虚拟机，通过域名区分虚拟机</h2><p>DNS服务器的作用：把域名转换成对应的ip地址，并进行返回。</p>
+<p>可以通过修改host文件来指定域名的ip地址。</p>
+<p>host文件的位置：C:\Windows\System32\drivers\etc</p>
+<p>添加如下修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># test</div><div class="line">10.108.250.115 esale.com</div></pre></td></tr></table></figure></p>
+<p>当在本地访问esale.com时，会跳转到10.108.250.115这个ip地址。</p>
+<p><strong>若要通过域名区分虚拟机，需要修改nginx.conf配置文件。</strong></p>
+<p>在nginx.conf中添加一段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">        listen       80;</div><div class="line">        server_name  test.esale.com;</div><div class="line"></div><div class="line">        #charset koi8-r;</div><div class="line"></div><div class="line">        #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">            root   html-test;</div><div class="line">            index  index.html index.htm;</div><div class="line">        &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>然后配置DNS来指定域名对应的ip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># test</div><div class="line">10.108.250.115 test.esale.com</div></pre></td></tr></table></figure></p>
+<p>再在nginx文件夹下添加拷贝html文件夹并重命名为html-test，则可以访问成功。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/31/Nginx/" data-id="cj3ct12ta000alktxkmkbl2iz" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-SpringMVC学习" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/05/23/SpringMVC学习/" class="article-date">
-  <time datetime="2017-05-23T13:49:07.821Z" itemprop="datePublished">2017-05-23</time>
+    <a href="/2017/05/25/SpringMVC学习/" class="article-date">
+  <time datetime="2017-05-25T14:54:21.372Z" itemprop="datePublished">2017-05-25</time>
 </a>
     
   </div>
@@ -78,7 +162,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/23/SpringMVC学习/">SpringMVC学习</a>
+      <a class="article-title" href="/2017/05/25/SpringMVC学习/">SpringMVC学习</a>
     </h1>
   
 
@@ -118,13 +202,26 @@
 <h2 id="八-Springmvc多视图"><a href="#八-Springmvc多视图" class="headerlink" title="八 . Springmvc多视图"></a>八 . Springmvc多视图</h2><h2 id="十-Oscache整合SSM项目"><a href="#十-Oscache整合SSM项目" class="headerlink" title="十 . Oscache整合SSM项目"></a>十 . Oscache整合SSM项目</h2><p>约定 ： 商品页面访问量特别大，给商品页面缓存。items路径下所有请求都缓存。</p>
 <p>在web.xml中配置过滤器：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>oscache<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.opensymphony.oscache.web.filter.CacheFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>time<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>3600<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>scope<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>application<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line">  </div><div class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>oscache<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/items/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>利用断点来判断是否存在缓存。</p>
-<h2 id="十-SpringMVC的freemark支持"><a href="#十-SpringMVC的freemark支持" class="headerlink" title="十 . SpringMVC的freemark支持"></a>十 . SpringMVC的freemark支持</h2><p>需要freemarker的jar包，spring-context-support.jar</p>
-<p>配置模板文件前缀和视图解析后缀：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 配置freemarker模版文件前缀，模版文件编码 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"templateLoaderPath"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsps/"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"defaultEncoding"</span> <span class="attr">value</span>=<span class="string">"UTF-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span>	</div><div class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 配置freemarker视图解析后缀，页面显示视图编码 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".ftl"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"contentType"</span> <span class="attr">value</span>=<span class="string">"text/html;charset=utf-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h2 id="十-SpringMVC的拦截器"><a href="#十-SpringMVC的拦截器" class="headerlink" title="十 . SpringMVC的拦截器"></a>十 . SpringMVC的拦截器</h2><p>在请求处理器映射器映射的时候，就发生拦截。</p>
+<h3 id="10-1-局部拦截器"><a href="#10-1-局部拦截器" class="headerlink" title="10.1 局部拦截器"></a>10.1 局部拦截器</h3><p>针对单个处理器映射器，就叫局部拦截器。</p>
+<h3 id="10-2-全局拦截器"><a href="#10-2-全局拦截器" class="headerlink" title="10.2 全局拦截器"></a>10.2 全局拦截器</h3><p>在springmvc.xml中添加如下配置:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--拦截器 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!--多个拦截器,顺序执行 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">mvc:interceptor</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">mvc:mapping</span> <span class="attr">path</span>=<span class="string">"/**"</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.yao.interceptor.Interceptor1"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">mvc:interceptor</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">mvc:interceptor</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">mvc:mapping</span> <span class="attr">path</span>=<span class="string">"/**"</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.yao.interceptor.Interceptor2"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">mvc:interceptor</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>拦截器类需要实现<strong><em>HandlerInterceptor接口</em></strong></p>
+<p>preHandler在处理映射器之前进行执行<br>return false:拦截<br>return true ：放行</p>
+<p>postHandler在还没有调用Controller，还没有返回modelAndView执行</p>
+<p>afterCompletion在返回modelAndView之后执行</p>
+<p><strong>测试</strong>：</p>
+<ul>
+<li>测试1<br>拦截器1放行，拦截器2放行：<br>HandlerInterceptor1………preHandle<br>HandlerInterceptor2………preHandle<br>HandlerInterceptor2………postHandle<br>HandlerInterceptor1………postHandle<br>HandlerInterceptor2………afterCompletion<br>HandlerInterceptor1………afterCompletion</li>
+<li><p>测试2<br>拦截器1放行，拦截器2阻止：<br>HandlerInterceptor1………preHandle<br>HandlerInterceptor2………preHandle<br>HandlerInterceptor1………afterCompletion</p>
+</li>
+<li><p>测试3：<br>拦截器1阻止，拦截器2阻止：<br>HandlerInterceptor1………preHandle</p>
+</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/23/SpringMVC学习/" data-id="cj31o950k000hpwtxn12x05c5" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/25/SpringMVC学习/" data-id="cj3ct12tm000jlktxpbquv9hj" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -171,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/23/SpringMVC的freemarker支持/" data-id="cj31o950a000cpwtxq7ip8sj5" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/23/SpringMVC的freemarker支持/" data-id="cj3ct12te000dlktxoqdfc52o" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -270,7 +367,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/18/Mybatis学习二/" data-id="cj31o95050009pwtx7wjwqo5k" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/18/Mybatis学习二/" data-id="cj3ct12t90009lktx8k51l1rv" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -375,7 +472,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/15/Mybatis学习一/" data-id="cj31o9507000apwtxf920gc5d" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/15/Mybatis学习一/" data-id="cj3ct12t10006lktxwnegk0dm" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -480,7 +577,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/14/Mybatis学习/" data-id="cj31o95030008pwtx066rd0qf" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/14/Mybatis学习/" data-id="cj3ct12t80008lktxgtf478ph" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -533,7 +630,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/10/Webservice/" data-id="cj31o950y000jpwtxodhomw3p" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/10/Webservice/" data-id="cj3ct12tl000hlktxw3l28bmk" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -661,7 +758,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/08/jQuery学习/" data-id="cj31o950g000fpwtxh1lqum8m" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/08/jQuery学习/" data-id="cj3ct12to000klktxr0fdfi7k" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -788,7 +885,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/04/JavaScript学习/" data-id="cj31o950y000kpwtxpsjkm1eh" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/04/JavaScript学习/" data-id="cj3ct12sz0005lktx0ux0fytr" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -851,66 +948,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/28/CRM/" data-id="cj31o94yt0000pwtxdkxm1m1e" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-SVN" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/04/18/SVN/" class="article-date">
-  <time datetime="2017-04-18T13:52:53.338Z" itemprop="datePublished">2017-04-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/18/SVN/">SVN</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>标签 ： SVN</p>
-<hr>
-<p>版本控制（Revision Control）：是维护工程蓝图的标准做法，能追踪工程蓝图从诞生一直到定案的过程。是一种记录若干文件内容变化，以便将来查阅特定版本修订情况的系统。</p>
-<h2 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h2><p>在硬盘中创建一个空的文件夹，如F:\repository\svn\repo1<br>在cmd窗口中可以完成创建仓库操作，包括在指定目录创建仓库和当前目录创建仓库。<br>指定目录创建：svnadmin create F:\repository\svn\repo1<br>当前目录创建：svnadmin create .</p>
-<h2 id="启动仓库"><a href="#启动仓库" class="headerlink" title="启动仓库"></a>启动仓库</h2><ul>
-<li><p>多仓库<br>cmd &gt; svnserve -d -r F:\repository\svn<br>要访问某一特定的仓库：svn://localhost:3690/repo1</p>
-</li>
-<li><p>单仓库<br>cmd &gt; svnserve -d -r F:\repository\svn\repo1<br>此时只能访问该已经启动的仓库repo1：svn://localhost:3690</p>
-</li>
-</ul>
-<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a><strong>checkout</strong></h3><p>svn checkout svn://localhost:3690/repo1</p>
-<h3 id="commit"><a href="#commit" class="headerlink" title="commit"></a><strong>commit</strong></h3><p>commit需要有权限，需要修改仓库目录中conf\svnserve.conf的配置</p>
-<ul>
-<li>将<code># anon-access = read</code>修改为<code>anon-access = write</code></li>
-<li>使用add子命令添加到本地版本库</li>
-</ul>
-<p>然后执行语句：<br><code>svn commit -m &quot;user1 add content&quot; test.txt</code><br>其中，语句中包括了-m设置日志信息</p>
-<h3 id="update"><a href="#update" class="headerlink" title="update"></a><strong>update</strong></h3><p><strong><em>在每次提交版本之前先执行更新操作</em></strong><br><code>svn update</code></p>
-<h2 id="目录规范"><a href="#目录规范" class="headerlink" title="目录规范"></a>目录规范</h2><ul>
-<li>trunk 主线 ， 用于存在程序整个进度</li>
-<li>branches 分支 ， 例如bug修复、特殊功能</li>
-<li>tags 标签（版本） ， 此目录下的内容不能修改 </li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/18/SVN/" data-id="cj31o950e000dpwtx2a0npv8d" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/04/28/CRM/" data-id="cj3ct12ss0003lktxjioqnv39" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -954,7 +992,11 @@
       <ul>
         
           <li>
-            <a href="/2017/05/23/SpringMVC学习/">SpringMVC学习</a>
+            <a href="/2017/05/31/Nginx/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/25/SpringMVC学习/">SpringMVC学习</a>
           </li>
         
           <li>
@@ -967,10 +1009,6 @@
         
           <li>
             <a href="/2017/05/15/Mybatis学习一/">Mybatis学习一</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/14/Mybatis学习/">Mybatis学习</a>
           </li>
         
       </ul>

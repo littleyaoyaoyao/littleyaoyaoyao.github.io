@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>We-Param</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Nginx1 . 介绍Nginx是一个使用c语言开发的高性能的http服务器及反向代理服务器。
+Nginx是一款高性能的http服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。由俄罗斯的程序设计师Igor Sysoev所开发，官方测试nginx能够支支撑5万并发链接，并且cpu、内存等资源消耗却非常低，运行非常稳定。
+2 . 应用场景
+http服务器。Nginx是一个http服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="We-Param">
+<meta property="og:url" content="http://yoursite.com/2017/05/31/Nginx/index.html">
+<meta property="og:site_name" content="We-Param">
+<meta property="og:description" content="Nginx1 . 介绍Nginx是一个使用c语言开发的高性能的http服务器及反向代理服务器。
+Nginx是一款高性能的http服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。由俄罗斯的程序设计师Igor Sysoev所开发，官方测试nginx能够支支撑5万并发链接，并且cpu、内存等资源消耗却非常低，运行非常稳定。
+2 . 应用场景
+http服务器。Nginx是一个http服务">
+<meta property="og:updated_time" content="2017-05-31T09:39:45.235Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="We-Param">
+<meta name="twitter:description" content="Nginx1 . 介绍Nginx是一个使用c语言开发的高性能的http服务器及反向代理服务器。
+Nginx是一款高性能的http服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。由俄罗斯的程序设计师Igor Sysoev所开发，官方测试nginx能够支支撑5万并发链接，并且cpu、内存等资源消耗却非常低，运行非常稳定。
+2 . 应用场景
+http服务器。Nginx是一个http服务">
+  
+    <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">We-Param</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Nginx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/31/Nginx/" class="article-date">
+  <time datetime="2017-05-31T09:42:19.633Z" itemprop="datePublished">2017-05-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1 . 介绍"></a>1 . 介绍</h2><p>Nginx是一个使用c语言开发的高性能的http服务器及反向代理服务器。</p>
+<p>Nginx是一款高性能的http服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。由俄罗斯的程序设计师Igor Sysoev所开发，官方测试nginx能够支支撑5万并发链接，并且cpu、内存等资源消耗却非常低，运行非常稳定。</p>
+<h2 id="2-应用场景"><a href="#2-应用场景" class="headerlink" title="2 . 应用场景"></a>2 . 应用场景</h2><ol>
+<li>http服务器。Nginx是一个http服务可以独立提供http服务。可以做网页静态服务器。</li>
+<li>虚拟主机。可以实现在一台服务器虚拟出多个网站。例如个人网站使用的虚拟主机。</li>
+<li>反向代理，负载均衡。当网站的访问量达到一定程度后，单台服务器不能满足用户的请求时，需要用多台服务器集群可以使用n ginx做反向代理。并且多台服务器可以平均分担负载，不会因为某台服务器负载高宕机而某台服务器闲置的情况。</li>
+</ol>
+<h2 id="3-Nginx的安装"><a href="#3-Nginx的安装" class="headerlink" title="3 . Nginx的安装"></a>3 . Nginx的安装</h2><p>Nginx一般推荐安装在Linux系统，并且要安装c语言的编译环境gcc.</p>
+<h3 id="3-1-安装nginx依赖的包"><a href="#3-1-安装nginx依赖的包" class="headerlink" title="3.1 安装nginx依赖的包"></a>3.1 安装nginx依赖的包</h3><ul>
+<li><p>gcc</p>
+<p>  安装nginx需要先将官网下载的源码进行编译，编译依赖gcc环境，如果没有gcc环境，需要安装gcc：yum install gcc-c++ </p>
+</li>
+<li><p>PCRE</p>
+<p>  PCRE(Perl Compatible RegularExpressions)是一个Perl库，包括perl兼容的正则表达式库。<br>nginx的http模块使用pcre来解析正则表达式，所以需要在linux上安装pcre库。<br>yum install -y pcre pcre-devel</p>
+<p>  注：pcre-devel是使用pcre开发的一个二次开发库。nginx也需要此库。</p>
+</li>
+<li><p>zlib</p>
+<p>  zlib库提供了很多种压缩和解压缩的方式，nginx使用zlib对http包的内容进行gzip，所以需要在linux上安装zlib库。yum install -y zlib zlib-devel</p>
+</li>
+<li><p>OpenSSL</p>
+<p>  是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。<br>  nginx不仅支持http协议，还支持https（即在ssl协议上传输http），所以需要在linux安装openssl库。yum install -y openssl openssl-devel</p>
+</li>
+</ul>
+<h3 id="3-2-安装nginx步骤"><a href="#3-2-安装nginx步骤" class="headerlink" title="3.2 安装nginx步骤"></a>3.2 安装nginx步骤</h3><ol>
+<li>把nginx的源码上传到linux系统</li>
+<li>把压缩包解压缩。</li>
+<li><p>在当前文件夹中进行configure。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">./configure \</div><div class="line">--prefix=/usr/local/nginx \</div><div class="line">--pid-path=/var/run/nginx/nginx.pid \</div><div class="line">--lock-path=/var/lock/nginx.lock \</div><div class="line">--error-log-path=/var/log/nginx/error.log \</div><div class="line">--http-log-path=/var/log/nginx/access.log \</div><div class="line">--with-http_gzip_static_module \</div><div class="line">--http-client-body-temp-path=/var/temp/nginx/client \</div><div class="line">--http-proxy-temp-path=/var/temp/nginx/proxy \</div><div class="line">--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \</div><div class="line">--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \</div><div class="line">--http-scgi-temp-path=/var/temp/nginx/scgi</div></pre></td></tr></table></figure>
+<p> 注意：上边将临时文件目录指定为/var/temp/nginx，需要在/var下创建temp及nginx目录</p>
+</li>
+<li><p>在当前文件夹中执行：make</p>
+</li>
+<li>在当前文件夹中执行：make install . 执行完毕后，在/usr/local/nginx/文件夹下会生成新的nginx文件夹</li>
+</ol>
+<h2 id="4-Nginx的启动和停止"><a href="#4-Nginx的启动和停止" class="headerlink" title="4 . Nginx的启动和停止"></a>4 . Nginx的启动和停止</h2><ul>
+<li><p>启动</p>
+<p>  进入nginx的sbin目录，./nginx就可以启动。<br>  如果正常启动但是无法访问，可能是防火墙造成的问题，使用指令：<br>  vim /etc/sysconfig/iptables来将端口号打开，再重启service iptables restart</p>
+</li>
+<li><p>停止</p>
+<p>  关闭nginx：可以使用kill命令，但是不推荐使用。推荐使用：./nginx -s stop</p>
+</li>
+<li><p>刷新配置</p>
+<p>  ./nginx -s reload</p>
+</li>
+</ul>
+<h2 id="5-Nginx的配置"><a href="#5-Nginx的配置" class="headerlink" title="5 . Nginx的配置"></a>5 . Nginx的配置</h2><p>在/usr/local/nginx/conf目录下nginx.conf文件是nginx的配置文件。</p>
+<p>截取部分配置代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">       listen       80;</div><div class="line">       server_name  localhost;</div><div class="line"></div><div class="line">       #charset koi8-r;</div><div class="line"></div><div class="line">       #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">       location / &#123;</div><div class="line">           root   html;</div><div class="line">           index  index.html index.htm;</div><div class="line">       &#125;</div></pre></td></tr></table></figure>
+<p>其中，<br>一个server就是一个虚拟机；<br>80表示端口号；<br>root html表示虚拟主机的根目录；若配置了另一个虚拟主机，在改变了这个虚拟主机的端口号之后，可以重新配置root html至新的根目录，并且可以修改根目录中的显示内容。</p>
+<h2 id="5-使用Nginx配置虚拟机，通过域名区分虚拟机"><a href="#5-使用Nginx配置虚拟机，通过域名区分虚拟机" class="headerlink" title="5 . 使用Nginx配置虚拟机，通过域名区分虚拟机"></a>5 . 使用Nginx配置虚拟机，通过域名区分虚拟机</h2><p>DNS服务器的作用：把域名转换成对应的ip地址，并进行返回。</p>
+<p>可以通过修改host文件来指定域名的ip地址。</p>
+<p>host文件的位置：C:\Windows\System32\drivers\etc</p>
+<p>添加如下修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># test</div><div class="line">10.108.250.115 esale.com</div></pre></td></tr></table></figure></p>
+<p>当在本地访问esale.com时，会跳转到10.108.250.115这个ip地址。</p>
+<p><strong>若要通过域名区分虚拟机，需要修改nginx.conf配置文件。</strong></p>
+<p>在nginx.conf中添加一段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">        listen       80;</div><div class="line">        server_name  test.esale.com;</div><div class="line"></div><div class="line">        #charset koi8-r;</div><div class="line"></div><div class="line">        #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">            root   html-test;</div><div class="line">            index  index.html index.htm;</div><div class="line">        &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>然后配置DNS来指定域名对应的ip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># test</div><div class="line">10.108.250.115 test.esale.com</div></pre></td></tr></table></figure></p>
+<p>再在nginx文件夹下添加拷贝html文件夹并重命名为html-test，则可以访问成功。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/31/Nginx/" data-id="cj3ct12ta000alktxkmkbl2iz" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/05/25/SpringMVC学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">SpringMVC学习</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/31/Nginx/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/25/SpringMVC学习/">SpringMVC学习</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/23/SpringMVC的freemarker支持/">SpringMVC的freemarker支持</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/18/Mybatis学习二/">Mybatis学习二</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/15/Mybatis学习一/">Mybatis学习一</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Yao<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
