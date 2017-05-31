@@ -51,9 +51,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -84,6 +84,7 @@
 <li>反向代理，负载均衡。当网站的访问量达到一定程度后，单台服务器不能满足用户的请求时，需要用多台服务器集群可以使用n ginx做反向代理。并且多台服务器可以平均分担负载，不会因为某台服务器负载高宕机而某台服务器闲置的情况。</li>
 </ol>
 <h2 id="3-Nginx的安装"><a href="#3-Nginx的安装" class="headerlink" title="3 . Nginx的安装"></a>3 . Nginx的安装</h2><p>Nginx一般推荐安装在Linux系统，并且要安装c语言的编译环境gcc.</p>
+<p><strong><em>注意：以下说明和操作都是在linux操作系统下进行的。</em></strong></p>
 <h3 id="3-1-安装nginx依赖的包"><a href="#3-1-安装nginx依赖的包" class="headerlink" title="3.1 安装nginx依赖的包"></a>3.1 安装nginx依赖的包</h3><ul>
 <li><p>gcc</p>
 <p>  安装nginx需要先将官网下载的源码进行编译，编译依赖gcc环境，如果没有gcc环境，需要安装gcc：yum install gcc-c++ </p>
@@ -134,11 +135,16 @@
 <p>在nginx.conf中添加一段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">        listen       80;</div><div class="line">        server_name  test.esale.com;</div><div class="line"></div><div class="line">        #charset koi8-r;</div><div class="line"></div><div class="line">        #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">            root   html-test;</div><div class="line">            index  index.html index.htm;</div><div class="line">        &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
 <p>然后配置DNS来指定域名对应的ip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># test</div><div class="line">10.108.250.115 test.esale.com</div></pre></td></tr></table></figure></p>
 <p>再在nginx文件夹下添加拷贝html文件夹并重命名为html-test，则可以访问成功。</p>
+<h2 id="6-Nginx的反向代理"><a href="#6-Nginx的反向代理" class="headerlink" title="6 . Nginx的反向代理"></a>6 . Nginx的反向代理</h2><p>反向代理服务器是应用在服务端。决定哪台服务器提供服务。</p>
+<h3 id="6-1-反向代理的模拟"><a href="#6-1-反向代理的模拟" class="headerlink" title="6.1 反向代理的模拟"></a>6.1 反向代理的模拟</h3><p>应该有一个nginx服务器，多个应用服务器（可以是tomcat）。需要安装一个nginx和多个tomcat进行模拟。</p>
+<p>nginx服务器按上述的过程已经部署完毕。可以在/usr/local/中安装多个tomcat(此处安装了2个tomcat)。并且修改端口号以避免冲突：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Server</span> <span class="attr">port</span>=<span class="string">"8006"</span> <span class="attr">shutdown</span>=<span class="string">"SHUTDOWN"</span>&gt;</span></div><div class="line">···</div><div class="line"> <span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8081"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span></span></div><div class="line">               <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span></div><div class="line">               <span class="attr">redirectPort</span>=<span class="string">"8443"</span> /&gt;</div><div class="line">···</div><div class="line"><span class="comment">&lt;!-- Define an AJP 1.3 Connector on port 8009 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8010"</span> <span class="attr">protocol</span>=<span class="string">"AJP/1.3"</span> <span class="attr">redirectPort</span>=<span class="string">"8443"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<p><strong><em>Nginx配置文件nginx.conf：</em></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">upstream tomcats&#123;</div><div class="line">	server 10.108.250.115:8080 ;</div><div class="line">	server 10.108.250.115:8081;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">       listen       80;</div><div class="line">       server_name  tomcat.esale.com;</div><div class="line"></div><div class="line">       #charset koi8-r;</div><div class="line"></div><div class="line">       #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">       location / &#123;</div><div class="line">           proxy_pass http://tomcats;</div><div class="line">           index  index.html index.htm;</div><div class="line">       	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong><em>负载均衡：</em></strong><br>只需要在upstream的server后面添加一个weight即可代表权重。权重越高，分配请求的数量就越多。默认权重是1。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">upstream tomcats&#123;</div><div class="line">	server 10.108.250.115:8080 ;</div><div class="line">	server 10.108.250.115:8081;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/31/Nginx/" data-id="cj3ct12ta000alktxkmkbl2iz" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/31/Nginx/" data-id="cj3d3n27s0009wwtxuq3mdf49" class="article-share-link">Share</a>
       
       
     </footer>
@@ -221,7 +227,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/25/SpringMVC学习/" data-id="cj3ct12tm000jlktxpbquv9hj" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/25/SpringMVC学习/" data-id="cj3d3n283000bwwtx7alrpp8q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -268,7 +274,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/23/SpringMVC的freemarker支持/" data-id="cj3ct12te000dlktxoqdfc52o" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/23/SpringMVC的freemarker支持/" data-id="cj3d3n288000fwwtxkzpfglgl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -367,7 +373,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/18/Mybatis学习二/" data-id="cj3ct12t90009lktx8k51l1rv" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/18/Mybatis学习二/" data-id="cj3d3n284000cwwtxph0oy7sp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -472,7 +478,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/15/Mybatis学习一/" data-id="cj3ct12t10006lktxwnegk0dm" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/15/Mybatis学习一/" data-id="cj3d3n27j0005wwtxui1aymxg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -577,7 +583,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/14/Mybatis学习/" data-id="cj3ct12t80008lktxgtf478ph" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/14/Mybatis学习/" data-id="cj3d3n27m0007wwtxj0sl7xi4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -630,7 +636,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/10/Webservice/" data-id="cj3ct12tl000hlktxw3l28bmk" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/10/Webservice/" data-id="cj3d3n289000gwwtx469p9x52" class="article-share-link">Share</a>
       
       
     </footer>
@@ -758,7 +764,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/08/jQuery学习/" data-id="cj3ct12to000klktxr0fdfi7k" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/08/jQuery学习/" data-id="cj3d3n28c000jwwtxbhtg7bmo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -885,7 +891,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/04/JavaScript学习/" data-id="cj3ct12sz0005lktx0ux0fytr" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/04/JavaScript学习/" data-id="cj3d3n27l0006wwtxpw9qlpdh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -948,7 +954,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/28/CRM/" data-id="cj3ct12ss0003lktxjioqnv39" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/04/28/CRM/" data-id="cj3d3n27c0002wwtxq0qahdt5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -987,7 +993,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -1024,7 +1030,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Yao<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
