@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>We-Param</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Esale商城项目1 . 基本构建思路该商城和互联网上存在的商城类似，具备有基本的功能。
+1.1 技术选型
+数据库：mysql
+数据库连接池：druid
+Dao层：MyBatis
+缓存：redis
+搜索：solr
+Service层：spring
+表现层Web层：springmvc jstl EasyUI freemark
+图片服务器：FastDFS
+反向代理服务器：nginx
+定时器：Quartz">
+<meta property="og:type" content="article">
+<meta property="og:title" content="We-Param">
+<meta property="og:url" content="http://yoursite.com/2017/06/02/Esale商城项目/index.html">
+<meta property="og:site_name" content="We-Param">
+<meta property="og:description" content="Esale商城项目1 . 基本构建思路该商城和互联网上存在的商城类似，具备有基本的功能。
+1.1 技术选型
+数据库：mysql
+数据库连接池：druid
+Dao层：MyBatis
+缓存：redis
+搜索：solr
+Service层：spring
+表现层Web层：springmvc jstl EasyUI freemark
+图片服务器：FastDFS
+反向代理服务器：nginx
+定时器：Quartz">
+<meta property="og:updated_time" content="2017-06-02T09:28:56.500Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="We-Param">
+<meta name="twitter:description" content="Esale商城项目1 . 基本构建思路该商城和互联网上存在的商城类似，具备有基本的功能。
+1.1 技术选型
+数据库：mysql
+数据库连接池：druid
+Dao层：MyBatis
+缓存：redis
+搜索：solr
+Service层：spring
+表现层Web层：springmvc jstl EasyUI freemark
+图片服务器：FastDFS
+反向代理服务器：nginx
+定时器：Quartz">
+  
+    <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">We-Param</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Esale商城项目" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/02/Esale商城项目/" class="article-date">
+  <time datetime="2017-06-02T14:42:55.102Z" itemprop="datePublished">2017-06-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Esale商城项目"><a href="#Esale商城项目" class="headerlink" title="Esale商城项目"></a>Esale商城项目</h1><h2 id="1-基本构建思路"><a href="#1-基本构建思路" class="headerlink" title="1 . 基本构建思路"></a>1 . 基本构建思路</h2><p>该商城和互联网上存在的商城类似，具备有基本的功能。</p>
+<h3 id="1-1-技术选型"><a href="#1-1-技术选型" class="headerlink" title="1.1 技术选型"></a>1.1 技术选型</h3><ul>
+<li>数据库：mysql</li>
+<li>数据库连接池：druid</li>
+<li>Dao层：MyBatis</li>
+<li>缓存：redis</li>
+<li>搜索：solr</li>
+<li>Service层：spring</li>
+<li>表现层Web层：springmvc jstl EasyUI freemark</li>
+<li>图片服务器：FastDFS</li>
+<li>反向代理服务器：nginx</li>
+<li>定时器：Quartz</li>
+<li>Web服务器：tomcat</li>
+<li>工程管理：maven</li>
+</ul>
+<h3 id="1-2-后台管理系统搭建"><a href="#1-2-后台管理系统搭建" class="headerlink" title="1.2 . 后台管理系统搭建"></a>1.2 . 后台管理系统搭建</h3><p>使用maven管理工程：完成项目构建和依赖管理</p>
+<p>大致的构架如下：</p>
+<p>Taotao-parent（父工程管理jar包的版本）</p>
+<p>  |–Taotao-common（把通用的工具类打包）</p>
+<p>  |–Taotao-manager（继承父工程）</p>
+<pre><code>|-taotao-manager-pojo
+
+  |-taotao-manager-dao
+
+  |-taotao-manager-service
+
+  |-taotao-manager-web（war包）
+</code></pre><h2 id="2-技术框架SSM"><a href="#2-技术框架SSM" class="headerlink" title="2 . 技术框架SSM"></a>2 . 技术框架SSM</h2><p>包括三层：dao层、service层、web层。</p>
+<ul>
+<li>dao层：整合mybatis和spring</li>
+</ul>
+<h2 id="4-商品列表展示"><a href="#4-商品列表展示" class="headerlink" title="4 . 商品列表展示"></a>4 . 商品列表展示</h2><p>需要展示列表，就需要引入js和css文件。但是如果将js和css文件放在WEB-INF下，则无法直接访问。因此在springmvc中，需要引入静态资源映射来完成资源的加载。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">location</span>=<span class="string">"/WEB-INF/js/"</span> <span class="attr">mapping</span>=<span class="string">"/js/**"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">location</span>=<span class="string">"/WEB-INF/css/"</span> <span class="attr">mapping</span>=<span class="string">"/css/**"</span>/&gt;</span></div></pre></td></tr></table></figure></p>
+<p>使用了easyUI模板完成了前端代码的编写，因此需要再次基础上进行后台代码的编写。</p>
+<p>商品的列表展示除了要向数据库查询商品信息外，还需要进行分页处理。</p>
+<p>在item-list.jsp页面中，有如下的一段代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"easyui-datagrid"</span> <span class="attr">id</span>=<span class="string">"itemList"</span> <span class="attr">title</span>=<span class="string">"商品列表"</span> </span></div><div class="line">       <span class="attr">data-options</span>=<span class="string">"singleSelect:false,collapsible:true,pagination:true,url:'/item/list',method:'get',pageSize:30,toolbar:toolbar"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">thead</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">        	<span class="tag">&lt;<span class="name">th</span> <span class="attr">data-options</span>=<span class="string">"field:'ck',checkbox:true"</span>&gt;</span><span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">        	<span class="tag">&lt;<span class="name">th</span> <span class="attr">data-options</span>=<span class="string">"field:'id',width:60"</span>&gt;</span>商品ID<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">th</span> <span class="attr">data-options</span>=<span class="string">"field:'title',width:200"</span>&gt;</span>商品标题<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">th</span> <span class="attr">data-options</span>=<span class="string">"field:'cid',width:100"</span>&gt;</span>叶子类目<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">th</span> <span class="attr">data-options</span>=<span class="string">"field:'sellPoint',width:100"</span>&gt;</span>卖点<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">th</span> <span class="attr">data-options</span>=<span class="string">"field:'price',width:70,align:'right',formatter:TAOTAO.formatPrice"</span>&gt;</span>价格<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">th</span> <span class="attr">data-options</span>=<span class="string">"field:'num',width:70,align:'right'"</span>&gt;</span>库存数量<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">th</span> <span class="attr">data-options</span>=<span class="string">"field:'barcode',width:100"</span>&gt;</span>条形码<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">th</span> <span class="attr">data-options</span>=<span class="string">"field:'status',width:60,align:'center',formatter:TAOTAO.formatItemStatus"</span>&gt;</span>状态<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">th</span> <span class="attr">data-options</span>=<span class="string">"field:'created',width:130,align:'center',formatter:TAOTAO.formatDateTime"</span>&gt;</span>创建日期<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">th</span> <span class="attr">data-options</span>=<span class="string">"field:'updated',width:130,align:'center',formatter:TAOTAO.formatDateTime"</span>&gt;</span>更新日期<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这段代码则会发出如下的请求url:<a href="http://localhost:8080/item/list?page=1&amp;rows=30" target="_blank" rel="external">http://localhost:8080/item/list?page=1&amp;rows=30</a></p>
+<p>而且，在easyUI中，datagrid要求<strong>响应的数据格式</strong>：json数据格式，并且需要包含”total”<br>和”rows”两个参数。</p>
+<ul>
+<li>参数说明</li>
+</ul>
+<p>Total：查询结果的总记录数</p>
+<p>Rows：集合，包含显示的所有数据。其中集合中每个元素的key应该和dategrid的field对应。</p>
+<ul>
+<li>dao</li>
+</ul>
+<p>使用逆向工程生成的代码即可。</p>
+<ul>
+<li>service </li>
+</ul>
+<p>在service层中，接受到的参数是page（当前的页码）和row（每页所显示的记录数）数据；</p>
+<p>返回值：自己创建的pojo对象,对象中包含两个参数。</p>
+<p>EasyUIDataGridResult.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EasyUIDataGridResult</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Long total;</div><div class="line">	<span class="keyword">private</span> List&lt;?&gt; rows;</div><div class="line">	<span class="function"><span class="keyword">public</span> Long <span class="title">getTotal</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> total;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTotal</span><span class="params">(Long total)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.total = total;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> List&lt;?&gt; getRows() &#123;</div><div class="line">		<span class="keyword">return</span> rows;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRows</span><span class="params">(List&lt;?&gt; rows)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.rows = rows;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>此处，需要使用到Mybatis的分页插件，需要在maven工程的pom.xml文件中添加：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.miemiedev<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-paginator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.15<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.pagehelper<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pagehelper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.7.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>并且在SqlMapConfig.xml中添加配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 配置分页插件 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">plugin</span> <span class="attr">interceptor</span>=<span class="string">"com.github.pagehelper.PageHelper"</span>&gt;</span></div><div class="line">		<span class="comment">&lt;!-- 指定使用的数据库是什么 --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dialect"</span> <span class="attr">value</span>=<span class="string">"mysql"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>ItemServiceImpl.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> EasyUIDataGridResult <span class="title">getItemList</span><span class="params">(<span class="keyword">int</span> page, <span class="keyword">int</span> rows)</span> </span>&#123;</div><div class="line">		<span class="comment">//分页处理</span></div><div class="line">		PageHelper.startPage(page, rows);</div><div class="line">		<span class="comment">//执行查询</span></div><div class="line">		TbItemExample example = <span class="keyword">new</span> TbItemExample();</div><div class="line">		List&lt;TbItem&gt; list = itemMapper.selectByExample(example);</div><div class="line">		<span class="comment">//取分页信息</span></div><div class="line">		PageInfo&lt;TbItem&gt; pageInfo = <span class="keyword">new</span> PageInfo&lt;&gt;(list);</div><div class="line">		<span class="comment">//返回处理结果</span></div><div class="line">		EasyUIDataGridResult result = <span class="keyword">new</span> EasyUIDataGridResult();</div><div class="line">		result.setTotal(pageInfo.getTotal());</div><div class="line">		result.setRows(list);</div><div class="line">		</div><div class="line">		<span class="keyword">return</span> result;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>controller </li>
+</ul>
+<p>在controller层需要拦截到page和rows参数。需要返回的是json格式的参数，因此会使用到<br>@ResponseBody注解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/item/list"</span>)</div><div class="line"><span class="meta">@ResponseBody</span></div><div class="line"><span class="function"><span class="keyword">public</span> EasyUIDataGridResult <span class="title">getItemList</span><span class="params">(Integer page,Integer rows)</span></span>&#123;</div><div class="line">	EasyUIDataGridResult result = itemService.getItemList(page, rows);</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="5-商品类目选择"><a href="#5-商品类目选择" class="headerlink" title="5 . 商品类目选择"></a>5 . 商品类目选择</h2><h2 id="6-图片上传"><a href="#6-图片上传" class="headerlink" title="6 . 图片上传"></a>6 . 图片上传</h2><ol>
+<li>使用Nginx服务器</li>
+<li>分布式文件系统FastDFS</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj3fymci20000w8txcokjn18t" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/05/31/Nginx/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/02/Esale商城项目/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/31/Nginx/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/25/SpringMVC学习/">SpringMVC学习</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/23/SpringMVC的freemarker支持/">SpringMVC的freemarker支持</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/18/Mybatis学习二/">Mybatis学习二</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Yao<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
