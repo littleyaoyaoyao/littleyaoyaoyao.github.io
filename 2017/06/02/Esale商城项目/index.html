@@ -33,7 +33,7 @@ Service层：spring
 图片服务器：FastDFS
 反向代理服务器：nginx
 定时器：Quartz">
-<meta property="og:updated_time" content="2017-06-02T09:28:56.500Z">
+<meta property="og:updated_time" content="2017-06-04T10:45:52.391Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="We-Param">
 <meta name="twitter:description" content="Esale商城项目1 . 基本构建思路该商城和互联网上存在的商城类似，具备有基本的功能。
@@ -87,7 +87,7 @@ Service层：spring
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -172,11 +172,30 @@ Service层：spring
 <li>使用Nginx服务器</li>
 <li>分布式文件系统FastDFS</li>
 </ol>
-
+<h2 id="7-规格参数模块"><a href="#7-规格参数模块" class="headerlink" title="7 . 规格参数模块"></a>7 . 规格参数模块</h2><h3 id="7-1-判断规格参数模板是否存在"><a href="#7-1-判断规格参数模板是否存在" class="headerlink" title="7.1 判断规格参数模板是否存在"></a>7.1 判断规格参数模板是否存在</h3><p>根据圣品的分类id查询tb_item_param表，如果查询到结果说明此模板已经添加。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">TAOTAO.initItemCat(&#123;</div><div class="line">	<span class="attr">fun</span>:<span class="function"><span class="keyword">function</span>(<span class="params">node</span>)</span>&#123;</div><div class="line">	$(<span class="string">".addGroupTr"</span>).hide().find(<span class="string">".param"</span>).remove();</div><div class="line">		<span class="comment">//  判断选择的目录是否已经添加过规格</span></div><div class="line">	  $.getJSON(<span class="string">"/item/param/query/itemcatid/"</span> + node.id,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">		  <span class="keyword">if</span>(data.status == <span class="number">200</span> &amp;&amp; data.data)&#123;</div><div class="line">			  $.messager.alert(<span class="string">"提示"</span>, <span class="string">"该类目已经添加，请选择其他类目。"</span>, <span class="literal">undefined</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				 $(<span class="string">"#itemParamAddTable .selectItemCat"</span>).click();</div><div class="line">			  &#125;);</div><div class="line">			  <span class="keyword">return</span> ;</div><div class="line">		  &#125;</div><div class="line">		  $(<span class="string">".addGroupTr"</span>).show();</div><div class="line">	  &#125;);</div><div class="line">	&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>分析这段js代码，先会向/item/param/query/itemcatid/{cid}进行请求，请求会返回json数据进行解析，判断其中的status和data. </p>
+<p>请求的url:/item/param/query/itemcatid/{cid}</p>
+<p>参数：cid</p>
+<p>返回结果：status和data,因此可以使用esaleResult</p>
+<ul>
+<li>dao层</li>
+</ul>
+<p>可以使用逆向工程生成的代码</p>
+<ul>
+<li>service</li>
+</ul>
+<p>接受参数cid ，根据参数cid调用mapper查询模板是否存在，如果存在应该返回esaleResult，并且把查询的结果放到esaleResult的data属性；如果不存在，则直接返回esaleResult。</p>
+<p>参数：cid</p>
+<p>返回值：esaleResult</p>
+<ul>
+<li>controller</li>
+</ul>
+<h3 id="7-2-提交规格参数模板"><a href="#7-2-提交规格参数模板" class="headerlink" title="7.2 提交规格参数模板"></a>7.2 提交规格参数模板</h3>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj3fymci20000w8txcokjn18t" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj3iqvgza00005wtx2jlyrthz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -187,7 +206,7 @@ Service层：spring
   
   
     <a href="/2017/05/31/Nginx/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title"></div>
     </a>
   
@@ -210,7 +229,7 @@ Service层：spring
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
     </div>
@@ -220,7 +239,7 @@ Service层：spring
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
