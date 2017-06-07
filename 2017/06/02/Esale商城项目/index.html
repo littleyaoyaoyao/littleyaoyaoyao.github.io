@@ -33,7 +33,8 @@ Service层：spring
 图片服务器：FastDFS
 反向代理服务器：nginx
 定时器：Quartz">
-<meta property="og:updated_time" content="2017-06-04T10:45:52.391Z">
+<meta property="og:image" content="http://note.youdao.com/noteshare?id=9a0c71e86f2d1fafa0560e962a2f8588">
+<meta property="og:updated_time" content="2017-06-07T09:40:25.851Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="We-Param">
 <meta name="twitter:description" content="Esale商城项目1 . 基本构建思路该商城和互联网上存在的商城类似，具备有基本的功能。
@@ -48,6 +49,7 @@ Service层：spring
 图片服务器：FastDFS
 反向代理服务器：nginx
 定时器：Quartz">
+<meta name="twitter:image" content="http://note.youdao.com/noteshare?id=9a0c71e86f2d1fafa0560e962a2f8588">
   
     <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
   
@@ -191,11 +193,92 @@ Service层：spring
 <ul>
 <li>controller</li>
 </ul>
-<h3 id="7-2-提交规格参数模板"><a href="#7-2-提交规格参数模板" class="headerlink" title="7.2 提交规格参数模板"></a>7.2 提交规格参数模板</h3>
+<h3 id="7-2-提交规格参数模板"><a href="#7-2-提交规格参数模板" class="headerlink" title="7.2 提交规格参数模板"></a>7.2 提交规格参数模板</h3><h3 id="7-3-保存规格参数"><a href="#7-3-保存规格参数" class="headerlink" title="7.3 保存规格参数"></a>7.3 保存规格参数</h3><p>生成规格参数json字符串的处理：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//取商品的规格</span></div><div class="line">		<span class="keyword">var</span> paramJson = [];</div><div class="line">		$(<span class="string">"#itemAddForm .params li"</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params">i,e</span>)</span>&#123;</div><div class="line">			<span class="keyword">var</span> trs = $(e).find(<span class="string">"tr"</span>);</div><div class="line">			<span class="keyword">var</span> group = trs.eq(<span class="number">0</span>).text();</div><div class="line">			<span class="keyword">var</span> ps = [];</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>;i&lt;trs.length;i++)&#123;</div><div class="line">				<span class="keyword">var</span> tr = trs.eq(i);</div><div class="line">				ps.push(&#123;</div><div class="line">					<span class="string">"k"</span> : $.trim(tr.find(<span class="string">"td"</span>).eq(<span class="number">0</span>).find(<span class="string">"span"</span>).text()),</div><div class="line">					<span class="string">"v"</span> : $.trim(tr.find(<span class="string">"input"</span>).val())</div><div class="line">				&#125;);</div><div class="line">			&#125;</div><div class="line">			paramJson.push(&#123;</div><div class="line">				<span class="string">"group"</span> : group,</div><div class="line">				<span class="string">"params"</span>: ps</div><div class="line">			&#125;);</div><div class="line">		&#125;);</div><div class="line">		<span class="comment">//把json对象转换成字符串</span></div><div class="line">		paramJson = <span class="built_in">JSON</span>.stringify(paramJson);</div><div class="line">		$(<span class="string">"#itemAddForm [name=itemParams]"</span>).val(paramJson);</div></pre></td></tr></table></figure></p>
+<p>需要在controller和service中添加一个参数接受商品的规格参数即可。</p>
+<ul>
+<li>service</li>
+</ul>
+<h2 id="8-前台系统搭建——服务层和表现层"><a href="#8-前台系统搭建——服务层和表现层" class="headerlink" title="8 . 前台系统搭建——服务层和表现层"></a>8 . 前台系统搭建——服务层和表现层</h2><p><img src="http://note.youdao.com/noteshare?id=9a0c71e86f2d1fafa0560e962a2f8588" alt="image"></p>
+<p>可以把业务逻辑提取出来，发布服务，供pc、移动端公用。</p>
+<ul>
+<li>好处：</li>
+</ul>
+<ol>
+<li>提高代码复用度</li>
+<li>可以灵活的进行分布式部署。</li>
+<li>系统之间耦合度低</li>
+<li>团队之间开发不冲突。</li>
+</ol>
+<ul>
+<li>缺点</li>
+</ul>
+<ol>
+<li>需要发布Webservice,系统之间需要远程调用。</li>
+<li>工作量增加</li>
+<li>需要系统之间协作才能完成业务，系统调用之间变得复杂</li>
+</ol>
+<p>需要创建两个工程：</p>
+<p>服务层esale-rest：没有表现层只有业务逻辑，需要发布服务</p>
+<p>表现层esale-portal：只有表现层，没有业务逻辑，不需要连接数据库</p>
+<p>表现层和服务层通信，使用Webservice进行通信。Rest形式的Webservice:http+json数据</p>
+<h3 id="8-1-服务层esale-rest工程搭建"><a href="#8-1-服务层esale-rest工程搭建" class="headerlink" title="8.1 服务层esale-rest工程搭建"></a>8.1 服务层esale-rest工程搭建</h3><p>使用maven来管理工程。需要发布和调用服务，因此是一个web工程，打包成war包。</p>
+<ul>
+<li>使用的技术</li>
+</ul>
+<ol>
+<li>Mybatis</li>
+<li>Spring</li>
+<li>发布服务：springmvc（此处不用cxf）</li>
+</ol>
+<ul>
+<li>框架整合</li>
+</ul>
+<p>参考esale-manager</p>
+<ul>
+<li>pom.xml</li>
+</ul>
+<p>添加esale-manager-dao的依赖</p>
+<p>添加spring的一来</p>
+<p>配置tomcat插件（注意改端口）</p>
+<h3 id="8-2-表现层esale-portal"><a href="#8-2-表现层esale-portal" class="headerlink" title="8.2 表现层esale-portal"></a>8.2 表现层esale-portal</h3><ul>
+<li>使用的技术：</li>
+</ul>
+<ol>
+<li>spring</li>
+<li>springmvc</li>
+</ol>
+<ul>
+<li>依赖的jar包：</li>
+</ul>
+<ol>
+<li>esale-manager-pojo</li>
+<li>spring</li>
+<li>tomcat插件（注意改端口）</li>
+</ol>
+<ul>
+<li>框架整合</li>
+</ul>
+<p>spring和springmvc</p>
+<p>Maven安装到本地仓库，跳过测试：clean install -DskipTest</p>
+<h2 id="9-首页商品类目展示"><a href="#9-首页商品类目展示" class="headerlink" title="9 . 首页商品类目展示"></a>9 . 首页商品类目展示</h2><ol>
+<li>类目展示需要异步加载；</li>
+<li>商品类目从数据空中获得，调用esale-rest发布的服务获得数据；</li>
+<li>可以在首页中使用js直接调用esale-rest发布的服务获得数据</li>
+</ol>
+<h2 id="9-1-发布商品类目查询服务"><a href="#9-1-发布商品类目查询服务" class="headerlink" title="9.1 发布商品类目查询服务"></a>9.1 发布商品类目查询服务</h2><ul>
+<li>分析：<br>获得一个分类列表的数据，要从数据库中查找，从tb_item_cat表中取数据。</li>
+</ul>
+<p>可以创建一个pojo描述树形列表的节点，其中包含三个属性u\n\i。</p>
+<ul>
+<li>U：url        String</li>
+<li>N：name        String</li>
+<li>I：items        List</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj3iqvgza00005wtx2jlyrthz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj3n6i2750001ectxlh3sw884" class="article-share-link">Share</a>
       
       
     </footer>
@@ -203,6 +286,15 @@ Service层：spring
   
     
 <nav id="article-nav">
+  
+    <a href="/2017/06/07/js跨域/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
     <a href="/2017/05/31/Nginx/" id="article-nav-older" class="article-nav-link-wrap">
@@ -244,6 +336,10 @@ Service层：spring
       <ul>
         
           <li>
+            <a href="/2017/06/07/js跨域/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2017/06/02/Esale商城项目/">(no title)</a>
           </li>
         
@@ -257,10 +353,6 @@ Service层：spring
         
           <li>
             <a href="/2017/05/23/SpringMVC的freemarker支持/">SpringMVC的freemarker支持</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/18/Mybatis学习二/">Mybatis学习二</a>
           </li>
         
       </ul>

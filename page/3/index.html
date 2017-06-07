@@ -64,6 +64,88 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Hibernate入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/31/Hibernate入门/" class="article-date">
+  <time datetime="2017-03-31T14:21:20.474Z" itemprop="datePublished">2017-03-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/31/Hibernate入门/">Hibernate入门</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>date: 2017-03-25 15:14:21</p>
+<h1 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h1><h2 id="sample1"><a href="#sample1" class="headerlink" title="sample1"></a>sample1</h2><h3 id="三层框架"><a href="#三层框架" class="headerlink" title="三层框架"></a>三层框架</h3><p>Spring管理每一个架构层<br>Struts2 架构最简单（<strong>源码相对简单</strong>）<br>Hibernate 架构最复杂，使用以及思想都很简单</p>
+<h3 id="ORM框架"><a href="#ORM框架" class="headerlink" title="ORM框架"></a>ORM框架</h3><p>ORM Object Relational Mapping 对象关系映射<br>O：对象<br>R：关系（表）<br>M：映射</p>
+<p>Orm元素—》配置文件</p>
+<p>常用的ORM框架：Hibernate  MyBatis</p>
+<h3 id="Hibernate的作用"><a href="#Hibernate的作用" class="headerlink" title="Hibernate的作用"></a>Hibernate的作用</h3><ul>
+<li>会使对数据库的操作变成对对象的操作</li>
+</ul>
+<h3 id="我们需要做的"><a href="#我们需要做的" class="headerlink" title="我们需要做的"></a>我们需要做的</h3><ul>
+<li>自动生成sql语句</li>
+<li>配置对象和表的对应关系</li>
+</ul>
+<h3 id="Hibernate配置"><a href="#Hibernate配置" class="headerlink" title="Hibernate配置"></a>Hibernate配置</h3><ol>
+<li>导包 ： 核心 必须  jpa规范  数据库驱动</li>
+</ol>
+<p>创建lib文件夹 ：hibernate-distribution-3.6.10.Final —-&gt;  required jpa                                       mysql-connector-java-5.0.8-bin mysql-connector-java-5.0.8-bin.jar</p>
+<ol>
+<li>build path</li>
+<li>创建数据库和表</li>
+<li>配置核心配置文件 hibernate.cfg.xml</li>
+<li>自己编写映射文件 User.hbm.xml  复制/org/hibernate/hibernate-mapping-3.0.dtd中的语句</li>
+</ol>
+<h4 id="使用资源"><a href="#使用资源" class="headerlink" title="使用资源"></a>使用资源</h4><p>读取配置文件:</p>
+<p><code>Configuration conf = new Configuration().configure();</code></p>
+<p>根据配置创建Factory:</p>
+<p><code>SessionFactory sessionFactory = conf.buildSessionFactory();</code></p>
+<p>创建session对象:</p>
+<p><code>Session session = sessionFactory.openSession();</code></p>
+<p>操作数据库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">      User u = new User();</div><div class="line">u.setName(<span class="string">"san"</span>);</div><div class="line">u.setPassword(<span class="string">"123"</span>);</div><div class="line">session.save(u);//面向对象的操作</div></pre></td></tr></table></figure></p>
+<p>关闭资源：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">session.close();</div><div class="line">sessionFactory.close();</div></pre></td></tr></table></figure></p>
+<h4 id="创建HibernateUtils类"><a href="#创建HibernateUtils类" class="headerlink" title="创建HibernateUtils类"></a>创建HibernateUtils类</h4><p>创建HibernateUtils类可以简化开发，避免在开发中重复使用相同的语句。</p>
+<pre><code class="bash">private static SessionFactory sf;
+static{
+    //1.加载配置
+    Configuration conf = new Configuration().configure();
+    //2.创建sessionFactory;
+    SessionFactory sf = conf.buildSessionFactory();
+    Runtime.getRuntime().addShutdownHook(new Thread(new <span class="function"><span class="title">Runnable</span></span>() {
+            @Override
+            public void <span class="function"><span class="title">run</span></span>() {
+                System.out.println(<span class="string">"虚拟机关闭!释放资源"</span>);
+                sf.close();
+            }
+        }));
+    }
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj3n6i27h0005ectx2o303iad" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Hibernate加载策略" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/31/Hibernate加载策略/" class="article-date">
@@ -191,7 +273,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj3iqvh1e000k5wtxe9pa9d9p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj3n6i289000aectxedlefmqt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -267,7 +349,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj3iqvgzj00025wtxrtp1rsqe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj3n6i27b0003ectxdtic7b1m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -392,7 +474,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj3iqvgzn00045wtx1e1212sw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj3n6i27c0004ectxxnzvq0ix" class="article-share-link">Share</a>
       
       
     </footer>
@@ -449,7 +531,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj3iqvgzw00055wtxpumh3fzx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj3n6i27k0006ectx22mteqfh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -494,7 +576,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/25/hello-world/" data-id="cj3iqvh18000h5wtximca0umx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/25/hello-world/" data-id="cj3n6i28j000hectxrra4hbrf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -538,6 +620,10 @@ false : 与get一致，会理解加载数据
       <ul>
         
           <li>
+            <a href="/2017/06/07/js跨域/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2017/06/02/Esale商城项目/">(no title)</a>
           </li>
         
@@ -551,10 +637,6 @@ false : 与get一致，会理解加载数据
         
           <li>
             <a href="/2017/05/23/SpringMVC的freemarker支持/">SpringMVC的freemarker支持</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/18/Mybatis学习二/">Mybatis学习二</a>
           </li>
         
       </ul>
