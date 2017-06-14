@@ -34,7 +34,7 @@ Service层：spring
 反向代理服务器：nginx
 定时器：Quartz">
 <meta property="og:image" content="http://note.youdao.com/noteshare?id=9a0c71e86f2d1fafa0560e962a2f8588">
-<meta property="og:updated_time" content="2017-06-07T09:40:25.851Z">
+<meta property="og:updated_time" content="2017-06-14T08:22:11.981Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="We-Param">
 <meta name="twitter:description" content="Esale商城项目1 . 基本构建思路该商城和互联网上存在的商城类似，具备有基本的功能。
@@ -265,7 +265,7 @@ Service层：spring
 <li>商品类目从数据空中获得，调用esale-rest发布的服务获得数据；</li>
 <li>可以在首页中使用js直接调用esale-rest发布的服务获得数据</li>
 </ol>
-<h2 id="9-1-发布商品类目查询服务"><a href="#9-1-发布商品类目查询服务" class="headerlink" title="9.1 发布商品类目查询服务"></a>9.1 发布商品类目查询服务</h2><ul>
+<h3 id="9-1-发布商品类目查询服务"><a href="#9-1-发布商品类目查询服务" class="headerlink" title="9.1 发布商品类目查询服务"></a>9.1 发布商品类目查询服务</h3><ul>
 <li>分析：<br>获得一个分类列表的数据，要从数据库中查找，从tb_item_cat表中取数据。</li>
 </ul>
 <p>可以创建一个pojo描述树形列表的节点，其中包含三个属性u\n\i。</p>
@@ -274,11 +274,12 @@ Service层：spring
 <li>N：name        String</li>
 <li>I：items        List</li>
 </ul>
-
+<p>业务逻辑：根据parentid查询子节点列表，并递归调用。</p>
+<h2 id="10"><a href="#10" class="headerlink" title="10 ."></a>10 .</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj3q1dxsi000260txdtc6531h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj3wqkl2i0000sotxduecmhs6" class="article-share-link">Share</a>
       
       
     </footer>
