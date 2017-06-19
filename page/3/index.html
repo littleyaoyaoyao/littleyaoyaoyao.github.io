@@ -53,7 +53,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -63,6 +63,95 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Hibernate一对一关系 ---- 主键同步" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/01/Hibernate一对一关系 ---- 主键同步/" class="article-date">
+  <time datetime="2017-04-01T08:01:42.851Z" itemprop="datePublished">2017-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/01/Hibernate一对一关系 ---- 主键同步/">Hibernate一对一关系 ---- 主键同步</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： Hibernate 主键同步</p>
+<hr>
+<p>Address.hbm.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE hibernate-mapping PUBLIC </span></div><div class="line">    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"</div><div class="line">    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"&gt;</div><div class="line"> <span class="tag">&lt;<span class="name">hibernate-mapping</span> <span class="attr">package</span>=<span class="string">"com.itheima.domain"</span> &gt;</span></div><div class="line"> 	<span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"Address"</span> <span class="attr">table</span>=<span class="string">"t_Address"</span>   &gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"id"</span>    &gt;</span></div><div class="line">		<span class="comment">&lt;!-- foreign: 该主键既是主键又是外键 --&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"foreign"</span>&gt;</span></div><div class="line">			<span class="comment">&lt;!-- 作为外键时引用哪个属性 --&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"property"</span>&gt;</span>company<span class="tag">&lt;/<span class="name">param</span>&gt;</span></div><div class="line">			<span class="tag">&lt;/<span class="name">generator</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">id</span>&gt;</span> </div><div class="line">			</div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">column</span>=<span class="string">"name"</span> <span class="attr">type</span>=<span class="string">"string"</span> &gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">		<span class="comment">&lt;!-- 配置一对一关系 --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">one-to-one</span> <span class="attr">name</span>=<span class="string">"company"</span> <span class="attr">class</span>=<span class="string">"Company"</span> <span class="attr">constrained</span>=<span class="string">"true"</span>  &gt;</span><span class="tag">&lt;/<span class="name">one-to-one</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">class</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">hibernate-mapping</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>Company.hbm.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE hibernate-mapping PUBLIC </span></div><div class="line">    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"</div><div class="line">    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"&gt;</div><div class="line"> <span class="tag">&lt;<span class="name">hibernate-mapping</span> <span class="attr">package</span>=<span class="string">"com.itheima.domain"</span> &gt;</span></div><div class="line"> 	<span class="tag">&lt;<span class="name">class</span> <span class="attr">name</span>=<span class="string">"Company"</span> <span class="attr">table</span>=<span class="string">"t_Company"</span>   &gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"id"</span>    &gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">generator</span> <span class="attr">class</span>=<span class="string">"native"</span>&gt;</span><span class="tag">&lt;/<span class="name">generator</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">id</span>&gt;</span> </div><div class="line">			</div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">column</span>=<span class="string">"name"</span> <span class="attr">type</span>=<span class="string">"string"</span> &gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">		<span class="comment">&lt;!-- 配置一对一</span></div><div class="line">		one-to-one : 默认使用主键同步策略完成一对一的表关系体现.</div><div class="line">		cascade:</div><div class="line">		fetch:</div><div class="line">		lazy:</div><div class="line">		 --&gt;</div><div class="line">		<span class="tag">&lt;<span class="name">one-to-one</span> <span class="attr">name</span>=<span class="string">"address"</span> <span class="attr">class</span>=<span class="string">"Address"</span>&gt;</span> <span class="tag">&lt;/<span class="name">one-to-one</span>&gt;</span></div><div class="line"> 	<span class="tag">&lt;/<span class="name">class</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">hibernate-mapping</span>&gt;</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj448964000034ctxty0rd8d8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-log4j" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/01/log4j/" class="article-date">
+  <time datetime="2017-04-01T07:13:53.110Z" itemprop="datePublished">2017-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/01/log4j/">log4j</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： Hibernate log4j</p>
+<hr>
+<p>Hibernate中已经在slf4j日志框架，要想要转换成log4j，就需要中间jar包进行转换。</p>
+<ol>
+<li><p>必要包</p>
+</li>
+<li><p>log4j.property(from project/etc)</p>
+<ul>
+<li>配置的内容<br>info级别和stdout、file输出器输出<br><code>log4j.rootLogger=info, stdout, file</code></li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj448965b000l4ctxlgtc5b2e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-Struts2未登录拦截和权限控制" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -92,7 +181,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj3y6gpmg000fp0tx576nbdex" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj448964v000g4ctx4q1x5t53" class="article-share-link">Share</a>
       
       
     </footer>
@@ -174,7 +263,7 @@ static{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj3y6gply0005p0txr7kr6s8t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj448964f00054ctxm40otw6u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -311,7 +400,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj3y6gpml000jp0txqapqoj8b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj448964v000a4ctx8xatqlub" class="article-share-link">Share</a>
       
       
     </footer>
@@ -387,7 +476,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj3y6gpls0002p0tx7fv8kgh0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj448964000014ctxfem7azgx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -512,7 +601,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj3y6gplv0004p0txxdnsafe5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate入门学习二/" data-id="cj448964000044ctxk9p678gt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -569,7 +658,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj3y6gply0006p0tx5p6ljnec" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/28/Hibernate对象状态/" data-id="cj448964v000c4ctxcbzjgrap" class="article-share-link">Share</a>
       
       
     </footer>
@@ -614,7 +703,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/25/hello-world/" data-id="cj3y6gpmh000gp0txfjkese5i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/25/hello-world/" data-id="cj448964v000i4ctx14ut3g9k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -643,7 +732,7 @@ false : 与get一致，会理解加载数据
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Arkiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
     </div>
@@ -653,12 +742,20 @@ false : 与get一致，会理解加载数据
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Siste innlegg</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/06/15/设计模式——适配器模式/">设计模式——————适配器模式</a>
+            <a href="/2017/06/19/设计模式——桥接模式/">设计模式——————适配器模式</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/16/设计模式——适配器模式/">设计模式——————适配器模式</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/16/Redis/">Redis</a>
           </li>
         
           <li>
@@ -667,14 +764,6 @@ false : 与get一致，会理解加载数据
         
           <li>
             <a href="/2017/06/07/js跨域/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2017/06/02/Esale商城项目/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/31/Nginx/">(no title)</a>
           </li>
         
       </ul>
