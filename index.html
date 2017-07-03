@@ -64,6 +64,96 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Redis" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/03/Redis/" class="article-date">
+  <time datetime="2017-07-03T14:26:20.684Z" itemprop="datePublished">2017-07-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/03/Redis/">Redis</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： Redis</p>
+<hr>
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>Redis是一个key-value数据库，支持<em>持久化</em>、<em>数据备份</em>等。</p>
+<p>Redis运行在内存中但可以持久化到硬盘中，并且在内存中可以完成很多复杂性强的工作。</p>
+<p>Redis有五种数据结构：<strong>字符串String、列表List、哈希表Hash、集合Set、有序集合ZSet</strong>。</p>
+<p>Redis不使用表，它的数据库也没有预定义或者强制的方式来要求用户关联Redis存储的不同数据</p>
+<p>使用Redis而不是关系数据库或者其他磁盘存储数据库，可以避免写入不必要的临时数据，也免去了对临时数据进行扫描或者删除的麻烦，并最终改善程序的性能。</p>
+<ul>
+<li><strong>使用场景：</strong><br>缓存（数据查询、短连接、新闻内容、商品内容等等）。（最多使用）<br>分布式集群架构中的session分离。<br>聊天室的在线好友列表。<br>任务队列。（秒杀、抢购、12306等等）<br>应用排行榜。<br>网站访问统计。<br>数据过期处理（可以精确到毫秒）</li>
+</ul>
+<h2 id="1-Redis的单机版"><a href="#1-Redis的单机版" class="headerlink" title="1. Redis的单机版"></a>1. Redis的单机版</h2><p><strong>安装步骤</strong>：</p>
+<ol>
+<li>安装gcc编译环境<br>yum install gcc-c++</li>
+<li>把redis源码上传到服务器</li>
+<li>解压缩<br>tar -zxvf redis-3.0.0.tar.gz</li>
+<li>make</li>
+<li>make install PREFIX=/usr/local(要安装的位置)</li>
+</ol>
+<p><strong>启动redis:</strong></p>
+<p>前端启动：./redis-server</p>
+<p>后台启动：<br>将redis解压后的源码包中的redis.conf拷贝到bin目录下，编辑此文件：daemonize yes<br>./redis-server redis.conf</p>
+<p><strong>关闭:</strong><br>强制关闭：kill -9 进程号<br>正常关闭：./redis-cli shutdown</p>
+<p>在项目中，建议使用正常关闭。因为redis作为缓存来使用的话，将数据存储到内存中，如果使用正常关闭，则会将内存数据持久化到本地之后再关闭；若是强制关闭，可能会导致部分数据的丢失。</p>
+<h2 id="2-Redis客户端"><a href="#2-Redis客户端" class="headerlink" title="2. Redis客户端"></a>2. Redis客户端</h2><h3 id="2-1-启动客户端命令："><a href="#2-1-启动客户端命令：" class="headerlink" title="2.1 启动客户端命令："></a>2.1 启动客户端命令：</h3><p>./redis-cli-p 端口 -h ip地址 &lt;-c&gt;连接集群时使用此参数<br>（其中，-h表示指定访问的redis服务器的ip地址；-p表示指定访问的redis服务器的port端口）</p>
+<p><strong>默认端口是6379，ip是localhost:</strong><br>使用：./redis-cli</p>
+<p><strong>关闭:</strong></p>
+<ol>
+<li>ctrl+c</li>
+<li>127.0.0.1 &gt; quit</li>
+</ol>
+<h3 id="2-2-图形界面客户端"><a href="#2-2-图形界面客户端" class="headerlink" title="2.2 图形界面客户端"></a>2.2 图形界面客户端</h3><p>若连接失败，需要设置防火墙：<br>vim /etc/sysconfig/iptables<br>端口设置完成之后，需要重新启动：service iptables restart </p>
+<p>redis.conf中设置了默认的数据库16个，如果不指定哪个数据库的话，就默认将数据存储到下标为0的数据库。</p>
+<p><strong>redis.conf中的数据库数量的设置：</strong><br><code>databases 16</code></p>
+<p><strong>redis.conf中的选择数据库的方式：</strong><br>使用select加上数据库的下标就可以选择指定的数据库来使用(下标从0开始) —&gt;<br>127.0.0.1 &gt; select 15</p>
+<h3 id="2-3-Java客户端-Jedis"><a href="#2-3-Java客户端-Jedis" class="headerlink" title="2.3 Java客户端 : Jedis"></a>2.3 Java客户端 : Jedis</h3><h2 id="3-Redis集群"><a href="#3-Redis集群" class="headerlink" title="3. Redis集群"></a>3. Redis集群</h2><p>集群中应该至少有三个节点，每个节点有一备份节点。需要6台服务器。</p>
+<p>步骤：</p>
+<ol>
+<li>创建6个redis实例，指定端口从7001到7006</li>
+<li>修改redis.conf打开Cluster-enable yes前面的注释</li>
+<li>需要一个ruby脚本。在redis源码文件夹下的src目录下。redis-trib.rb</li>
+<li>把redis-trib.rb文件复制到到redis-cluster目录下。</li>
+<li><strong>执行ruby脚本之前，需要安装ruby环境。</strong><ul>
+<li>yum install ruby</li>
+<li>yum install rubygems</li>
+<li>安装redis-trib.rb运行依赖的ruby的包</li>
+</ul>
+</li>
+</ol>
+<p>[root@bogon ~]# gem install redis-3.0.0.gem</p>
+<ol>
+<li>启动所有的redis实例。 </li>
+<li>使用redis-trib.rb创建集群。<br>./redis-trib.rb create –replicas 1 192.168.25.153:7001 192.168.25.153:7002 192.168.25.153:7003 192.168.25.153:7004 192.168.25.153:7005  192.168.25.153:7006</li>
+</ol>
+<p><strong>使用客户端连接集群： redis01/redis-cli -p 7001 -c</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/03/Redis/" data-id="cj4o8ohyd000tzgtxxnbx5snt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Redis与Jedis" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/06/29/Redis与Jedis/" class="article-date">
@@ -103,7 +193,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj4ijhl4h000iu4txg3rj093w" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj4o8ohx7000hzgtxdxjdmwsv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -157,7 +247,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj4ijhl3w000du4tx4mr4ay9s" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj4o8ohx3000ezgtxl3yr245b" class="article-share-link">Share</a>
       
       
     </footer>
@@ -199,7 +289,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj4ijhl4r000pu4txq16lih8j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj4o8ohxl000pzgtxkvk1084q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -264,50 +354,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/16/设计模式——适配器模式/" data-id="cj4ijhl5b000tu4txg9f4w7d4" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Redis" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/16/Redis/" class="article-date">
-  <time datetime="2017-06-16T06:35:30.891Z" itemprop="datePublished">2017-06-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/16/Redis/">Redis</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>标签 ： Redis</p>
-<hr>
-<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>Redis是一个key-value数据库，支持<em>持久化</em>、<em>数据备份</em>等。</p>
-<p>Redis运行在内存中但可以持久化到硬盘中，并且在内存中可以完成很多复杂性强的工作。</p>
-<p>Redis有五种数据结构：字符串String、列表List、哈希表Hash、集合Set、有序集合ZSet。</p>
-<p>Redis不使用表，它的数据库也没有预定义或者强制的方式来要求用户关联Redis存储的不同数据</p>
-<p>使用Redis而不是关系数据库或者其他磁盘存储数据库，可以避免写入不必要的临时数据，也免去了对临时数据进行扫描或者删除的麻烦，并最终改善程序的性能。</p>
-<h2 id="1-Redis中的数据结构和简单命令"><a href="#1-Redis中的数据结构和简单命令" class="headerlink" title="1. Redis中的数据结构和简单命令"></a>1. Redis中的数据结构和简单命令</h2>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/16/Redis/" data-id="cj4ijhl3y000eu4tx2gg462su" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/16/设计模式——适配器模式/" data-id="cj4o8ohxm000qzgtx3g5t6ckl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -497,7 +544,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/09/spring框架学习二/" data-id="cj4ijhl4u000ru4txi17dtain" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/09/spring框架学习二/" data-id="cj4o8ohye000uzgtxdeqr86rb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -545,7 +592,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/07/js跨域/" data-id="cj4ijhl51000su4txyzurrz89" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/07/js跨域/" data-id="cj4o8ohxj000nzgtx2pcymer1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -736,7 +783,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj4ijhl1n0001u4txecp80rt4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj4o8ohvp0000zgtxvghol61h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -826,7 +873,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/31/Nginx/" data-id="cj4ijhl3l0009u4txkrlepnfi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/31/Nginx/" data-id="cj4o8ohwx000bzgtx2w4cnbgi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -909,7 +956,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/25/SpringMVC学习/" data-id="cj4ijhl49000fu4tx1irf594o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/25/SpringMVC学习/" data-id="cj4o8ohx0000dzgtxv75n9rz1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -940,7 +987,7 @@ throws ,可省略，一般不写。
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
     </div>
   </div>
 
@@ -951,6 +998,10 @@ throws ,可省略，一般不写。
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/07/03/Redis/">Redis</a>
+          </li>
         
           <li>
             <a href="/2017/06/29/Redis与Jedis/">Redis与Jedis</a>
@@ -966,10 +1017,6 @@ throws ,可省略，一般不写。
         
           <li>
             <a href="/2017/06/16/设计模式——适配器模式/">设计模式——————适配器模式</a>
-          </li>
-        
-          <li>
-            <a href="/2017/06/16/Redis/">Redis</a>
           </li>
         
       </ul>
