@@ -23,7 +23,7 @@ Redis运行在内存中但可以持久化到硬盘中，并且在内存中可以
 Redis有五种数据结构：字符串String、列表List、哈希表Hash、集合Set、有序集合ZSet。
 Redis不使用表，它的数据库也没有预定义或者强制的方式来要求用户关联Redis存储的不同数据
 使用Re">
-<meta property="og:updated_time" content="2017-07-04T14:07:06.088Z">
+<meta property="og:updated_time" content="2017-07-04T15:06:33.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis">
 <meta name="twitter:description" content="标签 ： Redis
@@ -72,7 +72,7 @@ Redis不使用表，它的数据库也没有预定义或者强制的方式来要
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -84,7 +84,7 @@ Redis不使用表，它的数据库也没有预定义或者强制的方式来要
         <section id="main"><article id="post-Redis" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/07/04/Redis/" class="article-date">
-  <time datetime="2017-07-04T14:06:59.604Z" itemprop="datePublished">2017-07-04</time>
+  <time datetime="2017-07-04T15:06:28.693Z" itemprop="datePublished">2017-07-04</time>
 </a>
     
   </div>
@@ -140,7 +140,7 @@ Redis不使用表，它的数据库也没有预定义或者强制的方式来要
 <h3 id="2-3-Java客户端-Jedis"><a href="#2-3-Java客户端-Jedis" class="headerlink" title="2.3 Java客户端 : Jedis"></a>2.3 Java客户端 : Jedis</h3><p>使用jedis先添加两个jar包：common-pool2-2.3.jar  ， jedis-2.7.0.jar</p>
 <p><strong>单实例连接redis：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jedisClient</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="comment">// Jedis</span></div><div class="line">		Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"192.168.242.137"</span>, <span class="number">6379</span>);</div><div class="line">		<span class="comment">// 通过redis赋值</span></div><div class="line">		jedis.set(<span class="string">"s2"</span>, <span class="string">"222"</span>);</div><div class="line">		<span class="comment">// 通过redis取值</span></div><div class="line">		String result = jedis.get(<span class="string">"s2"</span>);</div><div class="line">		System.out.println(result);</div><div class="line">		<span class="comment">// 关闭jedis</span></div><div class="line">		jedis.close();</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
 <p><strong>使用jedis连接池连接redis服务器:</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jedisPool</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="comment">// JedisPool</span></div><div class="line">		JedisPool pool = <span class="keyword">new</span> JedisPool(<span class="string">"192.168.242.137"</span>, <span class="number">6379</span>);</div><div class="line">		<span class="comment">// 通过连接池获取jedis对象</span></div><div class="line">		Jedis jedis = pool.getResource();</div><div class="line"></div><div class="line">		jedis.set(<span class="string">"s4"</span>, <span class="string">"444"</span>);</div><div class="line"></div><div class="line">		String result = jedis.get(<span class="string">"s3"</span>);</div><div class="line">		System.out.println(result);</div><div class="line"></div><div class="line">		<span class="comment">// 关闭jedis客户端</span></div><div class="line">		jedis.close();</div><div class="line"></div><div class="line">		<span class="comment">// 关闭连接池</span></div><div class="line">		pool.close();</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="3-Redis数据类型"><a href="#3-Redis数据类型" class="headerlink" title="3. Redis数据类型"></a>3. Redis数据类型</h2><h3 id="3-1-String类型"><a href="#3-1-String类型" class="headerlink" title="3.1 String类型"></a>3.1 String类型</h3><h2 id="4-Redis集群"><a href="#4-Redis集群" class="headerlink" title="4. Redis集群"></a>4. Redis集群</h2><p>集群中应该至少有三个节点，每个节点有一备份节点。需要6台服务器。</p>
+<h2 id="3-Redis数据类型"><a href="#3-Redis数据类型" class="headerlink" title="3. Redis数据类型"></a>3. Redis数据类型</h2><h3 id="3-1-String类型"><a href="#3-1-String类型" class="headerlink" title="3.1 String类型"></a>3.1 String类型</h3><h3 id="3-2-Hash类型"><a href="#3-2-Hash类型" class="headerlink" title="3.2 Hash类型"></a>3.2 Hash类型</h3><h3 id="3-3-List类型"><a href="#3-3-List类型" class="headerlink" title="3.3 List类型"></a>3.3 List类型</h3><h3 id="3-3-Set类型"><a href="#3-3-Set类型" class="headerlink" title="3.3 Set类型"></a>3.3 Set类型</h3><h3 id="3-3-Zset类型"><a href="#3-3-Zset类型" class="headerlink" title="3.3 Zset类型"></a>3.3 Zset类型</h3><h2 id="4-Redis集群"><a href="#4-Redis集群" class="headerlink" title="4. Redis集群"></a>4. Redis集群</h2><p>集群中应该至少有三个节点，每个节点有一备份节点。需要6台服务器。</p>
 <p>步骤：</p>
 <ol>
 <li>创建6个redis实例，指定端口从7001到7006</li>
@@ -164,7 +164,7 @@ Redis不使用表，它的数据库也没有预定义或者强制的方式来要
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/04/Redis/" data-id="cj4pnfeb9000dbktxjvdvnkuu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/04/Redis/" data-id="cj4ppjhxz000k9ctxglerwag6" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -175,7 +175,7 @@ Redis不使用表，它的数据库也没有预定义或者强制的方式来要
   
   
     <a href="/2017/06/29/Redis与Jedis/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ouder</strong>
       <div class="article-nav-title">Redis与Jedis</div>
     </a>
   
@@ -198,7 +198,7 @@ Redis不使用表，它的数据库也没有预定义或者强制的方式来要
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
     </div>
@@ -208,7 +208,7 @@ Redis不使用表，它的数据库也没有预定义或者强制的方式来要
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
