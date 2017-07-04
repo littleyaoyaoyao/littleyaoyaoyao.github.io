@@ -66,8 +66,8 @@
   
     <article id="post-Redis" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/07/03/Redis/" class="article-date">
-  <time datetime="2017-07-03T14:26:20.684Z" itemprop="datePublished">2017-07-03</time>
+    <a href="/2017/07/04/Redis/" class="article-date">
+  <time datetime="2017-07-04T14:06:59.604Z" itemprop="datePublished">2017-07-04</time>
 </a>
     
   </div>
@@ -78,7 +78,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/03/Redis/">Redis</a>
+      <a class="article-title" href="/2017/07/04/Redis/">Redis</a>
     </h1>
   
 
@@ -120,7 +120,10 @@
 <p>redis.conf中设置了默认的数据库16个，如果不指定哪个数据库的话，就默认将数据存储到下标为0的数据库。</p>
 <p><strong>redis.conf中的数据库数量的设置：</strong><br><code>databases 16</code></p>
 <p><strong>redis.conf中的选择数据库的方式：</strong><br>使用select加上数据库的下标就可以选择指定的数据库来使用(下标从0开始) —&gt;<br>127.0.0.1 &gt; select 15</p>
-<h3 id="2-3-Java客户端-Jedis"><a href="#2-3-Java客户端-Jedis" class="headerlink" title="2.3 Java客户端 : Jedis"></a>2.3 Java客户端 : Jedis</h3><h2 id="3-Redis集群"><a href="#3-Redis集群" class="headerlink" title="3. Redis集群"></a>3. Redis集群</h2><p>集群中应该至少有三个节点，每个节点有一备份节点。需要6台服务器。</p>
+<h3 id="2-3-Java客户端-Jedis"><a href="#2-3-Java客户端-Jedis" class="headerlink" title="2.3 Java客户端 : Jedis"></a>2.3 Java客户端 : Jedis</h3><p>使用jedis先添加两个jar包：common-pool2-2.3.jar  ， jedis-2.7.0.jar</p>
+<p><strong>单实例连接redis：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jedisClient</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="comment">// Jedis</span></div><div class="line">		Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"192.168.242.137"</span>, <span class="number">6379</span>);</div><div class="line">		<span class="comment">// 通过redis赋值</span></div><div class="line">		jedis.set(<span class="string">"s2"</span>, <span class="string">"222"</span>);</div><div class="line">		<span class="comment">// 通过redis取值</span></div><div class="line">		String result = jedis.get(<span class="string">"s2"</span>);</div><div class="line">		System.out.println(result);</div><div class="line">		<span class="comment">// 关闭jedis</span></div><div class="line">		jedis.close();</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>使用jedis连接池连接redis服务器:</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jedisPool</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="comment">// JedisPool</span></div><div class="line">		JedisPool pool = <span class="keyword">new</span> JedisPool(<span class="string">"192.168.242.137"</span>, <span class="number">6379</span>);</div><div class="line">		<span class="comment">// 通过连接池获取jedis对象</span></div><div class="line">		Jedis jedis = pool.getResource();</div><div class="line"></div><div class="line">		jedis.set(<span class="string">"s4"</span>, <span class="string">"444"</span>);</div><div class="line"></div><div class="line">		String result = jedis.get(<span class="string">"s3"</span>);</div><div class="line">		System.out.println(result);</div><div class="line"></div><div class="line">		<span class="comment">// 关闭jedis客户端</span></div><div class="line">		jedis.close();</div><div class="line"></div><div class="line">		<span class="comment">// 关闭连接池</span></div><div class="line">		pool.close();</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="3-Redis数据类型"><a href="#3-Redis数据类型" class="headerlink" title="3. Redis数据类型"></a>3. Redis数据类型</h2><h3 id="3-1-String类型"><a href="#3-1-String类型" class="headerlink" title="3.1 String类型"></a>3.1 String类型</h3><h2 id="4-Redis集群"><a href="#4-Redis集群" class="headerlink" title="4. Redis集群"></a>4. Redis集群</h2><p>集群中应该至少有三个节点，每个节点有一备份节点。需要6台服务器。</p>
 <p>步骤：</p>
 <ol>
 <li>创建6个redis实例，指定端口从7001到7006</li>
@@ -144,7 +147,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/03/Redis/" data-id="cj4o8ohyd000tzgtxxnbx5snt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/04/Redis/" data-id="cj4pnfeb9000dbktxjvdvnkuu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -193,7 +196,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj4o8ohx7000hzgtxdxjdmwsv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj4pnfeba000ebktx7ogf29o5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -247,7 +250,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj4o8ohx3000ezgtxl3yr245b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj4pnfec8000mbktxy38ldoqf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -289,7 +292,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj4o8ohxl000pzgtxkvk1084q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj4pnfecc000pbktxazq84uhi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -354,7 +357,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/16/设计模式——适配器模式/" data-id="cj4o8ohxm000qzgtx3g5t6ckl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/16/设计模式——适配器模式/" data-id="cj4pnfecf000rbktx57nqdw1j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -544,7 +547,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/09/spring框架学习二/" data-id="cj4o8ohye000uzgtxdeqr86rb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/09/spring框架学习二/" data-id="cj4pnfecd000qbktxh1wyfl34" class="article-share-link">Share</a>
       
       
     </footer>
@@ -592,7 +595,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/07/js跨域/" data-id="cj4o8ohxj000nzgtx2pcymer1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/07/js跨域/" data-id="cj4pnfecg000sbktxc07fe4qd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -783,7 +786,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj4o8ohvp0000zgtxvghol61h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj4pnfe9f0000bktxhrc73dt3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -873,7 +876,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/31/Nginx/" data-id="cj4o8ohwx000bzgtx2w4cnbgi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/31/Nginx/" data-id="cj4pnfeb3000abktxuitgu2eh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -956,7 +959,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/25/SpringMVC学习/" data-id="cj4o8ohx0000dzgtxv75n9rz1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/25/SpringMVC学习/" data-id="cj4pnfech000tbktxjr8djwzq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1000,7 +1003,7 @@ throws ,可省略，一般不写。
       <ul>
         
           <li>
-            <a href="/2017/07/03/Redis/">Redis</a>
+            <a href="/2017/07/04/Redis/">Redis</a>
           </li>
         
           <li>
