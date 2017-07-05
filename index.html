@@ -67,7 +67,7 @@
     <article id="post-Redis" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/07/05/Redis/" class="article-date">
-  <time datetime="2017-07-05T12:55:12.075Z" itemprop="datePublished">2017-07-05</time>
+  <time datetime="2017-07-05T13:45:00.025Z" itemprop="datePublished">2017-07-05</time>
 </a>
     
   </div>
@@ -123,14 +123,42 @@
 <h3 id="2-3-Java客户端-Jedis"><a href="#2-3-Java客户端-Jedis" class="headerlink" title="2.3 Java客户端 : Jedis"></a>2.3 Java客户端 : Jedis</h3><p>使用jedis先添加两个jar包：common-pool2-2.3.jar  ， jedis-2.7.0.jar</p>
 <p><strong>单实例连接redis：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jedisClient</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="comment">// Jedis</span></div><div class="line">		Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"192.168.242.137"</span>, <span class="number">6379</span>);</div><div class="line">		<span class="comment">// 通过redis赋值</span></div><div class="line">		jedis.set(<span class="string">"s2"</span>, <span class="string">"222"</span>);</div><div class="line">		<span class="comment">// 通过redis取值</span></div><div class="line">		String result = jedis.get(<span class="string">"s2"</span>);</div><div class="line">		System.out.println(result);</div><div class="line">		<span class="comment">// 关闭jedis</span></div><div class="line">		jedis.close();</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
 <p><strong>使用jedis连接池连接redis服务器:</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jedisPool</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="comment">// JedisPool</span></div><div class="line">		JedisPool pool = <span class="keyword">new</span> JedisPool(<span class="string">"192.168.242.137"</span>, <span class="number">6379</span>);</div><div class="line">		<span class="comment">// 通过连接池获取jedis对象</span></div><div class="line">		Jedis jedis = pool.getResource();</div><div class="line"></div><div class="line">		jedis.set(<span class="string">"s4"</span>, <span class="string">"444"</span>);</div><div class="line"></div><div class="line">		String result = jedis.get(<span class="string">"s3"</span>);</div><div class="line">		System.out.println(result);</div><div class="line"></div><div class="line">		<span class="comment">// 关闭jedis客户端</span></div><div class="line">		jedis.close();</div><div class="line"></div><div class="line">		<span class="comment">// 关闭连接池</span></div><div class="line">		pool.close();</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="3-Redis数据类型"><a href="#3-Redis数据类型" class="headerlink" title="3. Redis数据类型"></a>3. Redis数据类型</h2><h3 id="3-1-String类型"><a href="#3-1-String类型" class="headerlink" title="3.1 String类型"></a>3.1 String类型</h3><h3 id="3-2-Hash类型"><a href="#3-2-Hash类型" class="headerlink" title="3.2 Hash类型"></a>3.2 Hash类型</h3><h3 id="3-3-List类型"><a href="#3-3-List类型" class="headerlink" title="3.3 List类型"></a>3.3 List类型</h3><h3 id="3-3-Set类型"><a href="#3-3-Set类型" class="headerlink" title="3.3 Set类型"></a>3.3 Set类型</h3><h3 id="3-3-Zset类型"><a href="#3-3-Zset类型" class="headerlink" title="3.3 Zset类型"></a>3.3 Zset类型</h3><h2 id="4-keys命令"><a href="#4-keys命令" class="headerlink" title="4. keys命令"></a>4. keys命令</h2><p>keys：查询所有的key<br>exits：确认一个key是否存在<br>rename：重命名key<br>type：返回值的类型<br>expire：设置key的生存时间<br>ttl：查询key的生存时间</p>
+<h2 id="3-Redis数据类型"><a href="#3-Redis数据类型" class="headerlink" title="3. Redis数据类型"></a>3. Redis数据类型</h2><h3 id="3-1-String类型"><a href="#3-1-String类型" class="headerlink" title="3.1 String类型"></a>3.1 String类型</h3><ul>
+<li>赋值：set key value</li>
+<li>取值：get key value</li>
+<li>赋值并取值：getset key value</li>
+<li>设置/获取多个键值：<br>MSET key value [key value …]<br>MGET key [key …]</li>
+<li>删除：DEL key</li>
+<li>数值增减：<br>INCR key<br>INCRBY key increment<br>DECR key<br>DECRBY key decrement</li>
+</ul>
+<p><strong>应用：</strong><br>商品编号、订单号采用string的递增数字特性生成。</p>
+<h3 id="3-2-Hash类型"><a href="#3-2-Hash类型" class="headerlink" title="3.2 Hash类型"></a>3.2 Hash类型</h3><p>假设有User对象以JSON序列化的形式存储到Redis中，User对象有id，username、password、age、name等属性，存储的过程如下：<br>保存、更新：<br>User对象 —&gt;  json(string) —&gt; redis<br>如果在业务上只是更新age属性，其他的属性并不做更新我应该怎么做呢？ 如果仍然采用上边的方法在传输、处理时会造成资源浪费，下边讲的hash可以很好的解决这个问题。</p>
+<h3 id="3-3-List类型"><a href="#3-3-List类型" class="headerlink" title="3.3 List类型"></a>3.3 List类型</h3><h3 id="3-3-Set类型"><a href="#3-3-Set类型" class="headerlink" title="3.3 Set类型"></a>3.3 Set类型</h3><h3 id="3-3-Zset类型"><a href="#3-3-Zset类型" class="headerlink" title="3.3 Zset类型"></a>3.3 Zset类型</h3><h2 id="4-keys命令"><a href="#4-keys命令" class="headerlink" title="4. keys命令"></a>4. keys命令</h2><p>keys：查询所有的key<br>exits：确认一个key是否存在<br>rename：重命名key<br>type：返回值的类型<br>expire：设置key的生存时间<br>ttl：查询key的生存时间</p>
 <h2 id="5-redis持久化方案"><a href="#5-redis持久化方案" class="headerlink" title="5. redis持久化方案"></a>5. redis持久化方案</h2><h3 id="5-1-Rdb"><a href="#5-1-Rdb" class="headerlink" title="5.1 Rdb"></a>5.1 Rdb</h3><p>redis的默认方式，reids通过快照来将数据持久化到磁盘中。</p>
 <p><strong>设置持久化快照的条件：</strong><br>在redis.conf中修改持久化快照的条件</p>
 <p><strong>rdb问题：</strong><br>一旦redis非法关闭，那么会丢失最后一次持久化之后的数据。</p>
 <h3 id="5-2-Aof方式"><a href="#5-2-Aof方式" class="headerlink" title="5.2 Aof方式"></a>5.2 Aof方式</h3><p>redis默认是不使用该方式持久化的。Aof方式的持久化，是操作一次redis数据库，则将操作的记录存储到aof持久化文件中。<br><code>appendonly no</code>改为<br><code>appendonly yes</code><br>加上：<br><code>appendfilename &quot;appendonly.aof&quot;</code></p>
 <h3 id="5-3-总结"><a href="#5-3-总结" class="headerlink" title="5.3 总结"></a>5.3 总结</h3><p>在使用aof和rdb方式时，如果redis重启，则数据从aof中加载</p>
 <h2 id="6-redis主从复制"><a href="#6-redis主从复制" class="headerlink" title="6. redis主从复制"></a>6. redis主从复制</h2><p>redis的主从复制可以避免单点故障（比如在redis服务器的磁盘损坏）。<br>一个主机可以有多个从机，主机和从机保持同步；从机也可以作为主机。</p>
-<h3 id="6-1-主从复制设置"><a href="#6-1-主从复制设置" class="headerlink" title="6.1 主从复制设置"></a>6.1 主从复制设置</h3><h2 id="7-Redis集群"><a href="#7-Redis集群" class="headerlink" title="7. Redis集群"></a>7. Redis集群</h2><p>集群中应该至少有三个节点，每个节点有一备份节点。需要6台服务器。</p>
+<h3 id="6-1-主从复制设置"><a href="#6-1-主从复制设置" class="headerlink" title="6.1 主从复制设置"></a>6.1 主从复制设置</h3><p><strong>主机配置：</strong></p>
+<p>无需配置</p>
+<p><strong>从机配置：</strong></p>
+<ul>
+<li><p>第一步：复制出一个从机（将文件夹复制出来）</p>
+</li>
+<li><p>第二步：修改redis.conf中的配置：<br>语法：<br><code>salveof &lt;masterip&gt; &lt;masterport&gt;</code><br>—&gt;<br><code>slaveof ip地址 端口号</code></p>
+</li>
+<li><p>第三步：修改从机中的ip地址或者端口号</p>
+</li>
+<li><p>第四步：清楚从机中的持久化文件</p>
+</li>
+<li><p>第五步：启动从机</p>
+</li>
+<li><p>启动从机的客户端</p>
+</li>
+</ul>
+<p><strong>注意：</strong>注意一旦发生增删改操作，那么从机会将数据同步到从机中；从机不能执行写操作。</p>
+<h2 id="7-Redis集群"><a href="#7-Redis集群" class="headerlink" title="7. Redis集群"></a>7. Redis集群</h2><p>集群中应该至少有三个节点，每个节点有一备份节点。需要6台服务器。</p>
 <p>步骤：</p>
 <ol>
 <li>创建6个redis实例，指定端口从7001到7006</li>
@@ -154,7 +182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/05/Redis/" data-id="cj4r0dsg3000uhgtxnnbogxiv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/05/Redis/" data-id="cj4r22k8h000enctxiu5aci7m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -203,7 +231,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj4r0dsf3000ghgtx1jd8bji5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj4r22k8l000hnctxznk0g25o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -257,7 +285,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj4r0dsf5000hhgtxlgexyjno" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj4r22k8j000gnctxl14wff68" class="article-share-link">Share</a>
       
       
     </footer>
@@ -299,7 +327,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj4r0dsfg000rhgtxcfhtcnw9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj4r22k8x000snctxm0pholvp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -364,7 +392,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/16/设计模式——适配器模式/" data-id="cj4r0dsfh000shgtx4otns8og" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/16/设计模式——适配器模式/" data-id="cj4r22k8y000tnctx39hoo2rp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -554,7 +582,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/09/spring框架学习二/" data-id="cj4r0dsfh000thgtxysjyfuun" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/09/spring框架学习二/" data-id="cj4r22k8z000unctx2m3fst37" class="article-share-link">Share</a>
       
       
     </footer>
@@ -602,7 +630,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/07/js跨域/" data-id="cj4r0dsfd000phgtxlikzrq7u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/07/js跨域/" data-id="cj4r22k8u000pnctxskfqilfg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -793,7 +821,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj4r0dsec0001hgtxb2hylw2e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/02/Esale商城项目/" data-id="cj4r22k7o0000nctxlhrgnkjv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -883,7 +911,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/31/Nginx/" data-id="cj4r0dsez000chgtxd71czbbq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/31/Nginx/" data-id="cj4r22k8h000dnctx3khn6xdk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -966,7 +994,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/25/SpringMVC学习/" data-id="cj4r0dsf1000ehgtxt79otay4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/25/SpringMVC学习/" data-id="cj4r22k8m000inctxgu6qejb3" class="article-share-link">Share</a>
       
       
     </footer>
