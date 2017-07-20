@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Freemarker | We-Param</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="标签 ： Freemarker
+
+一 . Freemarker简介FreeMarker是一个用Java语言编写的模板引擎，它基于模板来生成文本输出。FreeMarker与Web容器无关，即在Web运行时，它并不知道Servlet或HTTP。它不仅可以用作表现层的实现技术，而且还可以用于生成XML，JSP或Java 等。
+二 . Freemarker使用方法第一步：把freemarker的jar包添">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Freemarker">
+<meta property="og:url" content="http://yoursite.com/2017/07/20/Freemarker/index.html">
+<meta property="og:site_name" content="We-Param">
+<meta property="og:description" content="标签 ： Freemarker
+
+一 . Freemarker简介FreeMarker是一个用Java语言编写的模板引擎，它基于模板来生成文本输出。FreeMarker与Web容器无关，即在Web运行时，它并不知道Servlet或HTTP。它不仅可以用作表现层的实现技术，而且还可以用于生成XML，JSP或Java 等。
+二 . Freemarker使用方法第一步：把freemarker的jar包添">
+<meta property="og:updated_time" content="2017-07-20T15:54:36.510Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Freemarker">
+<meta name="twitter:description" content="标签 ： Freemarker
+
+一 . Freemarker简介FreeMarker是一个用Java语言编写的模板引擎，它基于模板来生成文本输出。FreeMarker与Web容器无关，即在Web运行时，它并不知道Servlet或HTTP。它不仅可以用作表现层的实现技术，而且还可以用于生成XML，JSP或Java 等。
+二 . Freemarker使用方法第一步：把freemarker的jar包添">
+  
+    <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">We-Param</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Freemarker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/20/Freemarker/" class="article-date">
+  <time datetime="2017-07-20T15:54:27.277Z" itemprop="datePublished">2017-07-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Freemarker
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： Freemarker</p>
+<hr>
+<h2 id="一-Freemarker简介"><a href="#一-Freemarker简介" class="headerlink" title="一 . Freemarker简介"></a>一 . Freemarker简介</h2><p>FreeMarker是一个用Java语言编写的模板引擎，它基于模板来生成文本输出。FreeMarker与Web容器无关，即在Web运行时，它并不知道Servlet或HTTP。它不仅可以用作表现层的实现技术，而且还可以用于生成XML，JSP或Java 等。</p>
+<h2 id="二-Freemarker使用方法"><a href="#二-Freemarker使用方法" class="headerlink" title="二 . Freemarker使用方法"></a>二 . Freemarker使用方法</h2><p>第一步：把freemarker的jar包添加到工程中<br>第二步：freemarker的运行不依赖web容器，可以在java工程中运行。创建一个测试方法进行测试。<br>第三步：创建一个Configration对象<br>第四步：告诉config对象模板文件存放的路径。<br>第五步：设置config的默认字符集。一般是utf-8<br>第六步：从config对象中获得模板对象。需要制定一个模板文件的名字。<br>第七步：创建模板需要的数据集。可以是一个map对象也可以是一个pojo，把模板需要的数据都放入数据集。<br>第八步：创建一个Writer对象，指定生成的文件保存的路径及文件名。<br>第九步：调用模板对象的process方法生成静态文件。需要两个参数数据集和writer对象。<br>第十步：关闭writer对象。</p>
+<p><strong>测试代码：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FreeMarkerTest</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFreeMarker</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">		<span class="comment">// 第一步：把freemarker的jar包添加到工程中</span></div><div class="line">		<span class="comment">// 第二步：freemarker的运行不依赖web容器，可以在java工程中运行。创建一个测试方法进行测试。</span></div><div class="line">		<span class="comment">// 第三步：创建一个Configuration对象</span></div><div class="line">		Configuration configuration = <span class="keyword">new</span> Configuration(Configuration.getVersion());</div><div class="line">		<span class="comment">// 第四步：告诉config对象模板文件存放的路径。</span></div><div class="line">		configuration.setDirectoryForTemplateLoading(<span class="keyword">new</span> File(<span class="string">"D:\\workspaces\\JaveEE\\esale-portal\\src\\main\\webapp\\WEB-INF\\ftl"</span>));</div><div class="line">		<span class="comment">// 第五步：设置config的默认字符集。一般是utf-8</span></div><div class="line">		configuration.setDefaultEncoding(<span class="string">"utf-8"</span>);</div><div class="line">		<span class="comment">// 第六步：从config对象中获得模板对象。需要制定一个模板文件的名字。</span></div><div class="line">		Template template = configuration.getTemplate(<span class="string">"first.ftl"</span>);</div><div class="line">		<span class="comment">// 第七步：创建模板需要的数据集。可以是一个map对象也可以是一个pojo，把模板需要的数据都放入数据集。</span></div><div class="line">		Map root = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">		root.put(<span class="string">"hello"</span>, <span class="string">"hello freemarker"</span>);</div><div class="line">		<span class="comment">// 第八步：创建一个Writer对象，指定生成的文件保存的路径及文件名。</span></div><div class="line">		Writer out = <span class="keyword">new</span> FileWriter(<span class="keyword">new</span> File(<span class="string">"D:\\temp\\html\\hello.html"</span>));</div><div class="line">		<span class="comment">// 第九步：调用模板对象的process方法生成静态文件。需要两个参数数据集和writer对象。</span></div><div class="line">		template.process(root, out);</div><div class="line">		<span class="comment">// 第十步：关闭writer对象。</span></div><div class="line">		out.flush();</div><div class="line">		out.close();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>模板代码：<br><code>${hello}</code></p>
+<h2 id="三-Freemarker模板写法"><a href="#三-Freemarker模板写法" class="headerlink" title="三 . Freemarker模板写法"></a>三 . Freemarker模板写法</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/20/Freemarker/" data-id="cj5cmbhzk000064tx6aizkuqa" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/11/SSM的配置/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">SSM的配置</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/20/Freemarker/">Freemarker</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/11/SSM的配置/">SSM的配置</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/09/Redis/">Redis</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/29/Redis与Jedis/">Redis与Jedis</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/29/Solr/">Solr</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Yao<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
