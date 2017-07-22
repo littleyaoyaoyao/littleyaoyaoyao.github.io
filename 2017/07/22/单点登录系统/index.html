@@ -3,30 +3,29 @@
 <head>
   <meta charset="utf-8">
   
-  <title>设计模式——桥接模式 | We-Param</title>
+  <title>单点登录系统 | We-Param</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="标签 ： 设计模式 结构型模式 桥接模式桥接模式（Bridge Pattern）一 . 概述将抽象部分和其实现部分进行分离，使他们可以独立地变化。
-二 . 适用性
-类的抽象以及它的实现都应该可以通过生成子类的方法加以扩充
-对一个抽象的实现部分的修改应对客户不产生影响，即客户的代码不必重新编译。
-你不希望在抽象和它的实现部分之间有一个固定的绑定关系。">
+  <meta name="description" content="标签 ： 单点登录
+
+一 . 单点登录系统SSO英文全称Single Sign On，单点登录。SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。它包括可以将这次主要的登录映射到其他应用中用于同一个用户的登录的机制。它是目前比较流行的企业业务整合的解决方案之一。
+为什么要使用单点登录系统？传统的登录在并发量高的时候需要做集群，配置session复制。如果集群中节点很多，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设计模式——桥接模式">
-<meta property="og:url" content="http://yoursite.com/2017/06/22/设计模式——桥接模式/index.html">
+<meta property="og:title" content="单点登录系统">
+<meta property="og:url" content="http://yoursite.com/2017/07/22/单点登录系统/index.html">
 <meta property="og:site_name" content="We-Param">
-<meta property="og:description" content="标签 ： 设计模式 结构型模式 桥接模式桥接模式（Bridge Pattern）一 . 概述将抽象部分和其实现部分进行分离，使他们可以独立地变化。
-二 . 适用性
-类的抽象以及它的实现都应该可以通过生成子类的方法加以扩充
-对一个抽象的实现部分的修改应对客户不产生影响，即客户的代码不必重新编译。
-你不希望在抽象和它的实现部分之间有一个固定的绑定关系。">
-<meta property="og:updated_time" content="2017-06-22T14:47:02.861Z">
+<meta property="og:description" content="标签 ： 单点登录
+
+一 . 单点登录系统SSO英文全称Single Sign On，单点登录。SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。它包括可以将这次主要的登录映射到其他应用中用于同一个用户的登录的机制。它是目前比较流行的企业业务整合的解决方案之一。
+为什么要使用单点登录系统？传统的登录在并发量高的时候需要做集群，配置session复制。如果集群中节点很多，">
+<meta property="og:image" content="http://note.youdao.com/noteshare?id=9a0c71e86f2d1fafa0560e962a2f8588">
+<meta property="og:updated_time" content="2017-07-22T15:51:45.145Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="设计模式——桥接模式">
-<meta name="twitter:description" content="标签 ： 设计模式 结构型模式 桥接模式桥接模式（Bridge Pattern）一 . 概述将抽象部分和其实现部分进行分离，使他们可以独立地变化。
-二 . 适用性
-类的抽象以及它的实现都应该可以通过生成子类的方法加以扩充
-对一个抽象的实现部分的修改应对客户不产生影响，即客户的代码不必重新编译。
-你不希望在抽象和它的实现部分之间有一个固定的绑定关系。">
+<meta name="twitter:title" content="单点登录系统">
+<meta name="twitter:description" content="标签 ： 单点登录
+
+一 . 单点登录系统SSO英文全称Single Sign On，单点登录。SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。它包括可以将这次主要的登录映射到其他应用中用于同一个用户的登录的机制。它是目前比较流行的企业业务整合的解决方案之一。
+为什么要使用单点登录系统？传统的登录在并发量高的时候需要做集群，配置session复制。如果集群中节点很多，">
+<meta name="twitter:image" content="http://note.youdao.com/noteshare?id=9a0c71e86f2d1fafa0560e962a2f8588">
   
     <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
   
@@ -75,10 +74,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-设计模式——桥接模式" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-单点登录系统" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/06/22/设计模式——桥接模式/" class="article-date">
-  <time datetime="2017-06-22T14:46:58.567Z" itemprop="datePublished">2017-06-22</time>
+    <a href="/2017/07/22/单点登录系统/" class="article-date">
+  <time datetime="2017-07-22T15:51:40.896Z" itemprop="datePublished">2017-07-22</time>
 </a>
     
   </div>
@@ -89,7 +88,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      设计模式——桥接模式
+      单点登录系统
     </h1>
   
 
@@ -97,17 +96,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="标签-：-设计模式-结构型模式-桥接模式"><a href="#标签-：-设计模式-结构型模式-桥接模式" class="headerlink" title="标签 ： 设计模式 结构型模式 桥接模式"></a>标签 ： 设计模式 结构型模式 桥接模式</h2><h1 id="桥接模式（Bridge-Pattern）"><a href="#桥接模式（Bridge-Pattern）" class="headerlink" title="桥接模式（Bridge Pattern）"></a>桥接模式（Bridge Pattern）</h1><h2 id="一-概述"><a href="#一-概述" class="headerlink" title="一 . 概述"></a>一 . 概述</h2><p>将抽象部分和其实现部分进行分离，使他们可以独立地变化。</p>
-<h2 id="二-适用性"><a href="#二-适用性" class="headerlink" title="二 . 适用性"></a>二 . 适用性</h2><ol>
-<li>类的抽象以及它的实现都应该可以通过生成子类的方法加以扩充</li>
-<li>对一个抽象的实现部分的修改应对客户不产生影响，即客户的代码不必重新编译。</li>
-<li>你不希望在抽象和它的实现部分之间有一个固定的绑定关系。</li>
+        <p>标签 ： 单点登录</p>
+<hr>
+<h2 id="一-单点登录系统"><a href="#一-单点登录系统" class="headerlink" title="一 . 单点登录系统"></a>一 . 单点登录系统</h2><p>SSO英文全称Single Sign On，单点登录。<br>SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。它包括可以将这次主要的登录映射到其他应用中用于同一个用户的登录的机制。它是目前比较流行的企业业务整合的解决方案之一。</p>
+<p><strong>为什么要使用单点登录系统？</strong><br>传统的登录在并发量高的时候需要做集群，配置session复制。如果集群中节点很多，会形成网络风暴。推荐节点不超过5个。因此将系统进行拆分，拆分为多个子系统可以很好地解决这个问题。</p>
+<p>系统架构：<br><img src="http://note.youdao.com/noteshare?id=9a0c71e86f2d1fafa0560e962a2f8588" alt="系统架构"></p>
+<p>功能：<br>注册功能、登录功能、查询功能</p>
+<p>注册接口的实现：<br>数据校验接口</p>
+<p>测试注册的工具：restclient</p>
+<p>用户登录接口：</p>
+<ol>
+<li>接受用户名和密码</li>
+<li>校验用户名密码</li>
+<li>生成token，可以使用UUID</li>
+<li>把用户信息写入redis,key就是token</li>
+<li>把token写入cookie</li>
+<li>返回登录成功需要把token返回给客户端</li>
 </ol>
+<p>cookie在其他系统中也会取，因此放在common中</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj5fh35lm000wbwtxkr7belay" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/07/22/单点登录系统/" data-id="cj5fh35le000rbwtx4dwk5ggw" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -116,19 +127,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/06/29/Solr/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nieuwer</strong>
-      <div class="article-nav-title">
-        
-          Solr
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/06/16/设计模式——适配器模式/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/07/20/Freemarker/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Ouder</strong>
-      <div class="article-nav-title">设计模式——————适配器模式</div>
+      <div class="article-nav-title">Freemarker</div>
     </a>
   
 </nav>

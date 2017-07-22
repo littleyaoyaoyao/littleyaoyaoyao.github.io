@@ -64,6 +64,69 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-CRM" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/28/CRM/" class="article-date">
+  <time datetime="2017-04-28T15:59:29.968Z" itemprop="datePublished">2017-04-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/28/CRM/">CRM</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： CRM</p>
+<hr>
+<h2 id="一-数据回显"><a href="#一-数据回显" class="headerlink" title="一  . 数据回显"></a>一  . 数据回显</h2><p>在查询了所有员工信息之后，需要增加编辑员工信息的功能。<br>编辑员工信息需要用到信息的回显，若需要回显员工的信息，需要得到该员工的id来唯一确定员工。<br>listStaff.jsp<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;s:a namespace="/" action="staffAction_editUI"&gt;</div><div class="line">	  		&lt;s:param name="staffId" value="staffId"&gt;&lt;/s:param&gt;</div><div class="line">	  		&lt;img src="$&#123;pageContext.request.contextPath&#125;/images/button/modify.gif" class="img" /&gt;</div><div class="line">&lt;/s:a&gt;</div></pre></td></tr></table></figure></p>
+<p>上述为struts2的a标签来发送action，<code>&lt;s:param name=&quot;staffId&quot; value=&quot;staffId&quot;&gt;&lt;/s:param&gt;</code>相当于以get的形式添加到action后，即以类似于<code>action?staffId=</code>的形式完成信息传递。</p>
+<p>staffAction.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">editUI</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//jsp中返回了一个get方法，封装到了staff对象中</span></div><div class="line">	CrmStaff findStaff = <span class="keyword">this</span>.staffService.findById(staff.getStaffId());</div><div class="line">	</div><div class="line">	ActionContext.getContext().getValueStack().push(findStaff);</div><div class="line">	</div><div class="line">	<span class="comment">//查询所有部门</span></div><div class="line">	List&lt;CrmDepartment&gt; allDepartment = departmentService.findAllDepartments();</div><div class="line">	<span class="comment">//存在栈顶，在数据回显的时候从栈顶照下来。因为底层使用的是findValue，会从栈顶先开始找，再找contextMap 。即使在栈顶找到了对象的key是null,也会回显</span></div><div class="line">	ActionContext.getContext().getValueStack().set(<span class="string">"allDepartment"</span>, allDepartment);</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> <span class="string">"editUI"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在staffAction.java中将findStaff放入栈顶。<br>在editStaff.jsp中，例如<code>&lt;s:textfield name=&quot;staffName&quot;&gt;</code>则可以完成信息的回显。struts2底层会调用findValue，先从root开始查询staffName,若为null，则向下contextMap中查询，若仍为null，则会返回空。</p>
+<h3 id="checkbox-select-radio标签的使用"><a href="#checkbox-select-radio标签的使用" class="headerlink" title="checkbox \ select \ radio标签的使用"></a>checkbox \ select \ radio标签的使用</h3><p>三者本身都需要有数据。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">   &lt;td&gt;</div><div class="line">   	&lt;s:radio list="&#123;'男','女'&#125;" name="gender"&gt;&lt;/s:radio&gt;</div><div class="line">   &lt;/td&gt;</div><div class="line"> &lt;/tr&gt;</div><div class="line">&lt;tr&gt;</div><div class="line">   &lt;td width="10%"&gt;所属部门：&lt;/td&gt;</div><div class="line">   &lt;td width="20%"&gt;</div><div class="line">   	&lt;s:select list="allDepartment" name="post.department.depId"</div><div class="line">					listKey="depId" listValue="depName"</div><div class="line">					headerKey=""	headerValue="----请选择----"  	    	</div><div class="line">   	&gt;&lt;/s:select&gt;</div><div class="line">   &lt;/td&gt;</div><div class="line">   &lt;td width="8%"&gt;职务：&lt;/td&gt;</div><div class="line">   &lt;td width="62%"&gt;</div><div class="line">   	&lt;s:select list="post != null ? post.department.postSet : &#123;&#125;" name="post.postId"</div><div class="line">					listKey="postId" listValue="postName"</div><div class="line">					headerKey=""	headerValue="----请选择----"	    	</div><div class="line">   	&gt;&lt;/s:select&gt;</div><div class="line">   &lt;/td&gt;</div><div class="line"> &lt;/tr&gt;</div><div class="line"> &lt;tr&gt;</div><div class="line">   &lt;td width="10%"&gt;入职时间：&lt;/td&gt;</div><div class="line">   &lt;td width="20%"&gt;</div><div class="line">   	&lt;s:date name="onDutyDate" format="yyyy-MM-dd" var="myDate"/&gt;</div><div class="line">   	&lt;s:textfield name="onDutyDate" readonly="true" value="%&#123;#myDate&#125;" onfocus="c.showMoreDay=true; c.show(this);"&gt;&lt;/s:textfield&gt;</div><div class="line">   &lt;/td&gt;</div></pre></td></tr></table></figure></p>
+<p>对于所属部门：</p>
+<p>list中的allDepartment，是在StaffAction中存入root中，完成了查询所有部门的功能，其本身返回的是对象。</p>
+<p>其中list表示的是下拉菜单中所有的内容，但此时里面是对象（包括map、javaBean）,因此需要listKey和listValue辅助来完成下拉菜单的显示。</p>
+<p>listKey:数据源中元素对象的属性, 用于获取选项的值，对应于select标签中的value。<br>listValue:数据源中元素对象的属性, 用于获取选项的文本内容，对应于select标签中的option。<br>name:完成数据回显，同之前标签的name，从值栈中寻找值，利用listKey来匹配。</p>
+<p>但是，下拉菜单中仍存在一定的问题，所属部门和职务应该是存在约束关系的，即选定了所属部门，在职务的菜单中应该只显示该部门中的职务。由此，引申出了<strong><em>ajax二级联动</em></strong>的概念</p>
+<h2 id="二-ajax二级联动"><a href="#二-ajax二级联动" class="headerlink" title="二 . ajax二级联动"></a>二 . ajax二级联动</h2><p>ajax需要浏览器和服务器的交互来完成功能。浏览器端先发送<strong>参数</strong>和<strong>路径</strong>至服务器端。在服务器端，利用action来完成将javaBean转换成json数据的处理，再将json数据回调给浏览器。在浏览器端接收到json数据并处理。</p>
+<p>浏览器端</p>
+<ol>
+<li>先获得需要获得的属性，即部门ID；</li>
+<li>发送ajax,通过部门查询职务<br>—-2.1 获得引擎（复制）<br>—-2.2 设置回调函数<br>———3 获得数据，并展示 ,手动ajax 获得 json数据 字符串<br>—-2.3 创建连接<br>—-2.4 发送请求</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">&lt;script type="text/javascript"&gt;</div><div class="line">		function showPost(obj)&#123;</div><div class="line">			//1 获得选中部门</div><div class="line">			var depId = obj.value;</div><div class="line">			//2 发送ajax，通过部门查询职务</div><div class="line">			//2.1 获得引擎</div><div class="line">			var xmlhttp=null;</div><div class="line">			if (window.XMLHttpRequest)&#123;// code for all new browsers</div><div class="line">			  xmlhttp=new XMLHttpRequest();</div><div class="line">			&#125; else if (window.ActiveXObject) &#123;// code for IE5 and IE6</div><div class="line">			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			//2.2 设置回调函数</div><div class="line">			xmlhttp.onreadystatechange = function()&#123;</div><div class="line">				//请求完成，正常响应</div><div class="line">				if(xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200)&#123;</div><div class="line">					//3 获得数据，并展示 ,手动ajax 获得 json数据 字符串</div><div class="line">					var textData = xmlhttp.responseText;</div><div class="line">					//3.1 将字符串 手动 转换 json对象</div><div class="line">					var jsonData = eval("("+textData+")");</div><div class="line">					</div><div class="line">					// 获得select对象</div><div class="line">					var postSelectElement = document.getElementById("postSelectId");</div><div class="line">					postSelectElement.innerHTML = "&lt;option value=''&gt;----请--选--择----&lt;/option&gt;";</div><div class="line">					</div><div class="line">					//3.2 遍历</div><div class="line">					for(var i = 0 ; i &lt; jsonData.length ; i++)&#123;</div><div class="line">						var postObj = jsonData[i];</div><div class="line">						// 获得职务id</div><div class="line">						var postId = postObj.postId;</div><div class="line">						// 获得职务名称</div><div class="line">						var postName = postObj.postName;</div><div class="line">						</div><div class="line">						//3.3 将数显示到select标签</div><div class="line">						postSelectElement.innerHTML += "&lt;option value='"+postId+"'&gt;"+postName+"&lt;/option&gt;";</div><div class="line">					&#125;</div><div class="line">					</div><div class="line">				&#125;</div><div class="line">			&#125;;</div><div class="line">			//2.3 创建连接</div><div class="line">			var url = "$&#123;pageContext.request.contextPath&#125;/postAction_findAllWithDepartment?department.depId=" + depId;</div><div class="line">			xmlhttp.open("GET", url);</div><div class="line">			//2.4 发送请求</div><div class="line">			xmlhttp.send(null);</div><div class="line">		&#125;</div><div class="line">	&lt;/script&gt;</div></pre></td></tr></table></figure>
+<p>服务器端</p>
+<p>在服务器端需要做的就是处理浏览器发送过来的java对象，并将其转换成为json数据。</p>
+<p>需要注意的是，在使用JsonConfig时，需要将不需要的数据排除在外。何为不需要的数据？当要将allPost转换为json数据时，CrmPost对象中有staffSet和department对象，而两者中又有其他的对象，从而会造成使计算机造成死循环，不断调用。<br>因此，使用<strong>setExcludes</strong>将不要的数据排除。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PostAction</span> <span class="keyword">extends</span> <span class="title">ActionSupport</span> <span class="keyword">implements</span> <span class="title">ModelDriven</span>&lt;<span class="title">CrmPost</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> CrmPost post = <span class="keyword">new</span> CrmPost();</div><div class="line">	</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> CrmPost <span class="title">getModel</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> post;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> PostService postService ;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPostService</span><span class="params">(PostService postService)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.postService = postService;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line"></div><div class="line">	<span class="comment">//-------------------------------------------------------------------------------------</span></div><div class="line">	</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * ajax通过部门查询所有职务</div><div class="line">	 * <span class="doctag">@return</span></div><div class="line">	 * <span class="doctag">@throws</span> Exception </div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">findAllWithDepartment</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">		</div><div class="line">		List&lt;CrmPost&gt; allPost = <span class="keyword">this</span>.postService.findAllPost(post.getDepartment());</div><div class="line">		</div><div class="line">		<span class="comment">//2 将java对象 转换 json数据</span></div><div class="line">		</div><div class="line">		<span class="comment">//2.1 将不需要的数据排除在外</span></div><div class="line">		JsonConfig jsonConfig =  <span class="keyword">new</span> JsonConfig();</div><div class="line">		jsonConfig.setExcludes(<span class="keyword">new</span> String[]&#123;<span class="string">"staffSet"</span>,<span class="string">"department"</span>&#125;);</div><div class="line">		<span class="comment">//2.2 完成转换</span></div><div class="line">		String jsonData = JSONArray.fromObject(allPost, jsonConfig).toString();</div><div class="line">		<span class="comment">//3.将json数据发送给浏览器</span></div><div class="line">		</div><div class="line">		<span class="comment">//3.1 设置编码，放置中文乱码 </span></div><div class="line">		ServletActionContext.getResponse().setContentType(<span class="string">"text/html;charset=UTF-8"</span>);</div><div class="line">		<span class="comment">//3.2发送</span></div><div class="line">		ServletActionContext.getResponse().getWriter().print(jsonData);</div><div class="line">		<span class="keyword">return</span> <span class="string">"none"</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="三-提交编辑过的表单"><a href="#三-提交编辑过的表单" class="headerlink" title="三 . 提交编辑过的表单"></a>三 . 提交编辑过的表单</h2><p>在表单提交的时候需要隐藏地提交Id,以唯一确定员工。<br><code>&lt;s:hidden name=&quot;staffId&quot; value=&quot;%{staffId}&quot; /&gt;</code>和<code>&lt;s:hidden name=&quot;staffId&quot;/&gt;</code>均可以实现。</p>
+<p>添加javascript click事件，提交表单<br>获得文档document,然后得到所有的表单forms,选中第一个，提交。<br>javascript:void(0)阻止href跳转。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;javascript:void(0)&quot; onclick=&quot;document.forms[0].submit()&quot;&gt;</div><div class="line">      &lt;img src=&quot;$&#123;pageContext.request.contextPath&#125;/images/button/save.gif&quot; /&gt;</div><div class="line">&lt;/a&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="service层"><a href="#service层" class="headerlink" title="service层"></a>service层</h3><p>更新员工信息，需要考虑到该表单中的每一个属性。</p>
+<h2 id="四-条件查询"><a href="#四-条件查询" class="headerlink" title="四 . 条件查询"></a>四 . 条件查询</h2><p><strong>首先，需要过滤不需要的（null 或 “” 或 “ “）</strong></p>
+<p>在PO类中添加查询条件字段，来接受客户端传过来的查询条件。一般查询条件都是字符串，因为浏览器都是字符串。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/28/CRM/" data-id="cj5fh35ji0000bwtxb13ebk2q" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-SVN" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/04/18/SVN/" class="article-date">
@@ -113,7 +176,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/18/SVN/" data-id="cj4zqz5kz000liwtx7rd01ybc" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/04/18/SVN/" data-id="cj5fh35l1000gbwtx2qz27c5k" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -231,7 +294,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/16/spring框架学习三/" data-id="cj4zqz5l7000siwtx3t7rklq1" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/04/16/spring框架学习三/" data-id="cj5fh35ld000qbwtxddjvvugo" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -407,7 +470,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj4zqz5l2000oiwtx2dzqcev9" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/04/06/Spring框架学习一/" data-id="cj5fh35l6000jbwtxmdqmwmu8" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -494,7 +557,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj4zqz5jr0001iwtxkl9wt9gy" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/04/02/Hibernate 二级缓存/" data-id="cj5fh35jx0002bwtxery5p9iw" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -535,7 +598,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj4zqz5kd0005iwtxbrc07ac2" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/04/01/Hibernate一对一关系 ---- 主键同步/" data-id="cj5fh35jz0003bwtxcv6j5q7c" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -583,7 +646,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj4zqz5l1000niwtxg7u4asrk" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/04/01/log4j/" data-id="cj5fh35la000mbwtxmhqh7trk" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -621,7 +684,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj4zqz5kv000jiwtxoq5wsja1" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/03/31/Struts2未登录拦截和权限控制/" data-id="cj5fh35l7000kbwtxvrbzazgm" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -703,7 +766,7 @@ static{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj4zqz5jt0002iwtxeux7lkhe" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate入门/" data-id="cj5fh35k70006bwtxa3tifvqd" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -840,83 +903,7 @@ false : 与get一致，会理解加载数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj4zqz5kn000ciwtxugjd53b3" class="article-share-link">Delen</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Hibernate一级缓存" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/30/Hibernate一级缓存/" class="article-date">
-  <time datetime="2017-03-30T09:14:40.954Z" itemprop="datePublished">2017-03-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/30/Hibernate一级缓存/">Hibernate一级缓存</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>标签 ： Hibernate 一级缓存</p>
-<hr>
-<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>Hibernate中也存在缓存，Hibernate中存在的缓存也是用来提高效率的</p>
-<p>在session对象中，有一个缓存</p>
-<p>本质：Map  键是ID  值是对象  。hibernate会把所有查询到对象放入缓存中，如果再次查询相同的对象，会从缓存中找，为了提高效率。</p>
-<p>Hibernate中存在两种缓存：</p>
-<ol>
-<li>线程级别的缓存：Session缓存</li>
-<li>进程级别的缓存： Hibernate二级缓存</li>
-</ol>
-<p>session缓存：就是session对象中存在的缓存，缓存中存在的是（持久化）对象</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">      Session session = HibernateUtils.openSession();</div><div class="line">session.beginTransaction();</div><div class="line">//------------------------------------------------</div><div class="line">User u1 = (User) session.get(User.class, 1);</div><div class="line">// 发送select语句,从数据库取出记录.并封装成对象</div><div class="line">   // 持久化状态对象=&gt; 存到缓存中</div><div class="line">User u2 = (User) session.get(User.class, 1);//再次查询时,会从缓存中查找,不会发送select</div><div class="line">User u3 = (User) session.get(User.class, 1);//再次查询时,会从缓存中查找,不会发送select</div><div class="line">System.out.println(u1==u2);//<span class="literal">true</span></div><div class="line">System.out.println(u1==u3);//<span class="literal">true</span></div><div class="line">//------------------------------------------------</div><div class="line">session.getTransaction().commit();</div><div class="line">session.close(); // 游离状态</div></pre></td></tr></table></figure>
-<h3 id="一级缓存，对象快照"><a href="#一级缓存，对象快照" class="headerlink" title="一级缓存，对象快照"></a>一级缓存，对象快照</h3><h4 id="缓存中的快照"><a href="#缓存中的快照" class="headerlink" title="缓存中的快照"></a>缓存中的快照</h4><p>在从数据库中取得数据时，会将数据一式两份，一份作为缓存中的对象，一份作为快照（快照与数据库中保持一致），在session提交时作为对比</p>
-<h4 id="持久化状态"><a href="#持久化状态" class="headerlink" title="持久化状态"></a>持久化状态</h4><p>本质就是存在缓存中的对象，就是持久化状态</p>
-<h4 id="session缓存的细节问题"><a href="#session缓存的细节问题" class="headerlink" title="session缓存的细节问题"></a>session缓存的细节问题</h4><p>save()方法：<br>来自于Hibernate</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">      User u = new User();</div><div class="line">u.setName(<span class="string">"张三"</span>);</div><div class="line">session.save(u); //insert语句被打印=&gt; 目的:获得id</div></pre></td></tr></table></figure>
-<p>persist() :<br>来自于JPA接口</p>
-<h4 id="HQL语句批量查询"><a href="#HQL语句批量查询" class="headerlink" title="HQL语句批量查询"></a>HQL语句批量查询</h4><ul>
-<li>HQL语句会使用一级缓存，因为session将结果组装成对象之前，会先检查session中是否已经存在了对象；若已经存在，直接返回已经存在的对象</li>
-<li>每次调用HQL查询都会生成sql语句，但是并不代表HQL不会使用一级缓存</li>
-<li>HQL查询结果会放入缓存当中</li>
-</ul>
-<h4 id="SQL语句查询"><a href="#SQL语句查询" class="headerlink" title="SQL语句查询"></a>SQL语句查询</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">List&lt;User&gt; list1 = session.createSQLQuery(<span class="string">"select * from t_user"</span>).addEntity(User.class).list();</div><div class="line">User u = (User) session.get(User.class, 1);</div></pre></td></tr></table></figure>
-<p>SQL查询结果会放入一级缓存中，但是前提是要把查询结果封装到对象中。</p>
-<h4 id="其他API"><a href="#其他API" class="headerlink" title="其他API"></a>其他API</h4><ul>
-<li><p>evict(): 将缓存中的对象移除</p>
-</li>
-<li><p>clear(): 清空一级缓存</p>
-</li>
-<li><p>refresh(): 将缓存中的对象立刻与数据库同步，会再发送一个sql语句 </p>
-<pre><code>对比快照，并提交缓存对象
-</code></pre></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public void <span class="function"><span class="title">test1</span></span>()&#123;</div><div class="line">		Session session = HibernateUtils.openSession();</div><div class="line">		session.beginTransaction();</div><div class="line">		//------------------------------------------------</div><div class="line">		User u1 = (User) session.get(User.class, 1);</div><div class="line">		u1.setName(<span class="string">"zhangsan"</span>);</div><div class="line">		session.flush();// 立刻提交session缓存中的对象到数据库</div><div class="line">		//------------------------------------------------</div><div class="line">		session.getTransaction().commit();</div><div class="line">		session.close(); // 游离状态</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>debug发现，第5行会发送select语句；执行到第7行flush()时会发送update语句，此时commit就不会在发送update语句了；若注释掉第6行，则执行到flush()处不会有任何变化。</p>
-<ul>
-<li>saveOrUpdate()<br>在代理主键的条件（native）下，saveOrUpdate 可以同时完成保存或更新操作;若主键为空=&gt;save()，若主键有值=&gt; update()</li>
-</ul>
-<p>在自然主键条件下（assigned）下，<br>主键为空=&gt; 报错,因为无论是save还是update 都必须指定id；<br>主键有值=&gt; 先会根据主键查询数据库。</p>
-<p>saveOrUpdate()会先执行select语句查询数据库中的信息。若：<br>数据库中存在=&gt; 执行update；<br>数据库中不存在=&gt; 执行insert。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/30/Hibernate一级缓存/" data-id="cj4zqz5jx0004iwtx8ywvbv8z" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/03/31/Hibernate加载策略/" data-id="cj5fh35kp0009bwtxs2991m3b" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -960,6 +947,10 @@ false : 与get一致，会理解加载数据
       <ul>
         
           <li>
+            <a href="/2017/07/22/单点登录系统/">单点登录系统</a>
+          </li>
+        
+          <li>
             <a href="/2017/07/20/Freemarker/">Freemarker</a>
           </li>
         
@@ -973,10 +964,6 @@ false : 与get一致，会理解加载数据
         
           <li>
             <a href="/2017/06/29/Redis与Jedis/">Redis与Jedis</a>
-          </li>
-        
-          <li>
-            <a href="/2017/06/29/Solr/">Solr</a>
           </li>
         
       </ul>
