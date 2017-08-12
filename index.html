@@ -51,9 +51,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -64,10 +64,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-单点登录系统" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Hadoop" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/07/22/单点登录系统/" class="article-date">
-  <time datetime="2017-07-22T15:51:40.896Z" itemprop="datePublished">2017-07-22</time>
+    <a href="/2017/08/12/Hadoop/" class="article-date">
+  <time datetime="2017-08-12T13:09:36.537Z" itemprop="datePublished">2017-08-12</time>
 </a>
     
   </div>
@@ -78,7 +78,63 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/22/单点登录系统/">单点登录系统</a>
+      <a class="article-title" href="/2017/08/12/Hadoop/">Hadoop</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： Hadoop</p>
+<hr>
+<h2 id="一-Hadoop概念"><a href="#一-Hadoop概念" class="headerlink" title="一 . Hadoop概念"></a>一 . Hadoop概念</h2><p>Hadoop的三部分 ：<br>mapreduce（分布式计算系统） + yarn（资源管理系统） +  hdfs（分布式文件系统）</p>
+<h2 id="二-Hadoop-HDFS核心组件"><a href="#二-Hadoop-HDFS核心组件" class="headerlink" title="二 . Hadoop HDFS核心组件"></a>二 . Hadoop HDFS核心组件</h2><p>分布式的文件存储系统<br>HDFS有两个核心角色：NameNode、DataNode</p>
+<ul>
+<li>NameNode（仅一个）<br>在HDFS中提供元数据服务<br>负责管理文件系统名称空间和控制外部客户机的访问</li>
+</ul>
+<p>保存元数据信息，我文件属性，服务器，文件怎么存储</p>
+<ul>
+<li>DataNode<br>为HDFS提供存储块<br>定期向NameNode汇报存储的文件信息</li>
+</ul>
+<p>保存文件、心跳汇报</p>
+<h2 id="三-Hadoop-MapReduce核心组件"><a href="#三-Hadoop-MapReduce核心组件" class="headerlink" title="三 . Hadoop MapReduce核心组件"></a>三 . Hadoop MapReduce核心组件</h2><p>MapReduce是一种编程模型，分布式计算框架，用于大规模数据集的并行运算。</p>
+<ul>
+<li>JobTracker<br>任务管理、资源管理（hadoop2 yarn）</li>
+</ul>
+<ul>
+<li>Tasktracker<br>执行（map、reduce），心跳</li>
+</ul>
+<p><strong>跨服务器的通信是如何完成的？</strong><br>RPC通信框架，自定义RPC<br>远程过程调用协议：webservice、httpclient</p>
+<h2 id="四-Hadoop-Hbase核心组件"><a href="#四-Hadoop-Hbase核心组件" class="headerlink" title="四 . Hadoop Hbase核心组件"></a>四 . Hadoop Hbase核心组件</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/12/Hadoop/" data-id="cj69bk6fb0000aotx57k1oxi0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-单点登录系统" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/02/单点登录系统/" class="article-date">
+  <time datetime="2017-08-02T01:48:17.273Z" itemprop="datePublished">2017-08-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/02/单点登录系统/">单点登录系统</a>
     </h1>
   
 
@@ -90,9 +146,11 @@
 <hr>
 <h2 id="一-单点登录系统"><a href="#一-单点登录系统" class="headerlink" title="一 . 单点登录系统"></a>一 . 单点登录系统</h2><p>SSO英文全称Single Sign On，单点登录。<br>SSO是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。它包括可以将这次主要的登录映射到其他应用中用于同一个用户的登录的机制。它是目前比较流行的企业业务整合的解决方案之一。</p>
 <p><strong>为什么要使用单点登录系统？</strong><br>传统的登录在并发量高的时候需要做集群，配置session复制。如果集群中节点很多，会形成网络风暴。推荐节点不超过5个。因此将系统进行拆分，拆分为多个子系统可以很好地解决这个问题。</p>
-<p>系统架构：<br><img src="http://note.youdao.com/noteshare?id=9a0c71e86f2d1fafa0560e962a2f8588" alt="系统架构"></p>
-<p>功能：<br>注册功能、登录功能、查询功能</p>
-<p>注册接口的实现：<br>数据校验接口</p>
+<p>系统架构：</p>
+<h2 id="二-功能实现"><a href="#二-功能实现" class="headerlink" title="二 . 功能实现"></a>二 . 功能实现</h2><p><strong>注册功能、登录功能、查询功能</strong></p>
+<ol>
+<li>数据校验接口</li>
+</ol>
 <p>测试注册的工具：restclient</p>
 <p>用户登录接口：</p>
 <ol>
@@ -104,94 +162,21 @@
 <li>返回登录成功需要把token返回给客户端</li>
 </ol>
 <p>cookie在其他系统中也会取，因此放在common中</p>
-
+<p>在md5加密时，可以使用spring的DigestUtils.md5DigestAsHex(password.getBytes())<br>token生成：String token = UUID.randomUUID().toString();</p>
+<h2 id="三-用户登录拦截器"><a href="#三-用户登录拦截器" class="headerlink" title="三 . 用户登录拦截器"></a>三 . 用户登录拦截器</h2><p>在网站需要用户进行登录后才能进行操作时，可以使用拦截来实现。<br>拦截器的处理流程可以如下：</p>
+<ol>
+<li>拦截请求的url（在springmvc.xml中配置）</li>
+<li>从cookie中取得token（setcookie(request,response,”name”,token)）</li>
+<li>如果没有token跳转到登录页面</li>
+<li>有token则需要调用单点登录系统sso的服务查询用户信息</li>
+<li>若session过期（在设置cookie时，在浏览器关闭的时候，cookie就会消失，redis中是设定时间的），跳转到登录页面</li>
+<li>如果没有过期，放行</li>
+</ol>
+<h2 id="四-登录回调回调"><a href="#四-登录回调回调" class="headerlink" title="四 . 登录回调回调"></a>四 . 登录回调回调</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/22/单点登录系统/" data-id="cj5uc4yk0000uiotx5buz4dq6" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Freemarker" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/20/Freemarker/" class="article-date">
-  <time datetime="2017-07-20T15:54:27.277Z" itemprop="datePublished">2017-07-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/20/Freemarker/">Freemarker</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>标签 ： Freemarker</p>
-<hr>
-<h2 id="一-Freemarker简介"><a href="#一-Freemarker简介" class="headerlink" title="一 . Freemarker简介"></a>一 . Freemarker简介</h2><p>FreeMarker是一个用Java语言编写的模板引擎，它基于模板来生成文本输出。FreeMarker与Web容器无关，即在Web运行时，它并不知道Servlet或HTTP。它不仅可以用作表现层的实现技术，而且还可以用于生成XML，JSP或Java 等。</p>
-<h2 id="二-Freemarker使用方法"><a href="#二-Freemarker使用方法" class="headerlink" title="二 . Freemarker使用方法"></a>二 . Freemarker使用方法</h2><p>第一步：把freemarker的jar包添加到工程中<br>第二步：freemarker的运行不依赖web容器，可以在java工程中运行。创建一个测试方法进行测试。<br>第三步：创建一个Configration对象<br>第四步：告诉config对象模板文件存放的路径。<br>第五步：设置config的默认字符集。一般是utf-8<br>第六步：从config对象中获得模板对象。需要制定一个模板文件的名字。<br>第七步：创建模板需要的数据集。可以是一个map对象也可以是一个pojo，把模板需要的数据都放入数据集。<br>第八步：创建一个Writer对象，指定生成的文件保存的路径及文件名。<br>第九步：调用模板对象的process方法生成静态文件。需要两个参数数据集和writer对象。<br>第十步：关闭writer对象。</p>
-<p><strong>测试代码：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FreeMarkerTest</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFreeMarker</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">		<span class="comment">// 第一步：把freemarker的jar包添加到工程中</span></div><div class="line">		<span class="comment">// 第二步：freemarker的运行不依赖web容器，可以在java工程中运行。创建一个测试方法进行测试。</span></div><div class="line">		<span class="comment">// 第三步：创建一个Configuration对象</span></div><div class="line">		Configuration configuration = <span class="keyword">new</span> Configuration(Configuration.getVersion());</div><div class="line">		<span class="comment">// 第四步：告诉config对象模板文件存放的路径。</span></div><div class="line">		configuration.setDirectoryForTemplateLoading(<span class="keyword">new</span> File(<span class="string">"D:\\workspaces\\JaveEE\\esale-portal\\src\\main\\webapp\\WEB-INF\\ftl"</span>));</div><div class="line">		<span class="comment">// 第五步：设置config的默认字符集。一般是utf-8</span></div><div class="line">		configuration.setDefaultEncoding(<span class="string">"utf-8"</span>);</div><div class="line">		<span class="comment">// 第六步：从config对象中获得模板对象。需要制定一个模板文件的名字。</span></div><div class="line">		Template template = configuration.getTemplate(<span class="string">"first.ftl"</span>);</div><div class="line">		<span class="comment">// 第七步：创建模板需要的数据集。可以是一个map对象也可以是一个pojo，把模板需要的数据都放入数据集。</span></div><div class="line">		Map root = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">		root.put(<span class="string">"hello"</span>, <span class="string">"hello freemarker"</span>);</div><div class="line">		<span class="comment">// 第八步：创建一个Writer对象，指定生成的文件保存的路径及文件名。</span></div><div class="line">		Writer out = <span class="keyword">new</span> FileWriter(<span class="keyword">new</span> File(<span class="string">"D:\\temp\\html\\hello.html"</span>));</div><div class="line">		<span class="comment">// 第九步：调用模板对象的process方法生成静态文件。需要两个参数数据集和writer对象。</span></div><div class="line">		template.process(root, out);</div><div class="line">		<span class="comment">// 第十步：关闭writer对象。</span></div><div class="line">		out.flush();</div><div class="line">		out.close();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>模板代码：<br><code>${hello}</code></p>
-<h2 id="三-Freemarker模板写法"><a href="#三-Freemarker模板写法" class="headerlink" title="三 . Freemarker模板写法"></a>三 . Freemarker模板写法</h2>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/20/Freemarker/" data-id="cj5uc4yhp0002iotxk5bmdjpm" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-SSM的配置" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/11/SSM的配置/" class="article-date">
-  <time datetime="2017-07-11T15:43:17.409Z" itemprop="datePublished">2017-07-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/11/SSM的配置/">SSM的配置</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>标签 ： SSM 配置文件</p>
-<hr>
-<p>写此文重新回顾一些最基本的配置。</p>
-<h2 id="1-在web-xml中进行配置"><a href="#1-在web-xml中进行配置" class="headerlink" title="1. 在web.xml中进行配置"></a>1. 在web.xml中进行配置</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line">	<span class="attr">xmlns</span>=<span class="string">"http://java.sun.com/xml/ns/javaee"</span> <span class="attr">xmlns:web</span>=<span class="string">"http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span></div><div class="line">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span></div><div class="line">	<span class="attr">id</span>=<span class="string">"esale"</span> <span class="attr">version</span>=<span class="string">"2.5"</span>&gt;</div><div class="line">	<span class="tag">&lt;<span class="name">display-name</span>&gt;</span>esale-manager<span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="comment">&lt;!-- 初始化spring容器 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">context-param</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:spring/applicationContext-*.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">listener</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">listener</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="comment">&lt;!-- 解决post乱码 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">	<span class="comment">&lt;!-- springmvc的前端控制器 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">servlet</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>esale-manager<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></div><div class="line">		<span class="comment">&lt;!-- contextConfigLocation不是必须的， 如果不配置contextConfigLocation， springmvc的配置文件默认在：WEB-INF/servlet的name+"-servlet.xml" --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:spring/springmvc.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>esale-manager<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></div><div class="line">		<span class="comment">&lt;!-- 使用/会导致静态资源被拦截 ，需要在springmvc.xml中配置--&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></div><div class="line">	</div><div class="line">	</div><div class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="2-创建SpringMVC的xml配置文件"><a href="#2-创建SpringMVC的xml配置文件" class="headerlink" title="2. 创建SpringMVC的xml配置文件"></a>2. 创建SpringMVC的xml配置文件</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">	<span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns:p</span>=<span class="string">"http://www.springframework.org/schema/p"</span></div><div class="line">	<span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></div><div class="line">	<span class="attr">xmlns:mvc</span>=<span class="string">"http://www.springframework.org/schema/mvc"</span></div><div class="line">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span></div><div class="line">        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"&gt;</div><div class="line">    </div><div class="line">    <span class="comment">&lt;!-- 配置包扫描器 --&gt;</span>    </div><div class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.esale.controller"</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 配置注解驱动 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>/&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 视图解析器 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span></span></div><div class="line">		<span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	</div><div class="line">	<span class="comment">&lt;!-- 静态资源映射，只有"/"时能够用到 ,这部分需要注意！！！！！！！--&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">location</span>=<span class="string">"/WEB-INF/js/"</span> <span class="attr">mapping</span>=<span class="string">"/js/**"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">location</span>=<span class="string">"/WEB-INF/css/"</span> <span class="attr">mapping</span>=<span class="string">"/css/**"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/11/SSM的配置/" data-id="cj5uc4yjk000iiotxmrip2acr" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/08/02/单点登录系统/" data-id="cj69bk6h4000xaotx6k8pb35n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -203,8 +188,8 @@
   
     <article id="post-Redis" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/07/09/Redis/" class="article-date">
-  <time datetime="2017-07-09T15:44:35.156Z" itemprop="datePublished">2017-07-09</time>
+    <a href="/2017/08/02/Redis/" class="article-date">
+  <time datetime="2017-08-02T01:48:04.916Z" itemprop="datePublished">2017-08-02</time>
 </a>
     
   </div>
@@ -215,7 +200,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/09/Redis/">Redis</a>
+      <a class="article-title" href="/2017/08/02/Redis/">Redis</a>
     </h1>
   
 
@@ -237,7 +222,7 @@
 <ol>
 <li>安装gcc编译环境<br>yum install gcc-c++</li>
 <li>把redis源码上传到服务器</li>
-<li>解压缩<br>tar -zxvf redis-3.0.0.tar.gz</li>
+<li>解压缩<br>tar -zxvf redis-3.0.0.tar.gz<br>进入redis文件夹中</li>
 <li>make</li>
 <li>make install PREFIX=/usr/local(要安装的位置)</li>
 </ol>
@@ -384,11 +369,104 @@
 <li>使用redis-trib.rb创建集群。<br>./redis-trib.rb create –replicas 1 192.168.25.153:7001 192.168.25.153:7002 192.168.25.153:7003 192.168.25.153:7004 192.168.25.153:7005  192.168.25.153:7006</li>
 </ol>
 <p><strong>使用客户端连接集群： redis01/redis-cli -p 7001 -c</strong></p>
+<h2 id="Pub-Sub模式（发布-订阅模式）"><a href="#Pub-Sub模式（发布-订阅模式）" class="headerlink" title="Pub/Sub模式（发布/订阅模式）"></a>Pub/Sub模式（发布/订阅模式）</h2><p>订阅foo频道：<br><code>subscribe foo</code><br>取消订阅foo：<br><code>unsubscribe foo</code></p>
+<p>发布端：<br><code>publish foo &quot;I am foo&quot;</code><br>此时在订阅端就能收到message</p>
+<p><code>psubscribe f*</code>表示f后带任何字符的频道都能收到信息</p>
+<p><strong>应用场景：</strong></p>
+<ol>
+<li>服务器集群监控管理</li>
+<li>聊天服务器</li>
+<li>消息弹幕</li>
+<li>视频弹幕</li>
+</ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/09/Redis/" data-id="cj5uc4yjb000diotxy0mbrers" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/08/02/Redis/" data-id="cj69bk6gj000haotx4f8vb15v" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Freemarker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/20/Freemarker/" class="article-date">
+  <time datetime="2017-07-20T15:54:27.277Z" itemprop="datePublished">2017-07-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/20/Freemarker/">Freemarker</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： Freemarker</p>
+<hr>
+<h2 id="一-Freemarker简介"><a href="#一-Freemarker简介" class="headerlink" title="一 . Freemarker简介"></a>一 . Freemarker简介</h2><p>FreeMarker是一个用Java语言编写的模板引擎，它基于模板来生成文本输出。FreeMarker与Web容器无关，即在Web运行时，它并不知道Servlet或HTTP。它不仅可以用作表现层的实现技术，而且还可以用于生成XML，JSP或Java 等。</p>
+<h2 id="二-Freemarker使用方法"><a href="#二-Freemarker使用方法" class="headerlink" title="二 . Freemarker使用方法"></a>二 . Freemarker使用方法</h2><p>第一步：把freemarker的jar包添加到工程中<br>第二步：freemarker的运行不依赖web容器，可以在java工程中运行。创建一个测试方法进行测试。<br>第三步：创建一个Configration对象<br>第四步：告诉config对象模板文件存放的路径。<br>第五步：设置config的默认字符集。一般是utf-8<br>第六步：从config对象中获得模板对象。需要制定一个模板文件的名字。<br>第七步：创建模板需要的数据集。可以是一个map对象也可以是一个pojo，把模板需要的数据都放入数据集。<br>第八步：创建一个Writer对象，指定生成的文件保存的路径及文件名。<br>第九步：调用模板对象的process方法生成静态文件。需要两个参数数据集和writer对象。<br>第十步：关闭writer对象。</p>
+<p><strong>测试代码：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FreeMarkerTest</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFreeMarker</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">		<span class="comment">// 第一步：把freemarker的jar包添加到工程中</span></div><div class="line">		<span class="comment">// 第二步：freemarker的运行不依赖web容器，可以在java工程中运行。创建一个测试方法进行测试。</span></div><div class="line">		<span class="comment">// 第三步：创建一个Configuration对象</span></div><div class="line">		Configuration configuration = <span class="keyword">new</span> Configuration(Configuration.getVersion());</div><div class="line">		<span class="comment">// 第四步：告诉config对象模板文件存放的路径。</span></div><div class="line">		configuration.setDirectoryForTemplateLoading(<span class="keyword">new</span> File(<span class="string">"D:\\workspaces\\JaveEE\\esale-portal\\src\\main\\webapp\\WEB-INF\\ftl"</span>));</div><div class="line">		<span class="comment">// 第五步：设置config的默认字符集。一般是utf-8</span></div><div class="line">		configuration.setDefaultEncoding(<span class="string">"utf-8"</span>);</div><div class="line">		<span class="comment">// 第六步：从config对象中获得模板对象。需要制定一个模板文件的名字。</span></div><div class="line">		Template template = configuration.getTemplate(<span class="string">"first.ftl"</span>);</div><div class="line">		<span class="comment">// 第七步：创建模板需要的数据集。可以是一个map对象也可以是一个pojo，把模板需要的数据都放入数据集。</span></div><div class="line">		Map root = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">		root.put(<span class="string">"hello"</span>, <span class="string">"hello freemarker"</span>);</div><div class="line">		<span class="comment">// 第八步：创建一个Writer对象，指定生成的文件保存的路径及文件名。</span></div><div class="line">		Writer out = <span class="keyword">new</span> FileWriter(<span class="keyword">new</span> File(<span class="string">"D:\\temp\\html\\hello.html"</span>));</div><div class="line">		<span class="comment">// 第九步：调用模板对象的process方法生成静态文件。需要两个参数数据集和writer对象。</span></div><div class="line">		template.process(root, out);</div><div class="line">		<span class="comment">// 第十步：关闭writer对象。</span></div><div class="line">		out.flush();</div><div class="line">		out.close();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>模板代码：<br><code>${hello}</code></p>
+<h2 id="三-Freemarker模板写法"><a href="#三-Freemarker模板写法" class="headerlink" title="三 . Freemarker模板写法"></a>三 . Freemarker模板写法</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/20/Freemarker/" data-id="cj69bk6fj0002aotx6gsbhh2b" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SSM的配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/11/SSM的配置/" class="article-date">
+  <time datetime="2017-07-11T15:43:17.409Z" itemprop="datePublished">2017-07-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/11/SSM的配置/">SSM的配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： SSM 配置文件</p>
+<hr>
+<p>写此文重新回顾一些最基本的配置。</p>
+<h2 id="1-在web-xml中进行配置"><a href="#1-在web-xml中进行配置" class="headerlink" title="1. 在web.xml中进行配置"></a>1. 在web.xml中进行配置</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line">	<span class="attr">xmlns</span>=<span class="string">"http://java.sun.com/xml/ns/javaee"</span> <span class="attr">xmlns:web</span>=<span class="string">"http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span></div><div class="line">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span></div><div class="line">	<span class="attr">id</span>=<span class="string">"esale"</span> <span class="attr">version</span>=<span class="string">"2.5"</span>&gt;</div><div class="line">	<span class="tag">&lt;<span class="name">display-name</span>&gt;</span>esale-manager<span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.html<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.htm<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>default.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="comment">&lt;!-- 初始化spring容器 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">context-param</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:spring/applicationContext-*.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">listener</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">listener</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="comment">&lt;!-- 解决post乱码 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">	<span class="comment">&lt;!-- springmvc的前端控制器 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">servlet</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>esale-manager<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></div><div class="line">		<span class="comment">&lt;!-- contextConfigLocation不是必须的， 如果不配置contextConfigLocation， springmvc的配置文件默认在：WEB-INF/servlet的name+"-servlet.xml" --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:spring/springmvc.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>esale-manager<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></div><div class="line">		<span class="comment">&lt;!-- 使用/会导致静态资源被拦截 ，需要在springmvc.xml中配置--&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></div><div class="line">	</div><div class="line">	</div><div class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="2-创建SpringMVC的xml配置文件"><a href="#2-创建SpringMVC的xml配置文件" class="headerlink" title="2. 创建SpringMVC的xml配置文件"></a>2. 创建SpringMVC的xml配置文件</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">	<span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns:p</span>=<span class="string">"http://www.springframework.org/schema/p"</span></div><div class="line">	<span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></div><div class="line">	<span class="attr">xmlns:mvc</span>=<span class="string">"http://www.springframework.org/schema/mvc"</span></div><div class="line">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span></div><div class="line">        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd</div><div class="line">        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"&gt;</div><div class="line">    </div><div class="line">    <span class="comment">&lt;!-- 配置包扫描器 --&gt;</span>    </div><div class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.esale.controller"</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 配置注解驱动 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>/&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 视图解析器 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span></span></div><div class="line">		<span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	</div><div class="line">	<span class="comment">&lt;!-- 静态资源映射，只有"/"时能够用到 ,这部分需要注意！！！！！！！--&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">location</span>=<span class="string">"/WEB-INF/js/"</span> <span class="attr">mapping</span>=<span class="string">"/js/**"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">location</span>=<span class="string">"/WEB-INF/css/"</span> <span class="attr">mapping</span>=<span class="string">"/css/**"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/11/SSM的配置/" data-id="cj69bk6gm000jaotxtrsxgr75" class="article-share-link">Share</a>
       
       
     </footer>
@@ -437,7 +515,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj5uc4yjv000qiotxdl8x4jve" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj69bk6gs000naotx18ac4rd7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -491,7 +569,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj5uc4yjg000giotxol73m3tm" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj69bk6gi000gaotxylea83kr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -533,7 +611,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj5uc4yk5000xiotx266qgp25" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj69bk6gv000raotxl97tp34y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -598,7 +676,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/16/设计模式——适配器模式/" data-id="cj5uc4yk2000wiotx4u6t0aq8" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/06/16/设计模式——适配器模式/" data-id="cj69bk6gv000saotxi65s94fu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -788,55 +866,7 @@ throws ,可省略，一般不写。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/09/spring框架学习二/" data-id="cj5uc4yjz000tiotxo0rez4pp" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-js跨域" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/07/js跨域/" class="article-date">
-  <time datetime="2017-06-07T15:57:36.265Z" itemprop="datePublished">2017-06-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Js跨域"><a href="#Js跨域" class="headerlink" title="Js跨域"></a>Js跨域</h1><p>js为了安全进行了限制，不允许跨域访问。</p>
-<p>如果：</p>
-<ol>
-<li>两个url的域名不同</li>
-<li>url相同，端口不同</li>
-<li>ip不同</li>
-</ol>
-<p>则是跨域了。</p>
-<p>在esale-portal中不能使用ajax直接调用esale-rest的服务。</p>
-<h2 id="解决跨域的问题"><a href="#解决跨域的问题" class="headerlink" title="解决跨域的问题"></a>解决跨域的问题</h2><p>可以使用jsonp来解决跨域问题。</p>
-<ol>
-<li>在js中不能跨域请求数据，但是<strong>js可以跨域请求js片段</strong>。可以把数据包装成js。</li>
-<li>可以把数据使用js方法来包装，形成一条方法的调用语句。</li>
-<li>可以使用ajax请求js片段，当js到达浏览器会被立即执行</li>
-<li>在浏览器端，先创建好回调方法，在回调方法中通过参数可以获得请求的数据。</li>
-</ol>
-<p>前期准备：</p>
-<ol>
-<li>把js的回调方法写好</li>
-<li>在ajax请求时，需要把回调方法的方法名传递给服务端</li>
-<li>服务端接收回调方法，把数据包装好，响应给客户端。</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/07/js跨域/" data-id="cj5uc4yjy000riotxvuup7ym9" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/06/09/spring框架学习二/" data-id="cj69bk6hg000yaotxpsj1tspx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -867,7 +897,7 @@ throws ,可省略，一般不写。
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li></ul>
     </div>
   </div>
 
@@ -875,12 +905,20 @@ throws ,可省略，一般不写。
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/07/22/单点登录系统/">单点登录系统</a>
+            <a href="/2017/08/12/Hadoop/">Hadoop</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/02/单点登录系统/">单点登录系统</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/02/Redis/">Redis</a>
           </li>
         
           <li>
@@ -889,14 +927,6 @@ throws ,可省略，一般不写。
         
           <li>
             <a href="/2017/07/11/SSM的配置/">SSM的配置</a>
-          </li>
-        
-          <li>
-            <a href="/2017/07/09/Redis/">Redis</a>
-          </li>
-        
-          <li>
-            <a href="/2017/06/29/Redis与Jedis/">Redis与Jedis</a>
           </li>
         
       </ul>
@@ -912,7 +942,7 @@ throws ,可省略，一般不写。
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Yao<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
