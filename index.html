@@ -66,8 +66,8 @@
   
     <article id="post-Python3 学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/08/30/Python3 学习笔记/" class="article-date">
-  <time datetime="2017-08-30T09:12:09.205Z" itemprop="datePublished">2017-08-30</time>
+    <a href="/2017/08/31/Python3 学习笔记/" class="article-date">
+  <time datetime="2017-08-31T15:03:39.934Z" itemprop="datePublished">2017-08-31</time>
 </a>
     
   </div>
@@ -78,7 +78,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/30/Python3 学习笔记/">Python3 学习笔记</a>
+      <a class="article-title" href="/2017/08/31/Python3 学习笔记/">Python3 学习笔记</a>
     </h1>
   
 
@@ -95,12 +95,85 @@
 </li>
 <li><p>tuple元祖<br>tuple一旦初始化就不能修改</p>
 </li>
+<li><p>range(4)生成的序列是从0开始小于5的整数</p>
+</li>
+<li><p>dict,使用key-value存储<br>其相对于list来说，是用空间换取时间的一种方法</p>
+</li>
+<li><p>函数中的数据类型检查，是错误和异常处理的一部分</p>
+</li>
+<li><p>函数默认参数：def power(x , n = 2)默认在缺省第二个参数的时候可以正常运行，<br><strong>默认参数必须指定不变变量</strong>，否则在下次调用函数的时候默认参数的内容就会发生变化</p>
+</li>
+<li><p>python允许在list或者tuple前面加一个<em>号，把list或tuple的元素变成可变参数传进去<br>num = [1,2,3,4]<br>add(</em>num)</p>
+</li>
+<li><p><strong>关键字参数：</strong><br>关键字参数允许你传入0个或人一个含参数名的参数，这些关键字参数在函数内部自动组成一个dict</p>
+</li>
+<li><p><strong>命名关键字参数：</strong><br>命名关键字参数需要一个<strong>特殊分隔符*</strong>，<em>后面的参数被视为命名关键字参数。<br>命名关键字参数必须传入参数名， 如果没有传入参数名，调用将报错。<br><strong>定义：</strong><br>def person(name , age , </em> , city ,job)<br>print(name,age,city,job)<br><strong>调用：</strong><br>person(“tom”,18,city=”beijing”,job=”student”)</p>
+</li>
 </ol>
+<p>此外，命名关键字参数可以有缺省值。</p>
+<ol>
+<li><strong>参数组合</strong><br>在pyhton中定义函数，可以用必选参数，默认参数，可变参数，关键字参数和命名关键字参数。<br><strong>请注意：</strong>参数定义的顺序必须是：必选参数、默认参数、可变参数/命名关键字参数和关键字参数</li>
+</ol>
+<h2 id="二-python高级函数"><a href="#二-python高级函数" class="headerlink" title="二 . python高级函数"></a>二 . python高级函数</h2><h3 id="2-1-切片Slice"><a href="#2-1-切片Slice" class="headerlink" title="2.1  切片Slice"></a>2.1  切片Slice</h3><p>例如有一个list , L=[“a”,”b”,”c”,”d”,”e”,”f”,”g”],<br>若要取前4个元素，使用切片的方法可以表示为：<br>L[0:4]。表示从索引0开始，知道索引4结束，不包括索引4。</p>
+<p><strong>其他操作示例</strong><br>前10个数，每两个取一个：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>L[:10:2]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>所有数，每五个取一个：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>L[::5]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="2-2-迭代"><a href="#2-2-迭代" class="headerlink" title="2.2  迭代"></a>2.2  迭代</h3><ul>
+<li><p>在python中，迭代是通过for…in来完成。<br>dict也可以迭代，但是由于dict中的存储的是hash值，因此迭代结果的顺序可能不一样。</p>
+</li>
+<li><p>在python中，只要是<strong>可迭代对象</strong>就可以用使用for循环正常运行。</p>
+</li>
+</ul>
+<p><strong>判断对象是可迭代对象：</strong></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from collections import Iterable<br>isinstance(‘abc’, Iterable) #str是否可迭代</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="2-3-列表生成式"><a href="#2-3-列表生成式" class="headerlink" title="2.3  列表生成式"></a>2.3  列表生成式</h3><p>举例：生成平方序列</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>[a * a for a in range(1,10)]<br>[1,4,9,16,25,36,49,64,81]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>还可以加条件：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>[a * a for a in range(1,10) if a % 2 ==0]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>二层循环：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>[m + n for m in ‘ABC’ for n in ‘XYZ’]</p>
+</blockquote>
+</blockquote>
+</blockquote>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/30/Python3 学习笔记/" data-id="cj70kwxc4000ji4txy0rnqnyx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/31/Python3 学习笔记/" data-id="cj70kzcvj000gdgtx52h6aoya" class="article-share-link">Share</a>
       
       
     </footer>
@@ -141,7 +214,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/15/《大型网站系统与Java中间件实践》读书笔记/" data-id="cj70kwxci000ui4tx5d98akmd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/15/《大型网站系统与Java中间件实践》读书笔记/" data-id="cj70kzcw5000wdgtxhotepvdx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -197,7 +270,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/12/Hadoop/" data-id="cj70kwxa60001i4tx6upz4hha" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/12/Hadoop/" data-id="cj70kzcuu0002dgtxmb76ff33" class="article-share-link">Share</a>
       
       
     </footer>
@@ -263,7 +336,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/02/单点登录系统/" data-id="cj70kwxd5000yi4tx0yt65hjw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/02/单点登录系统/" data-id="cj70kzcw9000ydgtxs6highzc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -470,7 +543,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/02/Redis/" data-id="cj70kwxbz000hi4tx0vl4ij64" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/02/Redis/" data-id="cj70kzcvk000hdgtx0wrxfw7d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -512,7 +585,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/20/Freemarker/" data-id="cj70kwx9z0000i4txnd55mxo8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/20/Freemarker/" data-id="cj70kzcuw0003dgtxm38o3iex" class="article-share-link">Share</a>
       
       
     </footer>
@@ -553,7 +626,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/11/SSM的配置/" data-id="cj70kwxc7000li4tx4l0n6pbv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/11/SSM的配置/" data-id="cj70kzcvl000idgtxj7zf8lr7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -602,7 +675,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj70kwxd70010i4tx4o4593zs" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj70kzcvm000jdgtxq5kukxc2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -656,7 +729,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj70kwxbv000gi4tx42atofwx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj70kzcvq000ldgtx41xr2o1k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -698,7 +771,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj70kwxck000vi4tx12owrxdv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj70kzcw9000zdgtxow5xqmwk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -742,7 +815,7 @@
       <ul>
         
           <li>
-            <a href="/2017/08/30/Python3 学习笔记/">Python3 学习笔记</a>
+            <a href="/2017/08/31/Python3 学习笔记/">Python3 学习笔记</a>
           </li>
         
           <li>
