@@ -64,6 +64,142 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Shiro" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/22/Shiro/" class="article-date">
+  <time datetime="2017-09-22T02:03:07.734Z" itemprop="datePublished">2017-09-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/22/Shiro/">Shiro</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签 ： Shiro</p>
+<hr>
+<h2 id="一-简介"><a href="#一-简介" class="headerlink" title="一 . 简介"></a>一 . 简介</h2><p>Apache Shiro 是Java 的一个安全框架。<br>Shiro 可以帮助我们完成：认证、授权、加密、会话管理、与Web 集成、缓存等。<br><strong>记住一点，Shiro 不会去维护用户、维护权限；这些需要我们自己去设计/提供；然后通过<br>相应的接口注入给Shiro即可。</strong></p>
+<p>一个最简单的Shiro应用经历了如下的过程:</p>
+<ol>
+<li>应用代码通过Subject来进行认证和授权，而Subject又委托给SecurityManager</li>
+<li>我们需要给Shiro 的SecurityManager 注入Realm，从而让SecurityManager 能得到合法<br>的用户及其权限进行判断。</li>
+</ol>
+<p><strong>Shiro内部框架：</strong><br><img src="http://note.youdao.com/yws/public/resource/9a0c71e86f2d1fafa0560e962a2f8588/xmlnote/BBB8CD67388446FF9D30F2055E7D3F33/1622" alt="此处输入图片的描述"></p>
+<p><strong>Subject</strong>：主体，可以看到主体可以是任何可以与应用交互的“用户”；</p>
+<p><strong>SecurityManager</strong> ：相当于SpringMVC中的DispatcherServlet或者Struts2中的FilterDispatcher；是Shiro的心脏；所有具体的交互都通过SecurityManager进行控制；它管理着所有Subject、且负责进行认证和授权、及会话、缓存的管理。</p>
+<p><strong>Authenticator</strong>：认证器，负责主体认证的，这是一个扩展点，如果用户觉得Shiro默认的不好，可以自定义实现；其需要认证策略（Authentication Strategy），即什么情况下算用户认证通过了；</p>
+<p><strong>Authrizer</strong>：授权器，或者访问控制器，用来决定主体是否有权限进行相应的操作；即控制着用户能访问应用中的哪些功能；</p>
+<p><strong>Realm</strong>：可以有1个或多个Realm，可以认为是安全实体数据源，即用于获取安全实体的；可以是JDBC实现，也可以是LDAP实现，或者内存实现等等；由用户提供；不知道你的用户/权限存储在哪及以何种格式存储；所以我们一般在应用中都需要实现自己的Realm；</p>
+<p><strong>SessionManager</strong>：如果写过Servlet就应该知道Session的概念，Session需要有人去管理它的生命周期，这个组件就是SessionManager；而Shiro并不仅仅可以用在Web环境，也可以用在如普通的JavaSE环境、EJB等环境；所有呢，Shiro 就抽象了一个自己的Session来管理主体与应用之间交互的数据；这样的话，比如我们在Web 环境用，刚开始是一台Web 服务器；接着又上了台EJB服务器；这时想把两台服务器的会话数据放到一个地方，这个时候就可以实现自己的分布式会话（如把数据放到Memcached服务器）；</p>
+<p><strong>SessionDAO</strong>：DAO 大家都用过，数据访问对象，用于会话的CRUD，比如我们想把Session保存到数据库，那么可以实现自己的SessionDAO，通过如JDBC写到数据库；比如想把Session放到Memcached中，<br>可以实现自己的Memcached SessionDAO；另外SessionDAO中可以使用Cache进行缓存，以提高性能；</p>
+<p><strong>CacheManager</strong>：缓存控制器，来管理如用户、角色、权限等的缓存的；因为这些数据基本<br>上很少去改变，放到缓存中后可以提高访问的性能</p>
+<p><strong>Cryptography</strong>：密码模块，Shiro 提高了一些常见的加密组件用于如密码加密/解密的。</p>
+<h2 id="二-身份验证"><a href="#二-身份验证" class="headerlink" title="二 . 身份验证"></a>二 . 身份验证</h2><p>身份验证的步骤：</p>
+<ol>
+<li>收集用户身份/凭证，即如用户名/密码；</li>
+<li>调用Subject.login 进行登录，如果失败将得到相应的AuthenticationException 异常，根<br>据异常提示用户错误信息；否则登录成功；</li>
+<li>最后调用Subject.logout进行退出操作。</li>
+</ol>
+<p><img src="http://note.youdao.com/yws/public/resource/9a0c71e86f2d1fafa0560e962a2f8588/xmlnote/1B2095C372974E20AA6C7F1F4E836606/1626" alt="此处输入图片的描述"></p>
+<p><strong>流程如下：</strong></p>
+<ol>
+<li><p>首先调用Subject.login(token)进行登录，其会自动委托给SecurityManager，调用之前必须通过SecurityUtils. setSecurityManager()设置；</p>
+</li>
+<li><p>SecurityManager负责真正的身份验证逻辑；它会委托给Authenticator进行身份验证；</p>
+</li>
+<li><p>Authenticator才是真正的身份验证者，ShiroAPI中核心的身份认证入口点，此处可以自定义插入自己的实现；</p>
+</li>
+<li><p>Authenticator可能会委托给相应的AuthenticationStrategy进行多Realm身份验证，默认ModularRealmAuthenticator会调用AuthenticationStrategy进行多Realm身份验证；</p>
+</li>
+<li><p>Authenticator 会把相应的token传入Realm，从Realm获取身份验证信息，如果没有返回/抛出异常表示身份验证失败了。此处可以配置多个Realm，将按照相应的顺序及策略进行访问。</p>
+</li>
+</ol>
+<h2 id="三-授权"><a href="#三-授权" class="headerlink" title="三 . 授权"></a>三 . 授权</h2><p>授权，也叫访问控制，即在应用中控制谁能访问哪些资源（如访问页面/编辑数据/页面操作等）。在授权中需了解的几个关键对象：主体（Subject）、资源（Resource）、权限（Permission）、角色（Role）。</p>
+<h3 id="1-授权方式"><a href="#1-授权方式" class="headerlink" title="1.授权方式"></a>1.授权方式</h3><p>Shiro支持三种方式的授权</p>
+<p><strong>编程式</strong>:通过if/else授权代码块完成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Subject subject = SecurityUtils.getSubject();</div><div class="line">if(subject.hasRole(“admin”)) &#123;</div><div class="line">//有权限</div><div class="line">&#125; else &#123;</div><div class="line">//无权限</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>注解式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@RequiresRoles(&quot;admin&quot;)</div><div class="line">public void hello() &#123;</div><div class="line">//有权限</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>JSP/GSP 标签</strong><br>在JSP/GSP 页面通过相应的标签完成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;shiro:hasRole name=&quot;admin&quot;&gt;</div><div class="line">&lt;!— 有权限—&gt;</div><div class="line">&lt;/shiro:hasRole&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="2-授权"><a href="#2-授权" class="headerlink" title="2.授权"></a>2.授权</h3><h4 id="基于角色的访问控制（隐式角色）"><a href="#基于角色的访问控制（隐式角色）" class="headerlink" title="基于角色的访问控制（隐式角色）"></a><strong>基于角色的访问控制（隐式角色）</strong></h4><ol>
+<li>在ini配置文件配置用户拥有的角色(shiro-role.ini)<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;shiro:hasRole name=&quot;admin&quot;&gt;</div><div class="line">&lt;!— 有权限—&gt;</div><div class="line">&lt;/shiro:hasRole&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>规则即：“用户名=密码,角色1，角色2”，如果需要在应用中判断用户是否有相应角色，就需要在相应的Realm中返回角色信息，也就是说Shiro不负责维护用户-角色信息，需要应用提供，Shiro只是提供相应的接口方便验证，后续会介绍如何动态的获取用户角色。</p>
+<p><strong>测试</strong><br>这段代码主要是为了判断某个用户是否拥有某个角色或权限，使用了hasRole<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void testHasRole() &#123;</div><div class="line">login(&quot;classpath:shiro-role.ini&quot;, &quot;zhang&quot;, &quot;123&quot;);</div><div class="line">//判断拥有角色：role1</div><div class="line">Assert.assertTrue(subject().hasRole(&quot;role1&quot;));</div><div class="line">//判断拥有角色：role1 and role2</div><div class="line">Assert.assertTrue(subject().hasAllRoles(Arrays.asList(&quot;role1&quot;, &quot;role2&quot;)));</div><div class="line">//判断拥有角色：role1 and role2 and !role3</div><div class="line">boolean[] result = subject().hasRoles(Arrays.asList(&quot;role1&quot;, &quot;role2&quot;, &quot;role3&quot;));</div><div class="line">Assert.assertEquals(true, result[0]);</div><div class="line">Assert.assertEquals(true, result[1]);</div><div class="line">Assert.assertEquals(false, result[2]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>checkRole判断是否拥有权限中的某一个，若不存在则会抛出异常<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Test(expected = UnauthorizedException.class)</div><div class="line">public void testCheckRole() &#123;</div><div class="line">login(&quot;classpath:shiro-role.ini&quot;, &quot;zhang&quot;, &quot;123&quot;);</div><div class="line">//断言拥有角色：role1</div><div class="line">subject().checkRole(&quot;role1&quot;);</div><div class="line">//断言拥有角色：role1 and role3 失败抛出异常</div><div class="line">subject().checkRoles(&quot;role1&quot;, &quot;role3&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>总结：<br>这种方式的缺点就是如果很多地方进行了角色判断，但是有一天不需要了那么就需要修改相应代码把所有相关的地方进行删除；这就是粗粒度造成的问题。</p>
+<h4 id="基于资源的访问控制（显示角色）"><a href="#基于资源的访问控制（显示角色）" class="headerlink" title="基于资源的访问控制（显示角色）"></a><strong>基于资源的访问控制（显示角色）</strong></h4><ol>
+<li>在ini配置文件配置用户拥有的角色及角色-权限关系（shiro-permission.ini）<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[users]</div><div class="line">zhang=123,role1,role2</div><div class="line">wang=123,role1</div><div class="line">[roles]</div><div class="line">role1=user:create,user:update</div><div class="line">role2=user:create,user:delete</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>规则</strong>：<strong>“用户名=密码，角色1，角色2” “角色=权限1，权限2”</strong>，<br>即首先根据用户名找到角色，然后根据角色再找到权限；即角色是权限集合；Shiro 同样不进行权限的维护，需<br>要我们通过Realm返回相应的权限信息。只需要维护“用户——角色”之间的关系即可。</p>
+<ol>
+<li>测试<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">@Test</div><div class="line">public void testIsPermitted() &#123;</div><div class="line">login(&quot;classpath:shiro-permission.ini&quot;, &quot;zhang&quot;, &quot;123&quot;);</div><div class="line">//判断拥有权限：user:create</div><div class="line">Assert.assertTrue(subject().isPermitted(&quot;user:create&quot;));</div><div class="line">//判断拥有权限：user:update and user:delete</div><div class="line">Assert.assertTrue(subject().isPermittedAll(&quot;user:update&quot;, &quot;user:delete&quot;));</div><div class="line">//判断没有权限：user:view</div><div class="line">Assert.assertFalse(subject().isPermitted(&quot;user:view&quot;));</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Test(expected = UnauthorizedException.class)</div><div class="line">public void testCheckPermission () &#123;</div><div class="line">login(&quot;classpath:shiro-permission.ini&quot;, &quot;zhang&quot;, &quot;123&quot;);</div><div class="line">//断言拥有权限：user:create</div><div class="line">subject().checkPermission(&quot;user:create&quot;);</div><div class="line">//断言拥有权限：user:delete and user:update</div><div class="line">subject().checkPermissions(&quot;user:delete&quot;, &quot;user:update&quot;);</div><div class="line">//断言拥有权限：user:view 失败抛出异常</div><div class="line">subject().checkPermissions(&quot;user:view&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>总结：<br>这种方式的一般规则是“资源标识符：操作”，即是资源级别的粒度；这种方式的好处就是如果要修改基本都是一个资源级别的修改，不会对其他模块代码产生影响，粒度小。但是实现起来可能稍微复杂点，需要维护“用户——角色，角色——权限（资源：操作）”之间的关系。</p>
+<h3 id="3-Permission"><a href="#3-Permission" class="headerlink" title="3.Permission"></a>3.Permission</h3><h4 id="字符串通配符权限"><a href="#字符串通配符权限" class="headerlink" title="字符串通配符权限"></a><strong>字符串通配符权限</strong></h4><p><strong>规则：“资源标识符：操作：对象实例ID”</strong><br><strong>即对哪个资源的哪个实例可以进行什么操作</strong>。其默认支持通配符权限字符串， “:”表示资源/操作/实例的分割； “,”表示操作的分割； “*”表示任意资源/操作/实例。</p>
+<ol>
+<li><p><strong>单个资源单个权限</strong><br><code>subject().checkPermissions(&quot;system:user:update&quot;);</code><br>用户拥有资源“system:user”的“update”权限</p>
+</li>
+<li><p><strong>单个资源多个权限</strong></p>
+</li>
+</ol>
+<p>首先，ini配置文件：<br><code>role41=system:user:update,system:user:delete</code></p>
+<p>然后，通过代码判断：<br><code>subject().checkPermissions(&quot;system:user:update&quot;, &quot;system:user:delete&quot;);</code></p>
+<p>用户拥有资源“system:user”的“update”和“delete”权限。如上可以简写成：</p>
+<p>首先，ini配置（表示角色4 拥有system:user资源的update和delete 权限）<br><code>role42=system:user:updata,delete</code></p>
+<p>然后，通过代码判断：<br><code>subject().checkPermissions(&quot;system:user:update,delete&quot;);</code><br>如上</p>
+<p>3.<strong>单个资源全部权限</strong></p>
+<p>ini配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">role51=&quot;system:user:create,update,delete,view&quot;</div><div class="line">//亦可以写成:</div><div class="line">role51=system:user:*</div><div class="line">//或者：</div><div class="line">role51=sysytem:user</div></pre></td></tr></table></figure></p>
+<p>代码判断：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">subject().checkPermissions(&quot;system:user:create,delete,update:view&quot;);</div><div class="line">//或者</div><div class="line">subject().checkPermissions(&quot;system:user:*&quot;);</div><div class="line">subject().checkPermissions(&quot;system:user&quot;);</div></pre></td></tr></table></figure></p>
+<p>4.<strong>所有资源全部权限</strong></p>
+<p><code>role=*:view</code><br>如下代码判断：<br><code>subject().checkPermissions(&quot;user:view&quot;);</code><br>用户拥有所有资源的“view”所有权限。</p>
+<p>5.<strong>实例级别的权限</strong></p>
+<p>5.1 单个实例单个权限</p>
+<p>ini配置：<br><code>role=user:view:1</code><br>对资源user的1实例拥有view权限</p>
+<p>5.2 单个实例多个权限</p>
+<p>ini配置：<br><code>role=&quot;user:update,delete:1&quot;</code><br>对资源user的1实例拥有update,delete权限</p>
+<p>同理，将配置改成：<br><code>role=user:*:1</code><br>就能实现所有权限</p>
+<p>5.3 所有实例单个权限<br><code>role=user:auth:*</code><br>对资源user的1实例拥有所有权限</p>
+<p><img src="http://note.youdao.com/yws/public/resource/9a0c71e86f2d1fafa0560e962a2f8588/xmlnote/36F95D48822A4378B6B1F7C6CCABFD3B/1628" alt="此处输入图片的描述"></p>
+<p><strong>流程如下：</strong></p>
+<ol>
+<li><p>首先调用Subject.isPermitted<em>/hasRole</em>接口，其会委托给SecurityManager，而<br>SecurityManager接着会委托给Authorizer；</p>
+</li>
+<li><p>Authorizer是真正的授权者，如果我们调用如isPermitted(“user:view”)，其首先会通过<br>PermissionResolver把字符串转换成相应的Permission实例；</p>
+</li>
+<li><p>在进行授权之前，其会调用相应的Realm获取Subject相应的角色/权限用于匹配传入的<br>角色/权限；</p>
+</li>
+<li><p>Authorizer会判断Realm的角色/权限是否和传入的匹配，如果有多个Realm，会委托给<br>ModularRealmAuthorizer 进行循环判断，如果匹配如isPermitted<em>/hasRole</em>会返回true，否<br>则返回false表示授权失败。</p>
+</li>
+</ol>
+<h3 id="4-Authorizer-PerssionResolver-RolePermissionResolver"><a href="#4-Authorizer-PerssionResolver-RolePermissionResolver" class="headerlink" title="4 . Authorizer PerssionResolver RolePermissionResolver"></a>4 . Authorizer PerssionResolver RolePermissionResolver</h3><p><strong>Authorizer</strong>的职责是进行授权（访问控制），是Shiro API中授权核心的入口点，其提供了<br>相应的角色/权限判断接口，具体请参考其Javadoc。<br>SecurityManager 继承了Authorizer接口，且提供了ModularRealmAuthorizer用于多Realm时的授权匹配。<br><strong>PermissionResolver</strong>用于解析权限字符串到Permission实例，而<strong>RolePermissionResolver</strong>用于根据角色解析相应的权限集合。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/22/Shiro/" data-id="cj7v8t8xt000ixwtxpn503zfx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Hadoop" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/09/08/Hadoop/" class="article-date">
@@ -110,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/08/Hadoop/" data-id="cj7hpxftz0001dgtx0xmbjn0t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/08/Hadoop/" data-id="cj7v8t8x00001xwtxmiruxovt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -233,7 +369,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/01/Python3 学习笔记/" data-id="cj7hpxfvg000hdgtx5svanv5s" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/01/Python3 学习笔记/" data-id="cj7v8t8xs000hxwtxgkk79wxg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -274,7 +410,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/15/《大型网站系统与Java中间件实践》读书笔记/" data-id="cj7hpxfvz000udgtxy41z1cr5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/15/《大型网站系统与Java中间件实践》读书笔记/" data-id="cj7v8t8y9000vxwtxbw26zy7o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -340,7 +476,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/02/单点登录系统/" data-id="cj7hpxfwb000zdgtxys5q0e7t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/02/单点登录系统/" data-id="cj7v8t8yd000yxwtxm5qe4vtp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -547,7 +683,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/02/Redis/" data-id="cj7hpxfvd000fdgtx9jka7mst" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/02/Redis/" data-id="cj7v8t8xp000fxwtxm3e7hfya" class="article-share-link">Share</a>
       
       
     </footer>
@@ -589,7 +725,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/20/Freemarker/" data-id="cj7hpxfum0002dgtx05vbsylk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/20/Freemarker/" data-id="cj7v8t8x60003xwtx8p7pver8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -630,7 +766,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/11/SSM的配置/" data-id="cj7hpxfve000gdgtxl3h9atu7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/11/SSM的配置/" data-id="cj7v8t8xu000jxwtxy7gxcswr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -679,7 +815,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj7hpxfvn000mdgtx5k6ia7lo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/29/Redis与Jedis/" data-id="cj7v8t8yq0011xwtxb30y79al" class="article-share-link">Share</a>
       
       
     </footer>
@@ -733,49 +869,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj7hpxfvj000jdgtx181sfk8z" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-设计模式——桥接模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/22/设计模式——桥接模式/" class="article-date">
-  <time datetime="2017-06-22T14:46:58.567Z" itemprop="datePublished">2017-06-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/22/设计模式——桥接模式/">设计模式——桥接模式</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="标签-：-设计模式-结构型模式-桥接模式"><a href="#标签-：-设计模式-结构型模式-桥接模式" class="headerlink" title="标签 ： 设计模式 结构型模式 桥接模式"></a>标签 ： 设计模式 结构型模式 桥接模式</h2><h1 id="桥接模式（Bridge-Pattern）"><a href="#桥接模式（Bridge-Pattern）" class="headerlink" title="桥接模式（Bridge Pattern）"></a>桥接模式（Bridge Pattern）</h1><h2 id="一-概述"><a href="#一-概述" class="headerlink" title="一 . 概述"></a>一 . 概述</h2><p>将抽象部分和其实现部分进行分离，使他们可以独立地变化。</p>
-<h2 id="二-适用性"><a href="#二-适用性" class="headerlink" title="二 . 适用性"></a>二 . 适用性</h2><ol>
-<li>类的抽象以及它的实现都应该可以通过生成子类的方法加以扩充</li>
-<li>对一个抽象的实现部分的修改应对客户不产生影响，即客户的代码不必重新编译。</li>
-<li>你不希望在抽象和它的实现部分之间有一个固定的绑定关系。</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj7hpxfw1000wdgtxvsrtnwas" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/29/Solr/" data-id="cj7v8t8xy000lxwtxd5eut94t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -819,6 +913,10 @@
       <ul>
         
           <li>
+            <a href="/2017/09/22/Shiro/">Shiro</a>
+          </li>
+        
+          <li>
             <a href="/2017/09/08/Hadoop/">Hadoop</a>
           </li>
         
@@ -832,10 +930,6 @@
         
           <li>
             <a href="/2017/08/02/单点登录系统/">单点登录系统</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/02/Redis/">Redis</a>
           </li>
         
       </ul>
