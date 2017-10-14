@@ -3,30 +3,53 @@
 <head>
   <meta charset="utf-8">
   
-  <title>设计模式——桥接模式 | We-Param</title>
+  <title>MINA | We-Param</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="标签 ： 设计模式 结构型模式 桥接模式桥接模式（Bridge Pattern）一 . 概述将抽象部分和其实现部分进行分离，使他们可以独立地变化。
-二 . 适用性
-类的抽象以及它的实现都应该可以通过生成子类的方法加以扩充
-对一个抽象的实现部分的修改应对客户不产生影响，即客户的代码不必重新编译。
-你不希望在抽象和它的实现部分之间有一个固定的绑定关系。">
+  <meta name="description" content="标签 ： MINA
+
+一 . 介绍MINA 是一个专门设计既能工作在客户端又能工作在服务器端的网络框架。
+MINA的优点：
+
+易于使用
+高并发的用户量
+对于现有协议的支持
+
+MINA是一个简单、有效的网络框架，它提供了诸多的功能，包括：
+
+二 . 服务端和客户端架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设计模式——桥接模式">
-<meta property="og:url" content="http://yoursite.com/2017/06/22/设计模式——桥接模式/index.html">
+<meta property="og:title" content="MINA">
+<meta property="og:url" content="http://yoursite.com/2017/10/14/MINA/index.html">
 <meta property="og:site_name" content="We-Param">
-<meta property="og:description" content="标签 ： 设计模式 结构型模式 桥接模式桥接模式（Bridge Pattern）一 . 概述将抽象部分和其实现部分进行分离，使他们可以独立地变化。
-二 . 适用性
-类的抽象以及它的实现都应该可以通过生成子类的方法加以扩充
-对一个抽象的实现部分的修改应对客户不产生影响，即客户的代码不必重新编译。
-你不希望在抽象和它的实现部分之间有一个固定的绑定关系。">
-<meta property="og:updated_time" content="2017-06-22T14:47:02.861Z">
+<meta property="og:description" content="标签 ： MINA
+
+一 . 介绍MINA 是一个专门设计既能工作在客户端又能工作在服务器端的网络框架。
+MINA的优点：
+
+易于使用
+高并发的用户量
+对于现有协议的支持
+
+MINA是一个简单、有效的网络框架，它提供了诸多的功能，包括：
+
+二 . 服务端和客户端架构">
+<meta property="og:image" content="http://note.youdao.com/yws/public/resource/9a0c71e86f2d1fafa0560e962a2f8588/xmlnote/41C4475BB94842AC9FB2079CB72A0573/1880">
+<meta property="og:updated_time" content="2017-10-14T14:26:30.748Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="设计模式——桥接模式">
-<meta name="twitter:description" content="标签 ： 设计模式 结构型模式 桥接模式桥接模式（Bridge Pattern）一 . 概述将抽象部分和其实现部分进行分离，使他们可以独立地变化。
-二 . 适用性
-类的抽象以及它的实现都应该可以通过生成子类的方法加以扩充
-对一个抽象的实现部分的修改应对客户不产生影响，即客户的代码不必重新编译。
-你不希望在抽象和它的实现部分之间有一个固定的绑定关系。">
+<meta name="twitter:title" content="MINA">
+<meta name="twitter:description" content="标签 ： MINA
+
+一 . 介绍MINA 是一个专门设计既能工作在客户端又能工作在服务器端的网络框架。
+MINA的优点：
+
+易于使用
+高并发的用户量
+对于现有协议的支持
+
+MINA是一个简单、有效的网络框架，它提供了诸多的功能，包括：
+
+二 . 服务端和客户端架构">
+<meta name="twitter:image" content="http://note.youdao.com/yws/public/resource/9a0c71e86f2d1fafa0560e962a2f8588/xmlnote/41C4475BB94842AC9FB2079CB72A0573/1880">
   
     <link rel="alternate" href="/atom.xml" title="We-Param" type="application/atom+xml">
   
@@ -75,10 +98,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-设计模式——桥接模式" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-MINA" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/06/22/设计模式——桥接模式/" class="article-date">
-  <time datetime="2017-06-22T14:46:58.567Z" itemprop="datePublished">2017-06-22</time>
+    <a href="/2017/10/14/MINA/" class="article-date">
+  <time datetime="2017-10-14T14:26:09.079Z" itemprop="datePublished">2017-10-14</time>
 </a>
     
   </div>
@@ -89,7 +112,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      设计模式——桥接模式
+      MINA
     </h1>
   
 
@@ -97,17 +120,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="标签-：-设计模式-结构型模式-桥接模式"><a href="#标签-：-设计模式-结构型模式-桥接模式" class="headerlink" title="标签 ： 设计模式 结构型模式 桥接模式"></a>标签 ： 设计模式 结构型模式 桥接模式</h2><h1 id="桥接模式（Bridge-Pattern）"><a href="#桥接模式（Bridge-Pattern）" class="headerlink" title="桥接模式（Bridge Pattern）"></a>桥接模式（Bridge Pattern）</h1><h2 id="一-概述"><a href="#一-概述" class="headerlink" title="一 . 概述"></a>一 . 概述</h2><p>将抽象部分和其实现部分进行分离，使他们可以独立地变化。</p>
-<h2 id="二-适用性"><a href="#二-适用性" class="headerlink" title="二 . 适用性"></a>二 . 适用性</h2><ol>
-<li>类的抽象以及它的实现都应该可以通过生成子类的方法加以扩充</li>
-<li>对一个抽象的实现部分的修改应对客户不产生影响，即客户的代码不必重新编译。</li>
-<li>你不希望在抽象和它的实现部分之间有一个固定的绑定关系。</li>
+        <p>标签 ： MINA</p>
+<hr>
+<h2 id="一-介绍"><a href="#一-介绍" class="headerlink" title="一 . 介绍"></a>一 . 介绍</h2><p>MINA 是一个专门设计既能工作在客户端又能工作在服务器端的网络框架。</p>
+<p>MINA的优点：</p>
+<ol>
+<li>易于使用</li>
+<li>高并发的用户量</li>
+<li>对于现有协议的支持</li>
 </ol>
-
+<p>MINA是一个简单、有效的网络框架，它提供了诸多的功能，包括：</p>
+<p><img src="http://note.youdao.com/yws/public/resource/9a0c71e86f2d1fafa0560e962a2f8588/xmlnote/41C4475BB94842AC9FB2079CB72A0573/1880" alt="此处输入图片的描述"></p>
+<h2 id="二-服务端和客户端架构"><a href="#二-服务端和客户端架构" class="headerlink" title="二 . 服务端和客户端架构"></a>二 . 服务端和客户端架构</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/22/设计模式——桥接模式/" data-id="cj8rf1gn6000yvwtx4ywo3ron" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/10/14/MINA/" data-id="cj8rf1gli0007vwtx18c0gouw" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -116,19 +144,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/06/29/Solr/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
-      <div class="article-nav-title">
-        
-          Solr
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/06/16/设计模式——适配器模式/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/09/22/Shiro/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Ancien</strong>
-      <div class="article-nav-title">设计模式——————适配器模式</div>
+      <div class="article-nav-title">Shiro</div>
     </a>
   
 </nav>
